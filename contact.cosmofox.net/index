@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="files/style.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<title>CONTACT | index</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="/index">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<a href="files/Alexander_Hof.vcf"><img alt="vcard" src="files/contact.png" /></a>
+		</div>
+		<div id="desc">
+			<p>Click or scan the QR code for the vcard file.</p>
+		</div>
+		<ul>
+			<li><a href="index">Contact / Impressum</a></li>
+		</ul>
+	</nav>
+	<div id="paper">
+		<article>
+				<h1>Contact / Impressum</h1>
+				<p>
+				Alexander Hof <br>
+				Bertha-von-Suttner-Str. 10 <br>
+				14469 Potsdam <br>
+				Germany <br>
+				Email:&nbsp; <a href="mailto:contact@cosmofox.net">contact AT cosmofox DOT net</a> <br>
+				Phone:&nbsp; +49 (0)331 62 56 84 10 <br>
+				PGP:&nbsp; <a href="files/cosmofox.asc">1B56 5855 F172 2B23 E5E6  8C5B 354A 27FE B782 AB6D</a> <br>
+				</p>
+		</article>	</div>
+</body>
+</html>

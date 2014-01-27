@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="files/style.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<title>COSMOFOX | index</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="/index">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<a href="news"><img src="files/logo.png" /></a>
+		</div>
+		<div id="desc">
+			<p>some things worth to know</p>
+		</div>
+		<ul>
+			<li>&#60; <a href="index" class="thisPage">index</a> &#62;</li>
+			<li><a href="using-open-WiFi">using-open-WiFi</a></li>
+			<li><a href="ejabberd-auf-uberspace">ejabberd-auf-uberspace</a></li>
+		</ul>
+	</nav>	<div id="paper">
+		<article>
+				<h1>How-to</h1>
+				<p>From Wikipedia, the free encyclopedia:</p>
+				<p>
+A how-to is an informal, often short, description of how to accomplish a specific task. A how-to is usually meant to help non-experts, may leave out details that are only important to experts, and may also be greatly simplified from an overall discussion of the topic. One of the earliest how-to books was published in 1569 by Thomas Wight and entitled, A booke of the arte and maner, how to plant and graffe all sortes of trees: With divers other new practise, by one of the Abbey of Saint Vincent in Fraunce by Leonard Mascall.
+				</p>
+		</article>	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a>
+		</div>
+	</footer>
+	</div>
+</body>
+</html>

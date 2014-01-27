@@ -1,0 +1,21 @@
+DirectoryIndex index
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{ENV:HTTPS} !=on
+#RewriteCond %{HTTP_HOST} !=git.cosmofox.net
+#RewriteCond %{HTTP_HOST} !=xmpp.cosmofox.net
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{HTTP_HOST} !=contact.cosmofox.net
+RewriteRule (.*) http://contact.cosmofox.net/$1 [R=301,L]
+
+#Prevent viewing of .htaccess file
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+#Prevent directory listings
+Options All -Indexes

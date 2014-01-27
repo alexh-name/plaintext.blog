@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="files/style.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<title>GEN2 | building-a-static-userspace</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="/index">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<a href="news"><img src="files/logo-gen2.png" /></a>
+		</div>
+		<div id="desc">
+			<p>forever compiling...</p>
+		</div>
+		<ul>
+			<li><a href="index">index</a></li>
+			<li><a href="migration-to-clang">migration-to-clang</a></li>
+			<li>&#60; <a href="building-a-static-userspace" class="thisPage">building-a-static-userspace</a> &#62;</li>
+			<li><a href="Hibernation">Hibernation</a></li>
+		</ul>
+	</nav>	<div id="paper">
+		<article>
+				<h1>building a static userspace</h1>
+				<p>date: 2013.11.18</p>
+				<p>/etc/portage/make.conf:</p>
+			   <p class="code">[...]
+USE="${USE} static static-libs"
+[...]</p>
+				<p>Setting above USE-flags and trying to compile as much as possible with them is all I'm capable of right now.</p>
+				<br>
+				<h2>Why building a static userspace?</h2>
+				<p><a href="http://sta.li/faq">That's why.</a> And for fun.</p>
+				<br>
+				<h2>This is a list of packages which <u>fail</u> to build:</h2>
+			   <p class="code">=app-arch/tar-1.27-r2
+=net-misc/wget-1.14</p>
+				<p><u>Logs and build-info</u> of failed builds can be found <a href="https://cosmofox.net/DL/Gen2/Static/failed/">here</a>.</p>
+		</article>
+	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a>
+		</div>
+	</footer>
+	</div>
+</body>
+</html>

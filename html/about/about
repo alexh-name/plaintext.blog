@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="files/style.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<title>COSMOFOX | about</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="/index">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<a href="news"><img src="files/logo.png" /></a>
+		</div>
+		<div id="desc">
+			<p> 'cause it all already sucks enough </p>
+		</div>
+		<ul>
+			<li><a href="news">news</a></li>
+			<li>&#60; <a href="about" class="thisPage">about</a> &#62;</li>
+			<li><a href="todo">todo</a></li>
+		</ul>
+	</nav>
+	<div id="paper">
+		<article>
+			<h1>About</h1>
+
+			<p>Here, I'm hosting that better stuff. Anything which <a href="http://suckless.org/philosophy" target="_blank">sucks less</a> belongs to the better stuff.</p>
+			<p class=small>disclaimer: neither is this linking approved, nor am I really a part of the suckless community. I just like their approach.</p>
+
+			<h2>Why "<i>Cosmofox</i>"?</h2>
+
+			<p>Imagine a fox flying through space, wearing a spacesuite. Awesome, right?</p>
+		</article>
+	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a>
+		</div>
+	</footer>
+	</div>
+</body>
+</html>

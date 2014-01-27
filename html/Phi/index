@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="files/style.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<title>COSMOFOX | index</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="/index">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<a href="news"><img src="files/logo-phi.png" /></a>
+		</div>
+		<div id="desc">
+			<p>...</p>
+		</div>
+		<ul>
+			<li>&#60; <a href="index" class="thisPage">index</a> &#62;</li>
+			<li><a href="texts">texts</a></li>
+		</ul>
+	</nav>
+	<div id="paper">
+		<article>
+			<h1>News</h1>
+			<p>Started on 2013-09-10, under construction.</p>
+			<p>Todo: about, migrating more content, setting up a git.</p>
+			<p>date: 2013-09-10</p>
+		</article>	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a>
+		</div>
+	</footer>
+	</div>
+</body>
+</html>
