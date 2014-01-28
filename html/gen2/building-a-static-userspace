@@ -14,7 +14,7 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="news"><img src="files/logo-gen2.png" /></a>
+			<a href="index"><img src="files/logo-gen2.png" /></a>
 		</div>
 		<div id="desc">
 			<p>forever compiling...</p>
@@ -23,9 +23,10 @@
 			<li><a href="index">index</a></li>
 			<li><a href="migration-to-clang">migration-to-clang</a></li>
 			<li>&#60; <a href="building-a-static-userspace" class="thisPage">building-a-static-userspace</a> &#62;</li>
-			<li><a href="Hibernation">Hibernation</a></li>
+			<li><a href="hibernation">Hibernation</a></li>
 		</ul>
-	</nav>	<div id="paper">
+	</nav>
+	<div id="paper">
 		<article>
 				<h1>building a static userspace</h1>
 				<p>date: 2013.11.18</p>
@@ -45,7 +46,7 @@ USE="${USE} static static-libs"
 		</article>
 	<footer>
 		<div>	
-			<a href="https://contact.cosmofox.net/">Impressum</a>
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
 		</div>
 	</footer>
 	</div>

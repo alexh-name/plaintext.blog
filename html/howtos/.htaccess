@@ -1,4 +1,4 @@
-DirectoryIndex news
+DirectoryIndex index
 
 RewriteEngine On
 

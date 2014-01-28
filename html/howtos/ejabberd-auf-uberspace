@@ -14,7 +14,7 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="news"><img src="files/logo.png" /></a>
+			<a href="index"><img src="files/logo.png" /></a>
 		</div>
 		<div id="desc">
 			<p>some things worth to know</p>
@@ -24,7 +24,8 @@
 			<li><a href="using-open-WiFi">using-open-WiFi</a></li>
 			<li>&#60; <a href="ejabberd-auf-uberspace" class="thisPage">ejabberd-auf-uberspace</a> &#62;</li>
 		</ul>
-	</nav>	<div id="paper">
+	</nav>
+	<div id="paper">
 	<article>
 			<p>
 				Auf meinem Hoster <a href="https://uberspace.de/">Uberspace</a> ist es auch möglich, einen eigenen XMPP(Jabber)-Server zu betreiben. Da gibt es z.B. <a href="https://github.com/processone/ejabberd">ejabberd</a>, und dazu auch einige Anleitungen, wie das auf Uberspace geht. Ich habe mich da nach <a href="http://blog.detmud.me/2012/07/jabber-server-auf-uberspace-mit-ejabberd/">blog.detmud.me</a> gerichtet. Wie ejabberd dann aber gewohnt als Service mit den daemontools betrieben werden kann, war immer noch eine offene Frage. Ich hab hier eine Lösung:
@@ -122,7 +123,7 @@ $KERNEL_OPTS -s ejabberd $ERLANG_OPTS live 2>&1</p>
 			  </p>
 	</article>	<footer>
 		<div>	
-			<a href="https://contact.cosmofox.net/">Impressum</a>
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
 		</div>
 	</footer>
 	</div>

@@ -14,7 +14,7 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="news"><img src="files/logo-phi.png" /></a>
+			<a href="index"><img src="files/logo-phi.png" /></a>
 		</div>
 		<div id="desc">
 			<p>...</p>
@@ -26,10 +26,11 @@
 	</nav>
 	<div id="paper">
 		<article>
-			<h1><a href="/DL/Phi/essays/">Essays</a></h1>
-		</article>	<footer>
+			<h1><a href="http://dl.cosmofox.net/Phi/essays/">Essays</a></h1>
+		</article>
+	<footer>
 		<div>	
-			<a href="https://contact.cosmofox.net/">Impressum</a>
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
 		</div>
 	</footer>
 	</div>

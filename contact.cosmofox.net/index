@@ -11,10 +11,10 @@
 <body>
 	<nav>
 		<div id="backlink">
-			<a href="/index">&#60;&#60;</a>
+			<a href="https://cosmofox.net/">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="files/Alexander_Hof.vcf"><img alt="vcard" src="files/contact.png" /></a>
+			<a href="http://dl.cosmofox.net/vcard/Alexander_Hof.vcf"><img alt="vcard" src="files/contact.png" /></a>
 		</div>
 		<div id="desc">
 			<p>Click or scan the QR code for the vcard file.</p>
@@ -33,8 +33,14 @@
 				Germany <br>
 				Email:&nbsp; <a href="mailto:contact@cosmofox.net">contact AT cosmofox DOT net</a> <br>
 				Phone:&nbsp; +49 (0)331 62 56 84 10 <br>
-				PGP:&nbsp; <a href="files/cosmofox.asc">1B56 5855 F172 2B23 E5E6  8C5B 354A 27FE B782 AB6D</a> <br>
+				PGP:&nbsp; <a href="http://dl.cosmofox.net/PGP/cosmofox.asc">1B56 5855 F172 2B23 E5E6  8C5B 354A 27FE B782 AB6D</a> <br>
 				</p>
-		</article>	</div>
+		</article>
+	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
+		</div>
+	</footer>
+	</div>
 </body>
 </html>

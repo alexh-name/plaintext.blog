@@ -14,7 +14,7 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="news"><img src="files/logo.png" /></a>
+			<a href="index"><img src="files/logo.png" /></a>
 		</div>
 		<div id="desc">
 			<p>some things worth to know</p>
@@ -24,7 +24,8 @@
 			<li><a href="using-open-WiFi">using-open-WiFi</a></li>
 			<li><a href="ejabberd-auf-uberspace">ejabberd-auf-uberspace</a></li>
 		</ul>
-	</nav>	<div id="paper">
+	</nav>
+	<div id="paper">
 		<article>
 				<h1>How-to</h1>
 				<p>From Wikipedia, the free encyclopedia:</p>
@@ -33,7 +34,7 @@ A how-to is an informal, often short, description of how to accomplish a specifi
 				</p>
 		</article>	<footer>
 		<div>	
-			<a href="https://contact.cosmofox.net/">Impressum</a>
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
 		</div>
 	</footer>
 	</div>

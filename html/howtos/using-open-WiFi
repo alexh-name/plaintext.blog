@@ -14,7 +14,7 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="news"><img src="files/logo.png" /></a>
+			<a href="index"><img src="files/logo.png" /></a>
 		</div>
 		<div id="desc">
 			<p>some things worth to know</p>
@@ -24,7 +24,8 @@
 			<li>&#60; <a href="using-open-WiFi" class="thisPage">using-open-WiFi</a> &#62;</li>
 			<li><a href="ejabberd-auf-uberspace">ejabberd-auf-uberspace</a></li>
 		</ul>
-	</nav>	<div id="paper">
+	</nav>
+	<div id="paper">
 		<article>
 				<h1 id="en">using open WiFi <font size="-1"><a href="#de">deutscher Text ></a></font></h1>
 				<h2>Disclaimer (for the access points provided by me)</h2>
@@ -68,7 +69,7 @@
 				</p>
 		</article>	<footer>
 		<div>	
-			<a href="https://contact.cosmofox.net/">Impressum</a>
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
 		</div>
 	</footer>
 	</div>
