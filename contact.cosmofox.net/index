@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" type="text/css" href="files/style.css" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<title>CONTACT | index</title>
+	<title>CONTACT &#124; index</title>
 </head>
 <body>
 	<nav>
@@ -14,7 +14,7 @@
 			<a href="https://cosmofox.net/">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="http://dl.cosmofox.net/vcard/Alexander_Hof.vcf"><img alt="vcard" src="files/contact.png" /></a>
+			<a href="http://dl.cosmofox.net/vcard/Alexander_Hof.vcf"><img alt="VCARD" src="files/contact.png" ></a>
 		</div>
 		<div id="desc">
 			<p>Click or scan the QR code for the vcard file.</p>

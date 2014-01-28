@@ -35,7 +35,7 @@ h4,nav ul,.date {
 h4,a,a:visited {
 	text-decoration:underline;
 }
-nav,.date,footer,#index {
+nav,.date,footer,#index,.indexblock,.centered {
 	text-align:center;
 }
 #logoc,#emblem,img {
@@ -132,7 +132,7 @@ nav a {
 #index ul li {
 	padding:20px 0;
 }
-#indexblock {
+.indexblock {
 	border-bottom:2px solid #C0C0C0;
 	line-height:22px;
 }

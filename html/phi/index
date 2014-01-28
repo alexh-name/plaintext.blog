@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" type="text/css" href="files/style.css" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<title>COSMOFOX | index</title>
+	<title>COSMOFOX &#124; index</title>
 </head>
 <body>
 	<nav>
@@ -14,7 +14,7 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="index"><img src="files/logo-phi.png" /></a>
+			<a href="index"><img src="files/logo-phi.png" alt="LOGO" ></a>
 		</div>
 		<div id="desc">
 			<p>...</p>

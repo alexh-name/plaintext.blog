@@ -6,23 +6,23 @@
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" type="text/css" href="files/style.css" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<title>COSMOFOX | index</title>
+	<title>COSMOFOX &#124; index</title>
 </head>
 <body>
 	<div id="index">
-		<div id="indexblock">
+		<div class="indexblock">
 			<ul>
 				<li><a href="about/">about</a></li>
 			</ul>
 		</div>
-		<div id="indexblock">
+		<div class="indexblock">
 			<ul>
 				<li><a href="gen2/">gen2</a></li>
 				<li><a href="howtos/">howtos</a></li>
 				<li><a href="phi/">φ</a></li>
 			</ul>
 		</div>
-		<div id="indexblock">
+		<div class="indexblock">
 			<ul>
 				<li><a href="mumble://cosmofox.net:54365?title=???&amp;version=1.2.0" target="_blank">mumble</a></li>
 				<li><a href="xmpp:olek@cosmofox.net?message" target="_blank">XMPP/Jabber</a></li>
@@ -33,6 +33,6 @@
 			<li><a href="https://contact.cosmofox.net/">Impressum</a></li>
 		</ul>
 	</div>
-	<center><small>     proudly hosted on <a href="https://uberspace.de/" target="_blank">Uberspace</a></small></center>
+	<div class="centered"><small>     proudly hosted on <a href="https://uberspace.de/" target="_blank">Uberspace</a></small></div>
 </body>
 </html>
