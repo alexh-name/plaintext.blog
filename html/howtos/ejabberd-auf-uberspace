@@ -34,7 +34,7 @@
 				Damit das korrekt funktioniert, müssen wir genau herausfinden, was das Skript "ejabberd/sbin/ejabberdctl" im Installationsverzeichnis eigentlich genau macht, um daraus einen Befehl für daemontools zu machen, der im Vordergrund bleibt und sich wieder vollstänig beenden läst, ohne Waisen zurückzulassen. Wichtig sind da die Funktion "live" und alle Variablen, die sie braucht, und auch in dem Skript gesetzt werden. Das habe ich hier für die Version 2.1.13 vorgemacht:
 			  </p>
 				~/service/ejabberd/run :
-<p class=code>#!/bin/sh
+<pre><code>#!/bin/sh
 
 # These environment variables are sometimes needed by the running daemons
 export USER=olek
@@ -97,12 +97,9 @@ $ERL \
       $NAME $ERLANG_NODE \
         -s erlang halt | grep -c duplicate_name > /dev/null
 
-[ "$?" -eq 0 ] && echo "\nERROR: The node '$ERLANG_NODE' is already running." \
-&& return 1
+[ "$?" -eq 0 ] && echo "\nERROR: The node '$ERLANG_NODE' is already running." && return 1
 
-exec $ERL $NAME $ERLANG_NODE -noinput -pa $EJABBERD_EBIN_PATH \
--mnesia dir '"/home/olek/_working/ejabberd/var/lib/ejabberd"' \
-$KERNEL_OPTS -s ejabberd $ERLANG_OPTS live 2>&1</p>
+exec $ERL $NAME $ERLANG_NODE -noinput -pa $EJABBERD_EBIN_PATH -mnesia dir '"/home/olek/_working/ejabberd/var/lib/ejabberd"' $KERNEL_OPTS -s ejabberd $ERLANG_OPTS live 2>&1</code></pre>
 			   <p>
 				Im Grunde habe ich erstens die Funktion "live" auseinandergebröselt, sodass nurnoch der eine eigentliche Prozess übrig bleibt, und zwischen "exec" und "2>&1" gesetzt, und zweitens zurückverfolgt, welche notwendigen Variablen im Skript gesetzt werden und diese in korrekter Reihenfolge kopiert.
 			  </p>

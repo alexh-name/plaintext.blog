@@ -30,19 +30,14 @@
 		<article>
 				<h1>migration to sys-devel/clang</h1>
 				<p>date: 2013.10.09</p>
-				<p class="code">sys-devel/clang-3.3-r100 static-analyzer -debug -multitarget -python \
-ABI_MIPS="-n32 -n64 -o32" ABI_X86="64 -32 -x32"
-
-sys-devel/llvm-3.3-r1 clang libffi static-analyzer -debug -doc -gold -multitarget \
--ocaml -python -test -udis86 ABI_MIPS="-n32 -n64 -o32" ABI_X86="64 -32 -x32" \
-KERNEL="-Darwin -FreeBSD" PYTHON_TARGETS="python2_7 -pypy2_0 -python2_6" \
-VIDEO_CARDS="radeon" 
+<pre><code>sys-devel/clang-3.3-r100 static-analyzer -debug -multitarget -python ABI_MIPS="-n32 -n64 -o32" ABI_X86="64 -32 -x32"
+sys-devel/llvm-3.3-r1 clang libffi static-analyzer -debug -doc -gold -multitarget -ocaml -python -test -udis86 ABI_MIPS="-n32 -n64 -o32" ABI_X86="64 -32 -x32" KERNEL="-Darwin -FreeBSD" PYTHON_TARGETS="python2_7 -pypy2_0 -python2_6" VIDEO_CARDS="radeon" 
 				 	 
 CFLAGS="-march=amdfam10 -O3 -pipe" 				 	 
-USE="${USE} custom-cflags custom-optimization" </p>
+USE="${USE} custom-cflags custom-optimization" </code></pre>
 				<br>
 				<h2>This is a list of packages which <b>fail</b> to build:</h2>
-				<p class="code">=app-crypt/gnupg-2.0.21 
+<pre><code>=app-crypt/gnupg-2.0.21 
 =app-crypt/gnupg-2.0.21-r1 
 =app-crypt/gnupg-2.0.21-r2 
 =app-crypt/gnupg-2.0.22::gentoo 
@@ -57,18 +52,18 @@ USE="${USE} custom-cflags custom-optimization" </p>
 =sys-devel/binutils-2.23.2 
 =x11-libs/cairo-1.12.14-r3 
 =x11-libs/cairo-1.12.14-r4 
-=x11-libs/cairo-1.12.16 </p>
+=x11-libs/cairo-1.12.16 </code></pre>
 				<p>
 				<u>Logs and build-info</u> of failed builds can be found <a href="https://cosmofox.net/DL/Gen2/Clang/failed">here</a>. 
 				</p>
 				<br>
 				<h2>Failing on run-time:</h2>
-				<p class="code">=x11-drivers/xf86-video-ati-7.2.0 
-=sys-apps/busybox-1.21.1 </p>
+<pre><code>=x11-drivers/xf86-video-ati-7.2.0 
+=sys-apps/busybox-1.21.1 </code></pre>
 				<br>
 				<h2>This list contains packages tested to build and run <b>fine</b> so far:</h2>
 				<p>(Excluding sys-devel/gcc and sys-libs/glibc, and virtual/*. Clang is my default compiler right now.)</p>
-				<p class="code">=app-arch/p7zip-9.20.1-r5 
+<pre><code>=app-arch/p7zip-9.20.1-r5 
 =app-crypt/easy-rsa-2.2.0-r1 
 =app-crypt/pinentry-0.8.3 
 =app-editors/vim-7.4.41 
@@ -252,7 +247,7 @@ USE="${USE} custom-cflags custom-optimization" </p>
 =x11-themes/oxygen-gtk-1.4.0 
 =x11-themes/oxygen-molecule-3.2 
 =x11-themes/qtcurve-qt4-1.8.14 
-=x11-themes/vanilla-dmz-aa-xcursors-0.4 </p>
+=x11-themes/vanilla-dmz-aa-xcursors-0.4 </code></pre>
 		</article>
 	<footer>
 		<div>	

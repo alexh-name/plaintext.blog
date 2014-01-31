@@ -136,13 +136,6 @@ nav a {
 	border-bottom:2px solid #C0C0C0;
 	line-height:22px;
 }
-p.code {
-	padding: 0.5em;
-	background-color: Black;
-	color: Snow;
-	font-family: monospace;
-	white-space: pre; 
-}
 /* THE SKEL */
 #paper {
 	max-width:800px;
