@@ -22,8 +22,8 @@
 		<ul>
 			<li><a href="index">index</a></li>
 			<li><a href="migration-to-clang">migration-to-clang</a></li>
-			<li>&#60; <a href="building-a-static-userspace" class="thisPage">building-a-static-userspace</a> &#62;</li>
-			<li><a href="hibernation">Hibernation</a></li>
+			<li>&#91; <a href="building-a-static-userspace" class="thisPage">building-a-static-userspace</a> &#93;</li>
+			<li><a href="hibernation">hibernation</a></li>
 		</ul>
 	</nav>
 	<div id="paper">

@@ -20,10 +20,10 @@
 			<p>forever compiling...</p>
 		</div>
 		<ul>
-			<li>&#60; <a href="index" class="thisPage">index</a> &#62;</li>
+			<li>&#91; <a href="index" class="thisPage">index</a> &#93;</li>
 			<li><a href="migration-to-clang">migration-to-clang</a></li>
 			<li><a href="building-a-static-userspace">building-a-static-userspace</a></li>
-			<li><a href="hibernation">Hibernation</a></li>
+			<li><a href="hibernation">hibernation</a></li>
 		</ul>
 	</nav>
 	<div id="paper">

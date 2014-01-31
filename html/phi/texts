@@ -21,7 +21,7 @@
 		</div>
 		<ul>
 			<li><a href="index">index</a></li>
-			<li>&#60; <a href="texts" class="thisPage">texts</a> &#62;</li>
+			<li>&#91; <a href="texts" class="thisPage">texts</a> &#93;</li>
 		</ul>
 	</nav>
 	<div id="paper">

@@ -23,7 +23,7 @@
 			<li><a href="index">index</a></li>
 			<li><a href="migration-to-clang">migration-to-clang</a></li>
 			<li><a href="building-a-static-userspace">building-a-static-userspace</a></li>
-			<li><a href="hibernation">Hibernation</a></li>
+			<li>&#91; <a href="hibernation" class="thisPage">hibernation</a> &#93;</li>
 		</ul>
 	</nav>
 	<div id="paper">

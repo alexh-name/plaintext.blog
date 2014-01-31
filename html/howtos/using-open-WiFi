@@ -21,7 +21,7 @@
 		</div>
 		<ul>
 			<li><a href="index">index</a></li>
-			<li>&#60; <a href="using-open-WiFi" class="thisPage">using-open-WiFi</a> &#62;</li>
+			<li>&#91; <a href="using-open-WiFi" class="thisPage">using-open-WiFi</a> &#93;</li>
 			<li><a href="ejabberd-auf-uberspace">ejabberd-auf-uberspace</a></li>
 		</ul>
 	</nav>

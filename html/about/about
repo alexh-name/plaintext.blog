@@ -21,7 +21,7 @@
 		</div>
 		<ul>
 			<li><a href="news">news</a></li>
-			<li>&#60; <a href="about" class="thisPage">about</a> &#62;</li>
+			<li>&#91; <a href="about" class="thisPage">about</a> &#93;</li>
 			<li><a href="todo">todo</a></li>
 		</ul>
 	</nav>
