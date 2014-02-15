@@ -14,7 +14,14 @@
 			<a href="/index">&#60;&#60;</a>
 		</div>
 		<div id="logo">
-			<a href="index"><img src="files/logo-gen2.png" alt="LOGO" ></a>
+			<pre id="emblem"><code>    .vir.
+  .d$$$$$$b.
+  $$$$( )$$$b
+  Q$$$$$$$$$$B
+    "$$$$$$$P
+   d$$$$$$P"
+  $$$$$$$P
+  `Q$$P"</code></pre>
 		</div>
 		<div id="desc">
 			<p>forever compiling...</p>

@@ -13,8 +13,8 @@
 		<div id="backlink">
 			<a href="/index">&#60;&#60;</a>
 		</div>
-		<div id="logo">
-			<a href="index"><img src="files/logo-phi.png" alt="LOGO" ></a>
+			<div id="logo">
+			<pre id="emblem"><code>φιλοσοφία</code></pre>
 		</div>
 		<div id="desc">
 			<p>...</p>
