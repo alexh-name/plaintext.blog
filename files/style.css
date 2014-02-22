@@ -132,10 +132,13 @@ nav a {
 #index ul li {
 	padding:20px 0;
 }
+#index hr {
+	max-width:50%;
+}
 .indexblock {
-	border-bottom:2px solid #C0C0C0;
 	line-height:22px;
 }
+
 /* THE SKEL */
 #paper {
 	max-width:800px;

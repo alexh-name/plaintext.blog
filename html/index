@@ -15,6 +15,7 @@
 				<li><a href="about/">about</a></li>
 			</ul>
 		</div>
+		<hr>
 		<div class="indexblock">
 			<ul>
 				<li><a href="gen2/">gen2</a></li>
@@ -22,6 +23,7 @@
 				<li><a href="phi/">φ</a></li>
 			</ul>
 		</div>
+		<hr>
 		<div class="indexblock">
 			<ul>
 				<li><a href="mumble://cosmofox.net:54365?title=???&amp;version=1.2.0" target="_blank">mumble</a></li>
@@ -29,6 +31,7 @@
 				<li><a href="http://dl.cosmofox.net/">downloads</a></li>
 			</ul>
 		</div>
+		<hr>
 		<ul>
 			<li><a href="https://contact.cosmofox.net/">Impressum</a></li>
 		</ul>
