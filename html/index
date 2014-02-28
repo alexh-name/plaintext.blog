@@ -29,6 +29,7 @@
 				<li><a href="mumble://cosmofox.net:54365?title=???&amp;version=1.2.0" target="_blank">mumble</a></li>
 				<li><a href="xmpp:olek@cosmofox.net?message" target="_blank">XMPP/Jabber</a></li>
 				<li><a href="http://dl.cosmofox.net/">downloads</a></li>
+				<li><a href="http://git.cosmofox.net/">git</a></li>
 			</ul>
 		</div>
 		<hr>
