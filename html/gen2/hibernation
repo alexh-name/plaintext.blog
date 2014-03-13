@@ -64,8 +64,8 @@ Power management and ACPI options  --->
 				<h2>Preparing swap-file</h2>
 				<p>First, we need to create a file that will serve as the swap-file with the right size.</p>
 				<p>Attention: Be sure to be confident with the use of "dd". Using it wrong can destroy data very easily.</p>
-<pre><code>dd if=/dev/zero of=PLACE-OF-SWAPFILE bs=1024 count=SIZE-IN-BYTES</code></pre>
-				<p>Replace "PLACE-OF-SWAPFILE" with the desired place of the swap-file (for example "/swapfile") and "SIZE-IN-BYTES" with the desired size of the swap-file in bytes.</p>
+<pre><code>dd if=/dev/zero of=PLACE-OF-SWAPFILE bs=1024 count=SIZE-IN-1024-BYTES</code></pre>
+				<p>Replace "PLACE-OF-SWAPFILE" with the desired place of the swap-file (for example "/swapfile") and "SIZE-IN-1024-BYTES" with the desired size of the swap-file in bytes.</p>
 				<p>Next, we'll give it secure permissions:</p>
 <pre><code>chmod 600 /swapfile</code></pre>
 				<p>And make it an actual swap-file:</p>
@@ -104,7 +104,8 @@ ext:	logical_offset:		physical_offset:	length:   expected: flags:
 echo $RESMAJMIN > /sys/power/resume </code></pre>
 				<p>What do they do? The first line reads the major and minor number of the decrypted device the file lies on and stores them in the variable "RESMAJMIN". The second one writes them to the desired place to make the kernel take over the session stored in the file.</p>
 				<p>Be carefull testing this. My first attempt always ended in a dangerously unstable system causing crashes and filesystem corruption. My solution was to use the latest git-kernel.</p>
-		</article>	<footer>
+		</article>
+	<footer>
 		<div>	
 			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
 		</div>
