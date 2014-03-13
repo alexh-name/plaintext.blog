@@ -91,10 +91,11 @@ Power management and ACPI options  --->
 				<p>We'll get many lines. The third line on the top names the columns: "ext:     logical_offset:        physical_offset: length:   expected: flags:"</p>
 				<p>Out of the first line of values we need the first value in the column "physical_offset:".</p>
 				<p>For example:</p>
-<pre><code>
-ext:	logical_offset:		physical_offset:	length:   expected: flags:
+<pre><code>ext:	logical_offset:		physical_offset:	length:   expected: flags:
 0:	0..   28671:		25450496..  25479167:	28672:             		</code></pre>
 				<p>The desired value would be "25450496".</p>
+				<p>Here is a one-liner to get it for you:</p>
+<pre><code>filefrag -v /SWAP | grep '   0:' | cut -d ':' -f 3 | cut -d '.' -f 1 | sed 's/^[ \t]*//'</code></pre>
 				<br>
 				<h2>Adding the resume-part to your initramfs</h2>
 				<p>For making your system wake up from S5 power state to the session stored in the file instead of just booting normally,  we need to tell it so in the right moment.</p>
@@ -103,6 +104,8 @@ ext:	logical_offset:		physical_offset:	length:   expected: flags:
 <pre><code>RESMAJMIN=$(cat /sys/class/block/dm-1/dev) 
 echo $RESMAJMIN > /sys/power/resume </code></pre>
 				<p>What do they do? The first line reads the major and minor number of the decrypted device the file lies on and stores them in the variable "RESMAJMIN". The second one writes them to the desired place to make the kernel take over the session stored in the file.</p>
+<pre><code>cat /sys/class/block/dm-*/dm/uuid</code></pre>
+				<p>Can give you a hint what's the right dm-device.</p>
 				<p>Be carefull testing this. My first attempt always ended in a dangerously unstable system causing crashes and filesystem corruption. My solution was to use the latest git-kernel.</p>
 		</article>
 	<footer>
