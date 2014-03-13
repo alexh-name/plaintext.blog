@@ -37,23 +37,18 @@
 		<article>
 				<h1>Hibernation</h1>
 				<i>
-				with pm-utils (on a luks-encrypted root partition, inside swap-file and custom initramfs) <br>
+				on a luks-encrypted root partition, inside swap-file and custom initramfs <br>
 				aka suspend to disk
 				</i>
 				<p>
-					date: 2013.08.27
+					date: 2014.03.13
 				</p>
 				<p>Only tested on an ext4-filesystem.</p>
 				<p>
 					<u>Don't do something you are not sure of. This tutorial can lead to unbootable systems and data loss if done wrong. My advices here are based on my best knowledge and written to be understandable for most people. Nevertheless, you are responsible for the things you do to your device.</u>
 				</p>
 					<h2>Requierments</h2>
-				<p>
-					Packages: <br>
-					sys-power/pm-utils (confirmed to work with: 1.4.1-r2) <br>
-					sys-kernel/*-sources (confirmed to work with: sys-kernel/git-sources-3.11_rc7) <br>
-					sys-fs/e2fsprogs (for using ext* as the root-filesystem. other filesystems not tested. confirmed to work with: 1.42.7)
-				</p>
+				<p>A linux-kernel, custom initramfs, sys-fs/e2fsprogs.</p>
 				<p>Kernel configuration:</p>
 <pre><code>General setup  --->
 [*] Support for paging of anonymous memory (swap)
