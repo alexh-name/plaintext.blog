@@ -26,7 +26,8 @@
 		<hr>
 		<div class="indexblock">
 			<ul>
-				<li><a href="mumble://cosmofox.net:54365?title=???&amp;version=1.2.0" target="_blank">mumble</a></li>
+				<li><a href="mumble://cosmofox.net:54365?title=?????&amp;version=1.2.0" target="_blank">mumble</a></li>
+				<li><a href="mumble://zckr.info:62877?title=?????%20&#35;2&amp;version=1.2.0" target="_blank">mumble #2</a></li>
 				<li><a href="xmpp:olek@cosmofox.net?message" target="_blank">XMPP/Jabber</a></li>
 				<li><a href="http://dl.cosmofox.net/">downloads</a></li>
 				<li><a href="http://git.cosmofox.net/">git</a></li>
