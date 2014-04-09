@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="files/style.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<title>COSMOFOX &#124; umurmur-auf-uberspace</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="/index">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<pre id="emblem"><code>???</code></pre>
+		</div>
+		<div id="desc">
+			<p>some things worth to know</p>
+		</div>
+		<ul>
+			<li><a href="index">index</a></li>
+			<li><a href="using-open-WiFi">using-open-WiFi</a></li>
+			<li><a href="ejabberd-auf-uberspace">ejabberd-auf-uberspace</a></li>
+			<li>&#91; <a href="umurmur-auf-uberspace" class="thisPage">umurmur-auf-uberspace</a> &#93;</li>
+		</ul>
+	</nav>
+	<div id="paper">
+	<article>
+		<h1>umurmur auf <a href="https://uberspace.de/">Uberspace</a></h1>
+		<p>Nach heartbleed habe ich mich schnell aufgemacht alles betroffene, was ich so betreibe, wieder dicht zu machen.</p>
+		<p>Dazu gehörten auch paar mumble-Server. Ein neues CA-signiertes Zertifikat habe ich mir sowieso schon geholt, und für andere Instanzen mit selbst-signiertem Zertifikat hätte es ja ein '-wipessl' getan.</p>
+		<p>Woher aber wissen, ob die statische Version von http://mumble.info/snapshot/ nicht gegen ein betroffenes OpenSSL kompiliert wurde? Ich habe auf die Schnelle keine Informationen dazu gefunden (und wer mir sagen kann, wie ich im Stil von 'ldd /bin/...' sowas an statischen Binarys herausfinde oder ob das überhaupt geht, bekommt Kekse).</p>
+		<p>Daher wollte ich mal eben ein murmurd selbst auf Uberspace kompilieren (denn die haben ihr OpenSSL ja rasch gefixt). Hat aber nicht mal eben so geklappt, und ich habe wirklich keinen Nerv mich in QT-Buildsysteme einzufuchsen.</p>
+		<p>Zum Glück gibt es aber umurmur. Es ist kleiner und kommt mit weniger BS. Das hat zwar auch nicht auf Anhieb geklappt (weil kein cmake 2.8 vorhanden war, die toast-kompilierte Version nicht lief und ich mich - ja - auch nicht weiter in cmake einfuchsen möchte), jedoch gibt es noch eine Version, die sich super und so wie ich es mag mit './configure && make' bauen lässt. Und zwar so:</p>
+		<p>Zunächst brauchen wir paar Abhängigkeiten:</p>
+		<pre><code>toast arm protobuf
+toast arm protobuf-c # todo: nur libprotobuf-c kompilieren
+toast arm http://www.hyperrealm.com/libconfig/libconfig-1.4.9.tar.gz</code></pre>
+		<p>Bereitet ein Verzeichnis für die Quellen vor:</p>
+		<pre><code>mkdir -p $HOME/usr/src
+cd $HOME/usr/src</code></pre>
+		<p>Und holt sie euch:</p>
+		<pre><code>wget http://umurmur.googlecode.com/files/umurmur-0.2.14.tar.gz
+tar -xzf umurmur-0.2.14.tar.gz
+cd umurmur-0.2.14</code></pre>
+		<p>Jetzt kanns losgehen:</p>
+		<pre><code>./configure --with-ssl=openssl
+make</code></pre>
+		<p>Kopiert die Binary an einen guten Platz:</p>
+		<pre><code>mkdir $HOME/bin
+cp src/umurmurd $HOME/bin/</code></pre>
+		<p>Und macht euch an die Config:</p>
+		<pre><code>mkdir $HOME/etc
+cp umurmur.conf.example $HOME/etc/umurmur.conf
+mkdir -p $HOME/var/umurmur/
+mkdir -p $HOME/var/log/</code></pre>
+		<p>In '$HOME/var/umurmur/' könnt ihr eure Zertifikate legen.
+Die Beispielconfig (die wir jetzt in $HOME/etc/umurmur.conf haben) ist gut erklärt.
+Diese Parameter solltet ihr aber entkommentieren und unbedingt ändern:</p>
+		<pre><code>bindport = PORT; # Zu erfragen beim Uberspace-Team
+bindaddr = "IP"; # IP eures Hostes
+banfile = "/home/USER/var/umurmur/banfile.txt" # 'USER' mit eurem Usernamen ersetzen.'~' funktioniert hier nicht.
+logfile = "/home/USER/var/log/umurmurd.log" # Ebenso. Wenn wir das nicht setzen, nervt umurmur womöglich SYSLOG.</code></pre>
+		<p>Dann erstellt ihr letztlich noch wie gewohnt einen Dienst.
+Die exec-Zeile sollte dann so aussehen:</p>
+		<pre><code>exec $HOME/bin/umurmurd -d -c $HOME/etc/umurmur.conf 2>&amp;1</code></pre>
+		<p>Neues, schlankes und sicheres murmur!</p>
+
+		<p>(Wodurch sich umurmur außerdem auszeichnet, ist, dass es mit PolarSSL läuft und dadurch wohl nochmal wesentlich effizienter wird. PolarSSL habe ich aber auch nicht auf die Schnelle auf dem Uberspace bauen können.
+Bei Hilfe: Kekse!)</p>
+	</article>	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
+		</div>
+	</footer>
+	</div>
+</body>
+</html>
