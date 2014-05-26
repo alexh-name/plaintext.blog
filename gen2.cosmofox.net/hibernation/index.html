@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width">
+	<link rel="shortcut icon" href="/files/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<title>gen2.cosmofox | hibernation</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="https://cosmofox.net/">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<pre id="emblem"><code>    .vir.
+  .d$$$$$$b.
+  $$$$( )$$$b
+  Q$$$$$$$$$$B
+    "$$$$$$$P
+   d$$$$$$P"
+  $$$$$$$P
+  `Q$$P"</code></pre>
+		</div>
+		<div id="desc">
+			<p>Calculating dependencies ...</p>
+		</div>
+		<ul>
+			<li><a href="/blog/">blog</a></li>
+			<li><a href="/migration-to-clang/">migration to clang</a></li>
+			<li><a href="/building-a-static-userspace/">building a static userspace</a></li>
+			<li>&#91; <a href="/hibernation/" class="thisPage">hibernation</a> &#93;</li>
+		</ul>
+	</nav>
+	<div id="paper">
+	<article>
+<!-- DATE: 2014-05-23 -->
+<!-- DESC: the beginning... -->
+
+<h1>hibernation</h1>
+<i>
+on a luks-encrypted root partition, inside swap-file and custom initramfs <br>
+aka suspend to disk
+</i>
+<p>
+	date: 2014.03.13
+</p>
+<p>Only tested on an ext4-filesystem.</p>
+<p>
+	<u>Don't do something you are not sure of. This tutorial can lead 
+to unbootable systems and data loss if done wrong. My advices here are 
+based on my best knowledge and written to be understandable for most 
+people. Nevertheless, you are responsible for the things you do to your 
+device.</u>
+</p>
+	<h2>Requierments</h2>
+<p>A linux-kernel, custom initramfs, sys-fs/e2fsprogs.</p>
+<p>Kernel configuration:</p>
+<pre><code>General setup  ---&gt;
+[*] Support for paging of anonymous memory (swap)
+
+Power management and ACPI options  ---&gt;
+[*] Hibernation (aka 'suspend to disk')</code></pre>
+<br>
+<h2>Preparing swap-file</h2>
+<p>First, we need to create a file that will serve as the swap-file with the right size.</p>
+<p>Attention: Be sure to be confident with the use of "dd". Using it wrong can destroy data very easily.</p>
+<pre><code>dd if=/dev/zero of=PLACE-OF-SWAPFILE bs=1024 count=SIZE-IN-1024-BYTES</code></pre>
+<p>Replace "PLACE-OF-SWAPFILE" with the desired place of the 
+swap-file (for example "/swapfile") and "SIZE-IN-1024-BYTES" with the 
+desired size of the swap-file in bytes.</p>
+<p>Next, we'll give it secure permissions:</p>
+<pre><code>chmod 600 /swapfile</code></pre>
+<p>And make it an actual swap-file:</p>
+<pre><code>mkswap /swapfile</code></pre>
+<p>To use it right now, do:</p>
+<pre><code>swapon /swapfile</code></pre>
+<p>To use it automatically after reboot, first add it to your fstab:</p>
+<pre><code>/swapfile	none	swap	sw	0 0 </code></pre>
+<p>And make your init-system start the swap-services according to your system.<br>
+Using openrc, that would be:
+</p>
+<pre><code>rc-update add swap boot &amp;&amp; rc-update add swapfiles boot</code></pre>
+<br>
+<h2>Adding kernel options</h2>
+<p>These are the needed kernel options:</p>
+<p>1st:</p>
+<pre><code>resume=THE-DEVICE-WHERE-THE-SWAP-FILE-LIES-ON </code></pre>
+<p>Right. Not the file itself, but the decrypted device it lies on. 
+That might be /dev/dm-1 or /dev/mapper/root as examples. You need to 
+know.</p>
+<p>2nd:</p>
+<pre><code>resume_offset=#######</code></pre>
+<p>Here we need a value we get when running filefrag (part of sys-fs/e2fsprogs)</p>
+<pre><code>filefrag -v /swapfile </code></pre>
+<p>We'll get many lines. The third line on the top names the 
+columns: "ext:     logical_offset:        physical_offset: length:   
+expected: flags:"</p>
+<p>Out of the first line of values we need the first value in the column "physical_offset:".</p>
+<p>For example:</p>
+<pre><code>ext:	logical_offset:		physical_offset:	length:   expected: flags:
+0:	0..   28671:		25450496..  25479167:	28672:             		</code></pre>
+<p>The desired value would be "25450496".</p>
+<p>Here is a one-liner to get it for you:</p>
+<pre><code>filefrag -v /SWAP | grep '   0:' | cut -d ':' -f 3 | cut -d '.' -f 1 | sed 's/^[ \t]*//'</code></pre>
+<br>
+<h2>Adding the resume-part to your initramfs</h2>
+<p>For making your system wake up from S5 power state to the session
+stored in the file instead of just booting normally,  we need to tell 
+it so in the right moment.</p>
+<p>Remember: Your root partition needs to be already decrypted as it
+would be while a normal boot, but before letting the init system kick 
+in to start a new session, we want the system to load the stored 
+session.</p>
+<p>Put something like the following after your decryption lines and before the ones who start the init:</p>
+<pre><code>RESMAJMIN=$(cat /sys/class/block/dm-1/dev) 
+echo $RESMAJMIN &gt; /sys/power/resume </code></pre>
+<p>What do they do? The first line reads the major and minor number 
+of the decrypted device the file lies on and stores them in the variable
+"RESMAJMIN". The second one writes them to the desired place to make 
+the kernel take over the session stored in the file.</p>
+<pre><code>cat /sys/class/block/dm-*/dm/uuid</code></pre>
+<p>Can give you a hint what's the right dm-device.</p>
+<p>Be carefull testing this. My first attempt always ended in a 
+dangerously unstable system causing crashes and filesystem corruption.</p>	</article>
+	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
+		</div>
+	</footer>
+	</div>	<!-- Page generated by wswsh 1.1 / mksh - Sat May 24 17:32:06 CES 2014 -->
+</body>
+</html>

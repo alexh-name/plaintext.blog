@@ -1,0 +1,21 @@
+DirectoryIndex index.html
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{ENV:HTTPS} !=on
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{HTTP_HOST} !=phi.cosmofox.net
+RewriteRule (.*) http://phi.cosmofox.net/$1 [R=301,L]
+
+Redirect 301 /index.html /blog/index.html
+
+#Prevent viewing of .htaccess file
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+#Prevent directory listings
+Options All -Indexes

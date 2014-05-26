@@ -1,0 +1,248 @@
+/* THIS DESIGN IS INSPIRED BY MANPAGES */
+/* Original by Ypnose - 2013 */
+/* Thanks to Ypnose for sharing. */
+/* Check out his website: ypnose.org */
+html {
+	background-color:#F1F2F2; /* #F0F1F1 */ 
+	font-size:100%;
+}
+body,code { /* body,pre */
+	font-family:monospace;
+}
+body {
+	font-style:normal;
+	font-weight:normal;
+}
+/* MERGED */
+body,h5,#desc,p code {
+	font-size:15px;
+}
+pre,footer {
+	font-size:14px;
+}
+body,nav ul,#desc p {
+	margin:0;
+}
+a,a:visited,#desc,.date,.cmds {
+	font-style:italic;
+}
+h3, blockquote {
+	padding-left:10px;
+}
+h4,nav ul,.date {
+	text-transform:uppercase;
+}
+h4,a,a:visited {
+	text-decoration:underline;
+}
+nav,.date,footer,#index,.indexblock,.centered {
+	text-align:center;
+}
+#logo,#emblem,img {
+	margin:0 auto;
+}
+pre,p code {
+	border:1px solid grey;
+}
+#desc,article {
+	line-height:28px;
+}
+#emblem,nav ul {
+	padding:0;
+}
+/* ------ */
+h1 {
+	font-size:26px;
+	padding:0 0 6px;
+	border-bottom:3px solid #080808;
+	line-height:36px;
+}
+h2 {
+	font-size:22px;
+	padding-left:16px;
+	line-height:30px;
+}
+h3 {
+	font-size:18px;
+}
+h4 {
+	font-size:16px;
+	margin-bottom:0;
+}
+h5 {
+	margin:22px auto 16px;
+	border-bottom:1px dotted #141414;
+}
+a,a:visited {
+	color:#404040;
+	text-shadow:1px 1px 0 #FFF;
+}
+a:hover {
+	color:#0D0D0D;
+}
+/* FIXED WIDTH TO AVOID UGLY SCROLLBAR "JUMP" (THANKS TO PERCENTAGES) :( */
+nav {
+	position:fixed;
+	top:0;
+	left:0;
+	width:340px;
+	height:100%;
+	padding:16px 14px 12px;
+	z-index:1;
+	border-right:2px solid #D3D3D3;
+	background-color:#E4E5E5;
+}
+nav,nav a {
+	color:#080808;
+}
+#backlink {
+	position:absolute;
+	left:10px;
+	top:10px;
+}
+#emblem {
+	/* PRE INHIBIT */
+	font-size:17px;
+	background-color:inherit;
+	border:none;
+}
+#logo {
+}
+#desc {
+	padding:26px 0 20px;
+}
+nav ul {
+	list-style-type:none;
+}
+nav ul li {
+	padding:10px 0;
+}
+nav a {
+	letter-spacing:1px;
+}
+#index {
+	font-size:26px;
+	}
+#index a {
+	text-decoration:none;
+}
+#index ul {
+	list-style-type:none;
+}
+#index ul li {
+	padding:20px 0;
+}
+#index hr {
+	max-width:50%;
+}
+.indexblock {
+	line-height:22px;
+}
+
+/* THE SKEL */
+#paper {
+	max-width:800px;
+	margin:0 0 0 440px;
+	padding:20px 28px;
+	z-index:9999;
+}
+article {
+	color:#040404;
+	text-align:justify;
+}
+article ul {
+	list-style-type:lower-greek;
+	padding-left:50px;
+	margin:-4px 0 -2px; 
+}
+article ul li {
+	padding:2px 4px;
+}
+.symb {
+	font-size:24px;
+}
+.date {
+	color:#888;
+}
+.boldy {
+	color:#000;
+	font-weight:bold;
+}
+pre,p code {
+	background-color:#E2E2E2; /* #E0E0E0 */
+}
+p code {
+	padding:1px 4px;
+	white-space:nowrap;
+}
+pre {
+	padding:6px 12px;
+	overflow-x:auto;
+	max-width:95%;
+	margin:14px auto;
+}
+.cmds {
+	color:#545672;
+}
+.red {
+	color:#CC1717;
+}
+img {
+	display:block;
+	max-width:98%;
+	padding:1px;
+}
+.shbar {
+	border-top:2px solid #BBB;
+	max-width:40%;
+	margin:20px auto;
+}
+blockquote {
+	border-left:6px solid #808080;
+	margin-left:30px;
+}
+
+footer {
+	max-width:80%;
+	margin:40px auto 0;
+	padding-top:12px;
+	border-top:2px solid #C0C0C0;
+	line-height:22px;
+}
+@media screen and (max-width:1300px) {
+	nav {
+		width:250px;
+	}
+	#paper {
+		margin:0 0 0 310px;
+	}
+}
+@media screen and (max-width:950px) {
+	nav {
+		width:150px;
+	}
+	#paper {
+		margin:0 0 0 210px;
+	}
+}
+@media screen and (max-width:700px) {
+	nav {
+		position:static;
+		top:auto;
+		left:auto;
+		width:auto;
+		height:auto;
+		border-right:none;
+		border-bottom:2px solid #D3D3D3;
+	}
+	#desc {
+		padding:12px 0;
+	}
+	nav ul li {
+		display:inline;
+		padding:0 4px; /* VERIFY IT */
+	}
+	#paper{
+		margin:0 auto;
+	}
+}

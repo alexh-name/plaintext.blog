@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="olek" />
+	<meta name="viewport" content="width=device-width">
+	<link rel="shortcut icon" href="/files/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<title>gen2.cosmofox | migration to clang</title>
+</head>
+<body>
+	<nav>
+		<div id="backlink">
+			<a href="https://cosmofox.net/">&#60;&#60;</a>
+		</div>
+		<div id="logo">
+			<pre id="emblem"><code>    .vir.
+  .d$$$$$$b.
+  $$$$( )$$$b
+  Q$$$$$$$$$$B
+    "$$$$$$$P
+   d$$$$$$P"
+  $$$$$$$P
+  `Q$$P"</code></pre>
+		</div>
+		<div id="desc">
+			<p>Calculating dependencies ...</p>
+		</div>
+		<ul>
+			<li><a href="/blog/">blog</a></li>
+			<li>&#91; <a href="/migration-to-clang/" class="thisPage">migration to clang</a> &#93;</li>
+			<li><a href="/building-a-static-userspace/">building a static userspace</a></li>
+			<li><a href="/hibernation/">hibernation</a></li>
+		</ul>
+	</nav>
+	<div id="paper">
+	<article>
+<!-- DATE: 2014-05-23 -->
+<!-- DESC: the beginning... -->
+
+<h1>migration to clang</h1>
+<p>date: 2013.10.09</p>
+<pre><code>sys-devel/clang-3.3-r100 static-analyzer -debug -multitarget -python ABI_MIPS="-n32 -n64 -o32" ABI_X86="64 -32 -x32"
+sys-devel/llvm-3.3-r1 clang libffi static-analyzer -debug -doc -gold -multitarget -ocaml -python -test -udis86 ABI_MIPS="-n32 -n64 -o32" ABI_X86="64 -32 -x32" KERNEL="-Darwin -FreeBSD" PYTHON_TARGETS="python2_7 -pypy2_0 -python2_6" VIDEO_CARDS="radeon" 
+				 	 
+CFLAGS="-march=amdfam10 -O3 -pipe" 				 	 
+USE="${USE} custom-cflags custom-optimization" </code></pre>
+<br>
+<h2>This is a list of packages which <b>fail</b> to build:</h2>
+<pre><code>=app-crypt/gnupg-2.0.21 
+=app-crypt/gnupg-2.0.21-r1 
+=app-crypt/gnupg-2.0.21-r2 
+=app-crypt/gnupg-2.0.22::gentoo 
+=mail-client/thunderbird-17.0.9 
+=media-gfx/darktable-1.2.3 
+=media-gfx/gimp-2.8.6 
+=media-gfx/inkscape-0.48.4-r1 
+=media-sound/mumble-1.2.4 
+=net-p2p/bitcoind-0.8.5 
+=net-print/cups-1.6.3-r2 
+=net-print/cups-1.6.4 
+=sys-devel/binutils-2.23.2 
+=x11-libs/cairo-1.12.14-r3 
+=x11-libs/cairo-1.12.14-r4 
+=x11-libs/cairo-1.12.16 </code></pre>
+<p>
+<u>Logs and build-info</u> of failed builds can be found <a href="https://cosmofox.net/DL/Gen2/Clang/failed">here</a>. 
+</p>
+<br>
+<h2>Failing on run-time:</h2>
+<pre><code>=x11-drivers/xf86-video-ati-7.2.0 
+=sys-apps/busybox-1.21.1 </code></pre>
+<br>
+<h2>This list contains packages tested to build and run <b>fine</b> so far:</h2>
+<p>(Excluding sys-devel/gcc and sys-libs/glibc, and virtual/*. Clang is my default compiler right now.)</p>
+<pre><code>=app-arch/p7zip-9.20.1-r5 
+=app-crypt/easy-rsa-2.2.0-r1 
+=app-crypt/pinentry-0.8.3 
+=app-editors/vim-7.4.41 
+=app-emulation/emul-linux-x86-baselibs-20130224-r13 
+=app-emulation/emul-linux-x86-baselibs-20131008 
+=app-emulation/emul-linux-x86-db-20130224 
+=app-emulation/emul-linux-x86-db-20131008 
+=app-emulation/emul-linux-x86-gtklibs-20130224 
+=app-emulation/emul-linux-x86-gtklibs-20131008 
+=app-emulation/emul-linux-x86-medialibs-20130224-r13 
+=app-emulation/emul-linux-x86-medialibs-20131008 
+=app-emulation/emul-linux-x86-opengl-20130224 
+=app-emulation/emul-linux-x86-opengl-20131008 
+=app-emulation/emul-linux-x86-sdl-20130224 
+=app-emulation/emul-linux-x86-sdl-20131008 
+=app-emulation/emul-linux-x86-soundlibs-20130224-r10 
+=app-emulation/emul-linux-x86-soundlibs-20131008 
+=app-emulation/emul-linux-x86-xlibs-20130224-r2 
+=app-emulation/emul-linux-x86-xlibs-20131008 
+=app-emulation/qemu-1.6.0-r1 
+=app-misc/ca-certificates-20130906 
+=app-office/libreoffice-4.0.4.2 
+=app-portage/gentoolkit-0.3.0.8-r2 
+=app-portage/portage-utils-0.40 
+=app-shells/zsh-5.0.2-r3 
+=app-text/build-docbook-catalog-1.20 
+=app-text/docbook-xsl-stylesheets-1.78.0-r1 
+=app-text/enscript-1.6.6 
+=app-text/poppler-0.22.5 
+=app-text/poppler-0.24.1 
+=app-text/poppler-0.24.2 
+=app-text/zathura-pdf-poppler-0.2.3 
+=dev-java/icedtea-bin-7.2.4.1 
+=dev-java/itext-2.1.5-r2 
+=dev-lang/swig-2.0.11 
+=dev-libs/geoip-1.5.1 
+=dev-libs/gmp-5.1.3 
+=dev-libs/leveldb-1.12.0 
+=dev-libs/mpfr-3.1.2-r1 
+=dev-libs/nspr-4.10.1 
+=dev-libs/nss-3.15.1-r2 
+=dev-libs/nss-3.15.2 
+=dev-libs/vala-common-0.22.0 
+=dev-perl/Archive-Zip-1.300.0 
+=dev-perl/Authen-SASL-2.160.0 
+=dev-perl/Digest-HMAC-1.30.0 
+=dev-perl/Error-0.170.210 
+=dev-perl/IO-Socket-SSL-1.953.0 
+=dev-perl/Net-SMTP-SSL-1.10.0 
+=dev-perl/Net-SSLeay-1.550 
+=dev-perl/XML-Parser-2.410.0-r1 
+=dev-python/python-exec-0.3.1 
+=dev-python/python-exec-2.0 
+=dev-python/python-exec-2.0-r1 
+=dev-python/setuptools-1.1.5 
+=dev-python/setuptools-1.1.6 
+=dev-qt/qtdbus-4.8.4 
+=dev-qt/qtgui-4.8.4-r1 
+=dev-util/google-perftools-2.0-r2 
+=dev-vcs/git-1.8.3.2 
+=gnome-base/librsvg-2.39.0 
+=kde-base/oxygen-icons-4.11.1 
+=mail-client/mutt-1.5.21-r14 
+=mail-client/thunderbird-24.0 
+=mail-client/thunderbird-24.0-r1 
+=media-fonts/arphicfonts-0.2.20080216.1 
+=media-fonts/baekmuk-fonts-2.2-r2 
+=media-fonts/dejavu-2.34 
+=media-fonts/liberation-fonts-2.00.1 
+=media-fonts/libertine-ttf-5.1.3.20110615 
+=media-fonts/lklug-0.6 
+=media-fonts/lohit-fonts-2.4.2 
+=media-fonts/sazanami-20040629 
+=media-fonts/ttf-bitstream-vera-1.10-r3 
+=media-fonts/urw-fonts-2.4.9 
+=media-gfx/darktable-1.2.3 
+=media-gfx/ebdftopcf-2 
+=media-libs/freetype-2.5.0.1 
+=media-gfx/inkscape-0.48.4-r1 
+=media-libs/flac-1.2.1-r5 
+=media-libs/giflib-4.2.3 
+=media-libs/libpng-1.6.6 
+=media-libs/libsdl-1.2.15-r4 
+=media-libs/libsndfile-1.0.25-r1 
+=media-libs/libtxc_dxtn-1.0.1-r1 
+=media-libs/mesa-9.2.0 
+=media-libs/x264-0.0.20130912 
+=media-sound/mpg123-1.15.4-r1 
+=media-video/libav-9.9 
+=media-video/mplayer2-2.0_p20130428-r1 
+=media-video/mpv-0.1.6 
+=media-video/mpv-0.1.7 
+=net-dns/bind-tools-9.9.3_p2 
+=net-fs/cifs-utils-6.1-r1 
+=net-fs/samba-3.6.19 
+=net-irc/irssi-0.8.15-r1 
+=net-misc/openvpn-2.3.2 
+=net-misc/youtube-dl-2013.09.17 
+=net-misc/youtube-dl-2013.09.20.1 
+=net-misc/youtube-dl-2013.09.24.2 
+=net-misc/youtube-dl-2013.09.29 
+=net-misc/youtube-dl-2013.10.01 
+=net-misc/youtube-dl-2013.10.01.1 
+=net-misc/youtube-dl-2013.10.04 
+=net-misc/youtube-dl-2013.10.07 
+=net-nds/openldap-2.4.35-r1 
+=net-print/cups-filters-1.0.36-r2 
+=net-print/foomatic-filters-4.0.17-r1 
+=net-print/hplip-3.13.9 
+=net-proxy/torsocks-1.2-r2 
+=net-proxy/torsocks-2.0.0_rc2 
+=perl-core/Archive-Tar-1.920.0 
+=perl-core/CPAN-Meta-Requirements-2.123.0 
+=perl-core/CPAN-Meta-YAML-0.8.0 
+=perl-core/Compress-Raw-Bzip2-2.60.0 
+=perl-core/Compress-Raw-Zlib-2.60.0 
+=perl-core/Digest-MD5-2.530.0 
+=perl-core/Digest-SHA-5.850.0 
+=perl-core/ExtUtils-Install-1.540.0 
+=perl-core/ExtUtils-MakeMaker-6.740.0 
+=perl-core/ExtUtils-ParseXS-3.220.0 
+=perl-core/File-Spec-3.400.0 
+=perl-core/IO-Compress-2.60.0 
+=perl-core/JSON-PP-2.272.20 
+=perl-core/Module-Build-0.400.700 
+=perl-core/Module-Metadata-1.0.11 
+=perl-core/Scalar-List-Utils-1.320.0 
+=perl-core/Test-Harness-3.280.0 
+=perl-core/version-0.990.300 
+=perl-core/version-0.990.400 
+=sys-apps/dbus-1.6.14 
+=sys-apps/dbus-1.6.16 
+=sys-apps/file-5.15 
+=sys-apps/hwids-20130915.1 
+=sys-apps/kbd-2.0.0 
+=sys-apps/openrc-0.12.1 
+=sys-apps/openrc-0.12.2 
+=sys-apps/portage-2.2.6 
+=sys-apps/portage-2.2.7 
+=sys-apps/util-linux-2.23.2-r2 
+=sys-devel/distcc-3.1-r9 
+=sys-devel/m4-1.4.17 
+=sys-fs/dosfstools-3.0.22 
+=sys-fs/e2fsprogs-1.42.8 
+=sys-fs/eudev-1.3 
+=sys-fs/lvm2-2.02.100-r2 
+=sys-fs/lvm2-2.02.102 
+=sys-fs/lvm2-2.02.103 
+=sys-fs/udev-207 
+=sys-kernel/git-sources-3.12_rc1 
+=sys-kernel/vanilla-sources-3.11.1 
+=sys-kernel/vanilla-sources-3.11.2 
+=sys-kernel/vanilla-sources-3.11.3 
+=sys-kernel/vanilla-sources-3.11.4 
+=sys-libs/e2fsprogs-libs-1.42.8 
+=sys-libs/libunwind-1.1 
+=sys-libs/pam-1.1.6-r2 
+=sys-libs/talloc-2.1.0 
+=sys-libs/timezone-data-2013f-r1 
+=sys-libs/timezone-data-2013g 
+=sys-power/pm-utils-1.4.1-r2 
+=www-client/firefox-23.0 
+=www-client/firefox-24.0 
+=www-client/firefox-24.0-r1 
+=www-client/surf-0.6-r1 
+=www-plugins/adobe-flash-11.2.202.310 
+=www-plugins/adobe-flash-11.2.202.310-r1 
+=x11-apps/xdpyinfo-1.3.1 
+=x11-base/xorg-server-1.14.2.902-r1 
+=x11-base/xorg-server-1.14.3 
+=x11-base/xorg-server-1.14.3-r1 
+=x11-drivers/xf86-input-evdev-2.8.1 
+=x11-libs/gtk+-2.24.21 
+=x11-misc/shared-mime-info-1.2 
+=x11-misc/xkeyboard-config-2.10.1 
+=x11-themes/gtk-chtheme-0.3.1-r2 
+=x11-themes/gtk-engines-murrine-0.98.2 
+=x11-themes/gtk-engines-qtcurve-1.8.16 
+=x11-themes/gtk-engines-unico-1.0.3_pre20121212 
+=x11-themes/murrine-themes-0.98.0 
+=x11-themes/oxygen-gtk-1.4.0 
+=x11-themes/oxygen-molecule-3.2 
+=x11-themes/qtcurve-qt4-1.8.14 
+=x11-themes/vanilla-dmz-aa-xcursors-0.4 </code></pre>	</article>
+	<footer>
+		<div>	
+			<a href="https://contact.cosmofox.net/">Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
+		</div>
+	</footer>
+	</div>	<!-- Page generated by wswsh 1.1 / mksh - Sat May 24 17:32:06 CES 2014 -->
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+	<title>gen2.cosmofox</title>
+	<link href="http://gen2.cosmofox.net/"/>
+	<link type="application/atom+xml" rel="self" href="http://gen2.cosmofox.net/atom.xml"/>
+	<updated>Thu Jan  1 01:00:00 CET 1970</updated>
+	<author>
+		<name>olek</name>
+	</author>
+	<id>http://gen2.cosmofox.net/</id>
+
+	<entry>
+		<title></title>
+		<link href="http://gen2.cosmofox.net/.html"/>
+		<id>http://gen2.cosmofox.net/.html</id>
+		<updated></updated>
+		<summary></summary>
+	</entry>
+
+</feed>
