@@ -6,8 +6,8 @@ RewriteCond %{HTTPS} !=on
 RewriteCond %{ENV:HTTPS} !=on
 RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
-RewriteCond %{HTTP_HOST} !=gen2.cosmofox.net
-RewriteRule (.*) http://gen2.cosmofox.net/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} !=nyx.cosmofox.net
+RewriteRule (.*) http://nyx.cosmofox.net/$1 [R=301,L]
 
 Redirect 301 /index.html /blog/index.html
 
