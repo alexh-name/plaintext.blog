@@ -8,11 +8,11 @@ html {
 }
 @font-face {
 	font-family: DejaVu Sans Mono;
-	src: url(/files/DejaVuSansMono-Bold.ttf);
+	src: url(/files/DejaVuSansMono.ttf);
 }
 @font-face {
 	font-family: DejaVu Sans Mono Bold;
-	src: url(/files/DejaVuSansMono.ttf);
+	src: url(/files/DejaVuSansMono-Bold.ttf);
 	font-weight:bold;
 }
 @font-face {
@@ -22,7 +22,7 @@ html {
 }
 
 body,code { /* body,pre */
-	font-family:DejaVu, monospace;
+	font-family:DejaVu Sans Mono, monospace;
 }
 body {
 	font-style:normal;
