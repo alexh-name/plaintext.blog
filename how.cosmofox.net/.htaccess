@@ -9,7 +9,7 @@ RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} !=how.cosmofox.net
 RewriteRule (.*) http://how.cosmofox.net/$1 [R=301,L]
 
-Redirect 301 /index.html /blog/index.html
+Redirect 301 /index.html /blog/
 
 #Prevent viewing of .htaccess file
 <Files .htaccess>
