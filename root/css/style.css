@@ -6,8 +6,23 @@ html {
 	background-color:#F1F2F2; /* #F0F1F1 */ 
 	font-size:100%;
 }
+@font-face {
+	font-family: DejaVu Sans Mono;
+	src: url(/files/DejaVuSansMono-Bold.ttf);
+}
+@font-face {
+	font-family: DejaVu Sans Mono Bold;
+	src: url(/files/DejaVuSansMono.ttf);
+	font-weight:bold;
+}
+@font-face {
+	font-family: DejaVu Sans Mono Oblique;
+	src: url(/files/DejaVuSansMono-Oblique.ttf);
+	font-weight:oblique;
+}
+
 body,code { /* body,pre */
-	font-family:monospace;
+	font-family:DejaVu Sans Mono Oblique, monospace;
 }
 body {
 	font-style:normal;
