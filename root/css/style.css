@@ -66,6 +66,9 @@ pre,p code {
 	padding:0;
 }
 /* ------ */
+p {
+	text-align:justify;
+}
 h1 {
 	font-size:26px;
 	padding:0 0 6px;
