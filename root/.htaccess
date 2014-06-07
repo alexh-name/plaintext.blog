@@ -11,6 +11,7 @@ RewriteRule (.*) http://cosmofox.net/$1 [R=301,L]
 Redirect 301 /howtos/umurmur-auf-uberspace https://how.cosmofox.net/umurmur-auf-Uberspace/
 Redirect 301 /howtos/ejabberd-auf-uberspace https://how.cosmofox.net/ejabberd-auf-Uberspace/
 Redirect 301 /AP https://how.cosmofox.net/using-open-WiFi/
+Redirect 301 /ap https://how.cosmofox.net/using-open-WiFi/
 Redirect 301 /gen2 https://nyx.cosmofox.net/
 
 #Prevent viewing of .htaccess file
