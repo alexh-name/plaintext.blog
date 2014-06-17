@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="shortcut icon" href="/files/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
-	<title>nyx.cosmofox | todo</title>
+	<title>nyx.cosmofox | device manager</title>
 </head>
 <body>
 	<nav>
@@ -33,22 +33,25 @@
 			<li><a href="/building-a-static-userspace/">building a static userspace</a></li>
 			<li><a href="/hibernation/">hibernation</a></li>
 			<li><a href="/video-playback/">video playback</a></li>
-			<li><a href="/device-manager/">device manager</a></li>
+			<li>&#91; <a href="/device-manager/" class="thisPage">device manager</a> &#93;</li>
 		</ul>
 	</nav>
 	<div id="paper">
 	<article>
-<!-- DATE: 2014-05-23 -->
-<!-- DESC: the beginning... -->
+<h1>device manager</h1>
 
-<h1>todo</h1>
+<!-- DATE: 2014-06-17 -->
+<!-- DESC: mdev and glibc 2.19-->
 
-<ul>
-<li>posting more</li>
-<li>publishing configs</li>
-<li>get done with nyx</li>
-</ul>
-	</article>
+<h2>2014.06.17: mdev and glibc 2.19</h2>
+
+<p> Nyx currently uses busybox's mdev as device manager. With the update to glibc 2.19, it was not possible to build a binary compatible with glibc's user/groups mechanisms. Mdev couldn't recognize any user or group whatsoever.</p>
+<p> Fortunately, busybox can have it's own internal mechanism for that. </p>
+<pre><code># make nconfig
+Login/Password Management Utilities  --->
+	[*] Use internal password and group functions rather than system functions
+
+CONFIG_USE_BB_PWD_GRP=y</code></pre>	</article>
 	<footer>
 		<div>	
 			<a href="https://contact.cosmofox.net/">contact / Impressum</a> &#124; design kindly shared by <a target="_blank" href="http://ypnose.org">Ypnose</a>
