@@ -1,0 +1,336 @@
+/* Original by Ypnose - 2013 */
+/* Thanks to Ypnose for sharing. */
+/* Check out his website: http://ywstd.fr/ */
+html {
+	background-image: url('/files/backgrounds/stardust.png'); 
+	font-size:100%;
+}
+@font-face {
+	font-family: 'crimson';
+	src: url('/files/fontfiles/crimsontext-roman-webfont.eot');
+	src: url('/files/fontfiles/crimsontext-roman-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/files/fontfiles/crimsontext-roman-webfont.woff') format('woff'),
+	url('/files/fontfiles/crimsontext-roman-webfont.ttf') format('truetype'),
+	url('/files/fontfiles/crimsontext-roman-webfont.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'crimson';
+	src: url('/files/fontfiles/crimsontext-bold-webfont.eot');
+	src: url('/files/fontfiles/crimsontext-bold-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/files/fontfiles/crimsontext-bold-webfont.woff') format('woff'),
+	url('/files/fontfiles/crimsontext-bold-webfont.ttf') format('truetype'),
+	url('/files/fontfiles/crimsontext-bold-webfont.svg#webfont') format('svg');
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'crimson';
+	src: url('/files/fontfiles/crimsontext-italic-webfont.eot');
+	src: url('/files/fontfiles/crimsontext-italic-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/files/fontfiles/crimsontext-italic-webfont.woff') format('woff'),
+	url('/files/fontfiles/crimsontext-italic-webfont.ttf') format('truetype'),
+	url('/files/fontfiles/crimsontext-italic-webfont.svg#webfont') format('svg');
+	font-style: italic;
+}
+@font-face {
+	font-family: 'crimson';
+	src: url('/files/fontfiles/crimsontext-bolditalic-webfont.eot');
+	src: url('/files/fontfiles/crimsontext-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/files/fontfiles/crimsontext-bolditalic-webfont.woff') format('woff'),
+	url('/files/fontfiles/crimsontext-bolditalic-webfont.ttf') format('truetype'),
+	url('/files/fontfiles/crimsontext-bolditalic-webfont.svg#webfont') format('svg');
+	font-weight: bold;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'inconsolata';
+	src: url('/files/fontfiles/inconsolata-webfont.eot');
+	src: url('/files/fontfiles/inconsolata-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/files/fontfiles/inconsolata-webfont.woff') format('woff'),
+	url('/files/fontfiles/inconsolata-webfont.ttf') format('truetype'),
+	url('/files/fontfiles/inconsolata-webfont.svg#webfont') format('svg');
+}
+code {
+	font-family:inconsolata, monospace;
+}
+body {
+	font-family:crimson, serif;
+	font-style:normal;
+	font-weight:normal;
+}
+/* MERGED */
+body,h5,#desc,p code {
+	font-size:16px;
+}
+pre,footer {
+	font-size:15px;
+}
+body,nav ul,#desc p {
+	margin:0;
+}
+/* a,a:visited,#desc,.date,.cmds {
+	font-style:italic;
+} */
+h3, blockquote {
+	padding-left:12px;
+}
+h4,nav ul,.date {
+	text-transform:uppercase;
+}
+h4,a,a:visited {
+	text-decoration:underline;
+}
+nav,.date,footer,#index,.centered {
+	text-align:center;
+}
+#logo,#emblem,img {
+	margin:0 auto;
+}
+pre,p code {
+	border:1px solid grey;
+}
+#desc,article {
+	line-height:28px;
+}
+#emblem,nav ul {
+	padding:0;
+}
+/* ------ */
+p {
+	text-align:justify;
+}
+h1 {
+	font-size:26px;
+	padding:0 0 6px;
+	border-bottom:3px solid #080808;
+	line-height:36px;
+	text-align: center;
+	text-transform:uppercase;
+}
+h2 {
+	font-size:22px;
+	padding-left:16px;
+	line-height:30px;
+}
+h3 {
+	font-size:18px;
+}
+h4 {
+	font-size:16px;
+	margin-bottom:0;
+}
+h5 {
+	margin:22px auto 16px;
+	border-bottom:1px dotted #141414;
+}
+a,a:visited {
+	color:#404040;
+	text-shadow:1px 1px 0 #FFF;
+}
+a:hover {
+	color:#0D0D0D;
+}
+/* FIXED WIDTH TO AVOID UGLY SCROLLBAR "JUMP" (THANKS TO PERCENTAGES) :( */
+nav {
+	position:fixed;
+	top:0;
+	left:0;
+	width:340px;
+	height:100%;
+	padding:16px 14px 12px;
+	z-index:1;
+	border-right:2px solid white;
+	background: repeating-linear-gradient(
+	30deg,
+	#c771a4,	/* S:43, V:75 */
+	#c771a4 20px,
+	#d177ac 20px,	/* S:43, V:82 */
+	#d177ac 40px );
+	font-style:normal;
+}
+nav,nav a,nav a:visited {
+	color: white;
+	font-size:22px;
+	text-shadow:1px 1px 0 black;
+	font-style:normal;
+}
+nav a:hover, nav a:visited:hover {
+	color:#0D0D0D;
+	text-shadow:1px 1px 0 white;
+}
+nav p {
+	text-align: center;
+}
+#backlink, #backlink a, #backlink a:visited {
+	text-decoration:none;
+	font-size:30px;
+	padding-bottom:10px;
+}
+#emblem {
+	/* PRE INHIBIT */
+	font-size:17px;
+	background-color:inherit;
+	border:none;
+}
+#logo {
+}
+#desc {
+	padding:26px 0 20px;
+	text-align: center;
+}
+nav ul {
+	list-style-type:none;
+}
+nav ul li {
+	padding:10px 0;
+}
+nav a {
+	letter-spacing:1px;
+}
+footer {
+	max-width:80%;
+	margin:40px auto 0;
+	padding-top:12px;
+	border-top:2px solid #C0C0C0;
+	line-height:22px;
+}
+#index {
+	color: white;
+	font-size:22px;
+	text-shadow:1px 1px 0 black;
+	font-style:normal;
+	text-decoration:none;
+}
+#index p {
+	margin:40px 0;
+	text-align: center;
+}
+#index footer,#index footer a {
+	border:none;
+	margin:0 auto 0;
+}
+#index a,#index a:visited {
+	color: white;
+	font-size:22px;
+	text-shadow:1px 1px 0 black;
+	padding:5px 8px;
+	margin:20px 15px;
+	text-decoration:none;
+	display: inline-block;
+}
+#index a:hover, #index a:visited:hover {
+	color:black;
+	text-shadow:none;
+	background:snow;
+}
+#index ul {
+	list-style-type:none;
+}
+#index ul li {
+	padding:20px 0;
+}
+#index hr {
+	max-width:34%;
+}
+/* THE SKEL */
+#paper {
+	max-width:800px;
+	margin:10px 0 0 440px;
+	padding:20px 28px;
+	z-index:9999;
+	background: whitesmoke;
+	border:10px double grey;
+}
+article {
+	color:#040404;
+	text-align:justify;
+}
+article ul {
+	padding-left:50px;
+	margin:-4px 0 -2px; 
+}
+/* list-style-type:lower-greek; */
+article ul li {
+	padding:2px 4px;
+}
+.symb {
+	font-size:24px;
+}
+.date {
+	color:#888;
+}
+.boldy {
+	color:#000;
+	font-weight:bold;
+}
+pre,p code {
+	background-color: white;
+}
+p code {
+	padding:1px 4px;
+	white-space:nowrap;
+}
+pre {
+	padding:6px 12px;
+	overflow-x:auto;
+	max-width:95%;
+	margin:14px auto;
+}
+.cmds {
+	color:#545672;
+}
+.red {
+	color:#CC1717;
+}
+img {
+	display:block;
+	max-width:98%;
+	border:1px solid white;
+}
+.shbar {
+	border-top:2px solid #BBB;
+	max-width:40%;
+	margin:20px auto;
+}
+blockquote {
+	border-left:6px solid #808080;
+	margin-left:30px;
+}
+@media screen and (max-width:1300px) {
+	nav {
+		width:250px;
+	}
+	#paper {
+		margin:5px 0 0 310px;
+	}
+}
+@media screen and (max-width:950px) {
+	nav {
+		width:150px;
+	}
+	#paper {
+		margin:5px 0 0 210px;
+	}
+}
+@media screen and (max-width:700px) {
+	nav {
+		position:static;
+		top:auto;
+		left:auto;
+		width:auto;
+		height:auto;
+		border-right:none;
+		border:none;
+	}
+	#desc {
+		padding:12px 0;
+	}
+	nav ul li {
+		display:inline;
+		padding:0 4px; /* VERIFY IT */
+	}
+	#paper{
+		margin:0 auto;
+	}
+}

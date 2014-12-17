@@ -1,0 +1,83 @@
+: umurmur auf Uberspace
+
+:: Update #2 (2014.11.08)
+
+Ein paar Dinge haben sich geändert. Mittlerweile gibt es Version 0.2.15. Die konnte fertig gebaut aber auf Brechen nicht den in der Config festgelegten Port nutzen. Das ist weniger schlimm, da die Änderungen zu 0.2.14 marginal sind. Zumal können wir in 0.2.14 noch auf autotools (bäh) verzichten. 
+0.2.14 verlangt aber nach einem etwas älteren protobuf-c als dem, das ihr nach der bisherigen Anleitung bekommen hättet. Ich habe jetzt alles so angepasst, dass ihr die exakten Versionen der Abhängigkeiten bekommt, mit denen ich auch Erfolg hatte. 
+
+:: Update
+
+Wie mich Maximilian Berger freundlicherweise informierte, gibt murmur beim Start die verwendete openssl-Version aus. Nach dieser Info in der Log zu suchen war mir in der Eile wohl nicht in den Sinn gekommen. Die verwendete Version der neuesten statischen murmur-Version vor heartbleed-Bekanntmachung war 1.0.0l. Diese ist nicht betroffen. Sehr gute Nachricht also. Danke für den Hinweis. 
+
+Nach heartbleed habe ich mich schnell aufgemacht alles betroffene, was ich so betreibe, wieder dicht zu machen. 
+Dazu gehörten auch paar mumble-Server. Ein neues CA-signiertes Zertifikat habe ich mir sowieso schon geholt, und für andere Instanzen mit selbst-signiertem Zertifikat hätte es ja ein '-wipessl' getan. 
+Woher aber wissen, ob die statische Version von http://mumble.info/snapshot/ nicht gegen ein betroffenes OpenSSL kompiliert wurde? Ich habe auf die Schnelle keine Informationen dazu gefunden (und wer mir sagen kann, wie ich im Stil von 'ldd /bin/...' sowas an statischen Binarys herausfinde oder ob das überhaupt geht, bekommt Kekse). 
+Daher wollte ich mal eben ein murmurd selbst auf Uberspace kompilieren (denn die haben ihr OpenSSL ja rasch gefixt). Hat aber nicht mal eben so geklappt, und ich habe wirklich keinen Nerv mich in QT-Buildsysteme einzufuchsen. 
+Zum Glück gibt es aber umurmur. Es ist kleiner und kommt mit weniger BS. Das hat zwar auch nicht auf Anhieb geklappt (weil kein cmake 2.8 vorhanden war, die toast-kompilierte Version nicht lief und ich mich - ja - auch nicht weiter in cmake einfuchsen möchte), jedoch gibt es noch eine Version, die sich super und so wie ich es mag mit './configure && make' bauen lässt. Und zwar so: 
+Zunächst brauchen wir paar Abhängigkeiten:
+
+====
+toast arm https://github.com/google/protobuf/releases/download/2.6.1/protobuf-2.6.1.tar.bz2
+toast arm http://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz # todo: nur libprotobuf-c kompilieren
+toast arm http://www.hyperrealm.com/libconfig/libconfig-1.4.9.tar.gz
+====
+
+Bereitet ein Verzeichnis für die Quellen vor:
+
+====
+mkdir -p $HOME/usr/src
+cd $HOME/usr/src
+====
+
+Und holt sie euch:
+
+====
+wget http://umurmur.googlecode.com/files/umurmur-0.2.14.tar.gz
+tar -xzf umurmur-0.2.14.tar.gz
+cd umurmur-0.2.14
+====
+
+Jetzt kanns losgehen:
+
+====
+./configure --with-ssl=openssl
+make
+====
+
+Kopiert die Binary an einen guten Platz:
+
+====
+mkdir $HOME/bin
+cp src/umurmurd $HOME/bin/
+====
+
+Und macht euch an die Config:
+
+====
+mkdir $HOME/etc
+cp umurmur.conf.example $HOME/etc/umurmur.conf
+mkdir -p $HOME/var/umurmur/
+mkdir -p $HOME/var/log/
+====
+
+In '$HOME/var/umurmur/' könnt ihr eure Zertifikate legen. 
+Die Beispielconfig (die wir jetzt in $HOME/etc/umurmur.conf haben) ist gut erklärt. 
+Diese Parameter solltet ihr aber entkommentieren und unbedingt ändern: 
+
+====
+bindport = PORT; # Zu erfragen beim Uberspace-Team
+bindaddr = "IP"; # IP eures Hostes
+banfile = "/home/USER/var/umurmur/banfile.txt" # 'USER' mit eurem Usernamen ersetzen.'~' funktioniert hier nicht.
+logfile = "/home/USER/var/log/umurmurd.log" # Ebenso. Wenn wir das nicht setzen, nervt umurmur womöglich SYSLOG.
+====
+
+Dann erstellt ihr letztlich noch wie gewohnt einen Dienst. 
+Die exec-Zeile sollte dann so aussehen:
+
+====
+exec $HOME/bin/umurmurd -d -c $HOME/etc/umurmur.conf 2>&amp;1
+====
+
+Neues, schlankes und sicheres murmur!
+
+(Wodurch sich umurmur außerdem auszeichnet, ist, dass es mit PolarSSL läuft und dadurch wohl nochmal wesentlich effizienter wird. PolarSSL habe ich aber auch nicht auf die Schnelle auf dem Uberspace bauen können. Bei Hilfe: Kekse!)

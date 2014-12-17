@@ -1,0 +1,11 @@
+<!-- DATE: 2014-09-17 -->
+<!-- DESC: new, more powerfull antenna for open WiFi access point -->
+
+: new, more powerfull antenna for open WiFi access point
+
+I finally had time to set up my rt8192cu based antenna to work with my RPi. A howto should follow soon.
+This is the new range covered by the new antenna (roughly estimated by checking into one direction): [0]
+
+[0] /files/range.png
+
+2014-09-17

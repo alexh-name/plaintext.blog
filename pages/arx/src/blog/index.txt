@@ -1,0 +1,8 @@
+: blog
+
+:: feed [0]
+
+2014.09.18: Today I decided to finally talk about another project, arx. [1]
+
+[1] /blog/2014/arx.html
+[0] /atom.xml

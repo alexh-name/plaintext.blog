@@ -1,0 +1,8 @@
+: blog
+
+:: feed [0]
+
+2014.12.10 splitting pages nyx and gentoo [1]
+
+[1] /blog/2014/gentoo.html
+[0] /atom.xml

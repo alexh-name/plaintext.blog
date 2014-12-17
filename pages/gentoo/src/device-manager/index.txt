@@ -1,0 +1,14 @@
+: device manager
+
+:: 2014.06.17: mdev and glibc 2.19
+
+Nyx currently uses busybox's mdev as device manager. With the update to glibc 2.19, it was not possible to build a binary compatible with glibc's user/groups mechanisms. Mdev couldn't recognize any user or group whatsoever. 
+Fortunately, busybox can have it's own internal mechanism for that.
+
+====
+# make nconfig
+Login/Password Management Utilities  --->
+	[*] Use internal password and group functions rather than system functions
+
+CONFIG_USE_BB_PWD_GRP=y
+====

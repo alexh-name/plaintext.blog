@@ -1,0 +1,97 @@
+: ejabberd auf Uberspace
+
+:: update (2014.11.08)
+
+Diese Anleitung stammt vom Mai 2014 und wurd seitdem nicht aktualisiert. 
+Ich bin mittlerweile auf prosody umgestiegen [1].
+
+Auf meinem Hoster Uberspace [2] ist es auch möglich, einen eigenen XMPP(Jabber)-Server zu betreiben. Da gibt es z.B. ejabberd [3], und dazu auch einige Anleitungen, wie das auf Uberspace geht. Ich habe mich da nach blog.detmud.me [4] gerichtet. Wie ejabberd dann aber gewohnt als Service mit den daemontools betrieben werden kann, war immer noch eine offene Frage. Ich hab hier eine Lösung:
+
+Damit das korrekt funktioniert, müssen wir genau herausfinden, was das Skript "ejabberd/sbin/ejabberdctl" im Installationsverzeichnis eigentlich genau macht, um daraus einen Befehl für daemontools zu machen, der im Vordergrund bleibt und sich wieder vollstänig beenden läst, ohne Waisen zurückzulassen. Wichtig sind da die Funktion "live" und alle Variablen, die sie braucht, und auch in dem Skript gesetzt werden. Das habe ich hier für die Version 2.1.13 vorgemacht:
+
+~/service/ejabberd/run :
+
+====
+#!/bin/sh
+ 
+# These environment variables are sometimes needed by the running daemons
+export USER=olek
+export HOME=/home/olek
+ 
+# Include the user-specific profile
+. $HOME/.bash_profile
+ 
+# Now let's go!
+ 
+ERL=/usr/local/bin/erl
+NAME=-name
+NODE=olek
+HOST=localhost
+ERLANG_NODE=$NODE@$HOST
+EJABBERDDIR=/home/olek/_working/ejabberd/lib/ejabberd
+EJABBERD_EBIN_PATH=$EJABBERDDIR/ebin
+SPOOLDIR=/home/olek/_working/ejabberd/var/lib/ejabberd
+KERNEL_OPTS=""
+POLL=true
+SMP=auto
+ERL_PROCESSES=250000
+ERLANG_OPTS="+K $POLL -smp $SMP +P $ERL_PROCESSES $ERL_OPTIONS"
+ 
+ETCDIR=/home/olek/_working/ejabberd/etc/ejabberd
+EJABBERD_CONFIG_PATH=$ETCDIR/ejabberd.cfg
+EJABBERD_PRIV_PATH=$EJABBERDDIR/priv
+EJABBERD_MSGS_PATH=$EJABBERD_PRIV_PATH/msgs
+LOGS_DIR=/home/olek/_working/ejabberd/var/log/ejabberd
+EJABBERD_LOG_PATH=$LOGS_DIR/ejabberd.log
+EJABBERD_SO_PATH=$EJABBERD_PRIV_PATH/lib
+EJABBERD_BIN_PATH=$EJABBERD_PRIV_PATH/bin
+EJABBERD_DOC_PATH=/home/olek/_working/ejabberd/share/doc/ejabberd
+DATETIME=`date "+%Y%m%d-%H%M%S"`
+ERL_CRASH_DUMP=$LOGS_DIR/erl_crash_$DATETIME.dump
+ETCDIR=/home/olek/_working/ejabberd/etc/ejabberd
+ERL_INETRC=$ETCDIR/inetrc
+ERL_MAX_PORTS=32000
+ERL_MAX_ETS_TABLES=1400
+HOME=$SPOOLDIR
+ 
+# export global variables
+export EJABBERD_CONFIG_PATH
+export EJABBERD_MSGS_PATH
+export EJABBERD_LOG_PATH
+export EJABBERD_SO_PATH
+export EJABBERD_BIN_PATH
+export EJABBERD_DOC_PATH
+export EJABBERD_PID_PATH
+export ERL_CRASH_DUMP
+export ERL_EPMD_ADDRESS
+export ERL_INETRC
+export ERL_MAX_PORTS
+export ERL_MAX_ETS_TABLES
+export HOME
+ 
+cd $HOME
+ 
+$ERL \
+$NAME $ERLANG_NODE \
+-s erlang halt | grep -c duplicate_name > /dev/null
+ 
+[ "$?" -eq 0 ] && echo "\nERROR: The node '$ERLANG_NODE' is already running." && return 1
+ 
+exec $ERL $NAME $ERLANG_NODE -noinput -pa $EJABBERD_EBIN_PATH -mnesia dir '"/home/olek/_working/ejabberd/var/lib/ejabberd"' $KERNEL_OPTS -s ejabberd $ERLANG_OPTS live 2>&1
+====
+
+Im Grunde habe ich erstens die Funktion "live" auseinandergebröselt, sodass nurnoch der eine eigentliche Prozess übrig bleibt, und zwischen "exec" und "2>&1" gesetzt, und zweitens zurückverfolgt, welche notwendigen Variablen im Skript gesetzt werden und diese in korrekter Reihenfolge kopiert.
+
+
+/Achtung/:
+
+* Prüft alle Variablen in eurer eigenen "ejabberd/sbin/ejabberdctl" im Installationsverzeichnis nach. Die Werte der Variablen werden bei der Installation erzeugt und werden von Installation zu Installation unterschiedlich sein. Z.B. müsst ihr unbedingt "/home/olek/_working/ejabberd/" überall durch euer eigenes Installationsverzeichnis ersetzen.
+* Wenn ihr eure Variablen aus der "ejabberd/sbin/ejabberdctl" übernehmt, wird euch auffallen, dass NODE=ejabberd gesetzt ist. Das wird bei einem shared hoster wie Uberspace zu Problemen führen. Normalerweise würdet ihr diesen Wert in einer eigenen Konfigurationsdatei überschreiben, aber mit dieser Methode müsst ihr sie hier ersetzen (was auch keine Nachteile hat). Setzt die Variable mit eurem Uberspace-Nutzernamen wie in ich meinem Beispiel mit "olek". (Das ganze hat zum Hintergrund, dass keine nodes mit gleichem Namen laufen können. Damit es also keine Überschneidungen mit anderen Nutzern auf dem gleichen Host gibt, ist der Nutzername eine gute Wahl, da der garantiert einzigartig ist.)
+* In der letzten Zeile "exec [...]" müsst ihr den Pfad in " -mnesia dir '"PFAD"' " mit dem in der Variablen "SPOOLDIR" gleichsetzen. Beachtet auch, dass ganz genau so wie in dem Beispiel der Pfad erst mit doppelten, und dann von außen mit einfachen Anführungszeichen versehen sein muss. Das ist auch der Grund, weshalb ich hier nicht einfach die Variable "SPOOLDIR" einsetzen konnte. Ich habe es wohl nicht geschafft, die Zeichen so zu escapen, dass die Anführungszeichen und der Pfad korrekt bei der Ausführung aufgelöst werden. (Tipps willkommen).
+
+Nun kann ejabberd ganz gewohnt per daemontools gestartet und gestoppt werden.
+
+[1] https://how.cosmofox.net/prosody-auf-Uberspace/
+[2] https://uberspace.de/
+[3] https://github.com/processone/ejabberd
+[4] http://blog.detmud.me/2012/07/jabber-server-auf-uberspace-mit-ejabberd/

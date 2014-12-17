@@ -1,0 +1,13 @@
+: blog
+
+:: feed [0]
+
+2014.09.30: open WiFi now with TOR-routing again [3]
+2014.09.17: new, more powerfull antenna for open WiFi access point [2]
+2014.06.08: open WiFi now without TOR-routing [1]
+
+
+[3] /blog/2014/update_open_wifi.html
+[2] /blog/2014/new_antenna.html
+[1] /blog/2014/wifi_without_tor.html
+[0] /atom.xml

@@ -1,0 +1,30 @@
+<!-- DATE: 2014-09-22 -->
+<!-- DESC: AP with rt8192cu based adapters -->
+
+: AP with rt8192cu based adapters
+
+There are some WiFi adapters around that are based on the rt8192cu chip, that isn't playing nicely with the standard drivers upstream hostapd can talk to. Fortunately, the updated upstream kernel module provided by the Raspberry Pi people works with it, which it didn't some time ago. So all we need to do is to build a hostapd binary compatible with the rtl871xdrv driver. I uploaded the source here, I got it from the manufacturer. 
+Let's go. We'll find us a nice directory for the source, download and unpack it and start to compile:
+
+====
+cd /usr/src/
+mkdir rt8192cu-hostapd
+cd rt8192cu-hostapd
+wget https://dl.cosmofox.net/arx/rt8192cu-hostapd.tar
+tar -xf rt8192cu-hostapd.tar
+cd rt8192cu-hostapd
+tar -xf wpa_supplicant_hostapd-0.8_rtw_r7475.20130812.tar.gz
+cd wpa_supplicant_hostapd-0.8_rtw_r7475.20130812/
+make
+====
+
+If succeeded (give it 10-15 minutes), you should have a hostapd (and a hostapd_cli) binary. Copy it to where you find it usefull:
+
+====
+cp hostapd /usr/sbin/hostapd-rt8192cu
+chmod +x /usr/sbin/hostapd-rt8192cu
+====
+
+In the tarball are different configurations also provided by the manufacturer to now make something usefull out of our now working binary. Also take a look at "multiple hostapd instances" [1].
+
+[1] /multiple-hostapd-instances/

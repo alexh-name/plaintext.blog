@@ -1,0 +1,6 @@
+#!/bin/mksh
+
+mksh scripts/gen.layout
+make
+mksh scripts/insert.files
+mksh scripts/gen.thispage
