@@ -134,6 +134,7 @@ a:hover {
 /* FIXED WIDTH TO AVOID UGLY SCROLLBAR "JUMP" (THANKS TO PERCENTAGES) :( */
 nav {
 	position:fixed;
+	overflow:auto;
 	top:0;
 	left:0;
 	width:340px;
@@ -286,7 +287,6 @@ pre {
 img {
 	display:block;
 	max-width:98%;
-	border:1px solid white;
 }
 .shbar {
 	border-top:2px solid #BBB;
@@ -333,4 +333,7 @@ blockquote {
 	#paper{
 		margin:0 auto;
 	}
+}
+img {
+	border:1px solid white;
 }

@@ -1,6 +1,7 @@
 #!/bin/mksh
 
 mksh scripts/gen.layout
+mksh scripts/gen.css
 make
-mksh scripts/insert.files
-mksh scripts/gen.thispage
+scripts/insert.files
+scripts/gen.thispage

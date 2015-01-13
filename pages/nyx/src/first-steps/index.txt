@@ -35,7 +35,7 @@ Still logged in as root, you can now create a unique user:
 
 ====
 useradd -m -G users,wheel,audio,video,cron -s /bin/mksh NAME
-passwd
+passwd NAME
 ====
 
 Having a user in the group "wheel" is very important, otherwise you won't be able to gain root access.

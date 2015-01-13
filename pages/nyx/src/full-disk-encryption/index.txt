@@ -1,0 +1,82 @@
+: full disk encryption
+
+or how not to give a heck about stolen hard drives 
+
+Nyx comes with all you need to run it from within a completely encrypted hard drive. 
+In this document I want to point out why you might need it, what might be downsides, explain how it works in nyx and how you can use it.
+
+:: So, why should I care?
+
+A few points:
+
+* You want to store something private that you don't want to end up on the internet 
+* You don't want someone to impersonate you 
+* You don't want someone to stalk your every keystroke (or webcam, or ...) 
+* You don't want someone to install malware on your device 
+* You don't want someone to put things on your device without your consent 
+* You don't want someone to redirect every single webpage you try to access to this: [1] 
+
+Full disk encryption can make it a lot harder for someone to commit any of those on a device someone has physical access to. Preventing access to a running system just by software, over a network e.g. is a completely different topic that has to be tackled by only using software known to be written securely and by configuring and using it in a secure manner.
+
+:: Ok, but why do I need /full/ disk encryption?
+
+Isn't that a bit over the top? 
+
+Depending on your expertise in this field, you might reply: 
+'But I have set up a password on my device/ user account/ etc.! How would you get access without knowing the password?' 
+Since we are talking about stolen hardware (or hardware someone has physical access to in general), the answer is: easily. Like: /very/ easily. 
+As long as the set up password isn't used to encrypt /all/ the data on the device in a secure manner, there are ways to read and change remaining unencrypted data and work your way from there to whatever might actually be encrypted. 
+ 
+We don't even have to go this far in most cases: You run Windows and set up a password for your user account thinking, only you have access? You are wrong. In the year 2014, most consumer products don't come with encryption by default, with very bad encryption or without encryption at all. Using a password for your user account doesn't encrypt anything (by default). 
+This doesn't only apply to Windows, but to all non-encrypting mechanisms that only try to deny access to something from within the running system. They are simply not /meant/ to be used to secure data someone has physical access to. Their job is something different. Encryption is the only way to make physically accessible data unreadable. Otherwise the data is still there, unencrypted, ready to grab. All I have to do is to access it from something that isn't the system in which you set up that password. 
+This is as simple as booting the device from a portable system on a pen drive (which can be done very fast, while you are on lunch break, or on the toilet) or by taking out the hard drive and read it from another device. 
+
+Now, what about encrypted containers, partitions or other methods to encrypt only some data, the actual sensible type of data? 
+While this is a much better approach which is also actually meant to secure data someone has physical access to, it still isn't ideal either. 
+In this case there is still unencrypted data left. This unencrypted data doesn't have to be anything sensible or interesting, I'm rather talking about files containing programs and configurations of programs. 
+Someone with access to your device can still access those files to alter them in a way, which weakens or completely disables the encryption of the sensible data the next time you access it, just to break the weakened encryption or grab now unencrypted sensible data at the next chance of access. 
+Or even better: The suspect just installs something that sends everthing needed right away over the net the next time you're online with the device. 
+In the moment the altered device will be used by someone who can decrypt the encrypted data, the data can be stolen.
+
+We conclude: to give someone an actual challenge to access your data, you have to encrypt every single bit of it.
+
+:: downsides and problems
+
+You might wonder: 'So why isn't everyone doing it?' 
+The most important reasons will most likely involve usabilty. 
+
+::: speed :::
+
+One reason to not use it can be slow hardware. Encryption has (most often) to be done by the processor. Very slow ones might have a problem running whatever you want it to run nicely while also en- and decrypting stuff in the background. These days though, even phones are fast enough to do it.
+
+::: setting it up :::
+
+To set up a full disk encryption can be hard. On nyx though, I think it's not. [2]
+
+::: using it in a daily manner :::
+
+There can be implementations, that make it a complicated and confusing thing to use encrypted systems every day. But again, I tried to make it as easy as possible. In the end, you only need to stick in a pen drive into your device before using it and to make sure not to hand it out to someone you don't trust. So, it's just like a physical key for your front door. You can also carry it around on your key ring, that's what I do.
+
+::: dealing with the consequences once an error happens :::
+
+Due to how it works, a fully encrypted disk is more vulnerable to data loss in the sense that all the data at once can be completely lost and not recoverable, once a hardware error happens or if you screw up fiddling with the encrypted drive after the setup. 
+While having obvious downsides, this can also be considered an upside. Sometimes, you might want to really destroy data and make it unrecoverable. On a fully encrypted disk, this is as simple as deleting the master key. We will come to such details in a moment. 
+
+::: actual encryption of every single bit of data is not practically possible :::
+
+Besides the data written on hard drives that contains your operating system etc. there's also code running on built-in hardware (firmware) which it needs to operate. This data can also be manipulated to break into systems and you won't really be able to secure normal consumer hardware against this attack vector. One could argue that full disk encryption isn't really in place as long as this remains. I would argue that you should't make breaking into your system easier than neccessary. Messing with firmware to take control of your system at least is another level of difficulty and needs a lot more preperation to do. 
+For the reason that a system just needs some unecrypted data to start with, we'll also need to put /some/ unencrypted data somewhere ourselves. But this is what we'll use the pen drive for, so that we can minimize the chance of exposure of the unencrypted data to someone you don't trust by carrying it on your key ring etc. and to keep the unencrypted data used to decrypt the encrypted data seperate from it.
+
+:: how full disk encryption is done on nyx 
+
+Nyx uses dm-crypt [3] (which provides built-in cryptography features in the linux kernel) and LUKS [4] to manage the keys, which is a common and well trusted combination to do the job. 
+There are nice and detailed documentation for how they work here [3] and here [4]. This is a short one: 
+A small amount of data in the LUKS format is written on the encrypted disk. This data contains a strong master key, which itself is encrypted by a given passphrase, and other information and data needed, to make this master key usable after providing the set passphrase. This masterkey is then being used to encrypt every data that is written to the disk and to decrypt data that is read from it. Only who can access this decrypted masterkey can also decrypt the data on disk. If the masterkey is altered or gets lost, the data encrypted by it can't be decrypted anymore. LUKS however makes it possible to use different passphrases, add, delete and alter them to access the masterkey which remains unchanged, so that passphrases can be changed without losing data previously written. 
+
+to be continued
+
+[1] https://www.youtube.com/watch?v=IPGHrgHWO7s
+[2] tutorial to set up FDE on nyx. not written yet.
+[3] https://code.google.com/p/cryptsetup/wiki/DMCrypt
+[4] http://cryptsetup.googlecode.com/svn-history/r42/wiki/LUKS-standard/on-disk-format.pdf
+

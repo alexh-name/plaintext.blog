@@ -29,6 +29,7 @@ function page_head {
                        <li><a href="/blog/">blog</a></li>
                        <li><a href="/todo/">todo</a></li>
                        <li><a href="/about/">about</a></li>
+                       <li><a href="/full-disk-encryption/">full disk encryption</a></li>
                        <li><a href="/first-steps/">first steps</a></li>
                 </ul>
         </nav>

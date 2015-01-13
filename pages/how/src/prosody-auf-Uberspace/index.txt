@@ -1,5 +1,21 @@
 : prosody auf Uberspace :
 
+::: updates
+
+2015.01.13:
+
+Wie mir freundlicherweise von Moritz ( @el_golfo ) mitgeteilt wurde, fehlten in der SSL-Konfiguration die Optionen 
+
+====
+[...] "single_dh_use", "single_ecdh_use" [...]
+====
+
+wie sie hier beschrieben werden [12]. Die habe ich nun hinzugefügt, ist empfehlenswert. 
+Diese erschweren kurz gesagt eine potentielle Attacke auf die Server-Client-Verbindung, wenn OpenSSL "schwache" Primzahlen für DH-Parameter nutzt. OpenSSL tut das aber nur, wenn explizit gesetzt [13]. 
+Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürchtet.
+
+::: /updates
+
 Nach dieser Anleitung wird es möglich sein, prosody mit den derzeit stärksten ciphers zu betreiben.
 Das gibt dann beim IM Observatory [0] ein 'A'.
 
@@ -52,7 +68,7 @@ sed 's/UUSER/HierEuerNutzername/g' -i ~/.bash_profile
 Damit der Spaß auch Anwendung findet:
 
 ====
-source ~/.bash_profile
+. ~/.bash_profile
 ====
 
 Jetzt installieren wir die Module, die prosody braucht [5]. 
@@ -175,7 +191,7 @@ VirtualHost "domain.tld" -- anpassen!
 		-- Best ciphers for perfect forward secrecy.
 		ciphers = "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:EDH+aRSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128";
  
-        	options = { "no_ticket", "no_compression", "no_sslv2", "no_sslv3", "cipher_server_preference" }
+        	options = { "no_sslv2", "no_sslv3", "no_ticket", "no_compression", "cipher_server_preference", "single_dh_use", "single_ecdh_use" }
 }
 ====
 
@@ -292,3 +308,5 @@ Das kann dann so [10] [11] aussehen.
 [9] http://wiki.xmpp.org/web/SRV_Records
 [10] https://xmpp.net/result.php?id=77936
 [11] https://xmpp.net/result.php?id=77953
+[12] http://prosody.im/doc/advanced_ssl_config?s%5B%5D=ssl#options
+[13] http://www.openssl.org/docs/apps/dhparam.html
