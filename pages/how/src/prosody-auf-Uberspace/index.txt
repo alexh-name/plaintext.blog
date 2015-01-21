@@ -2,6 +2,13 @@
 
 ::: updates
 
+2015.01.21:
+
+Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
+Ich persönlich behalte die Option bei, da die Infos mir - nun ja - beim Debuggen helfen. Wie im Geiste des letzten Updates sei ohnehin gesagt: Wer die genutzte IP nirgendwo aufgezeichnet wissen möchte, sollte sie sowieso korrekt verschleiern, etwa mit TOR. Lernt und lehrt eure Nutzer, wie. Alles andere ist falsche Sicherheit.
+
+Außerdem habe ich noch eine kurze Beschreibung verlinkt, wie ihr Zertifikatketten korrekt zusammensetzt. Dank für die Anregung geht hier an @roflthecat.
+
 2015.01.13:
 
 Wie mir freundlicherweise von Moritz ( @el_golfo ) mitgeteilt wurde, fehlten in der SSL-Konfiguration die Optionen 
@@ -25,7 +32,7 @@ Zunächst installiert ihr euch die aktuelle OpenSSL-Version lokal in eurem $HOME
 Auf https://www.openssl.org/source/ könnt ihr den Link zur neuesten Version finden, markiert mit '[LATEST]'.
 
 ====
-toast arm https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz
 ====
 
 Testen, welche Version von Lua von deinem Uberspace-Account verwendet wird:
@@ -120,6 +127,8 @@ openssl req -new -key prosody_domain.tld_private.key -out prosody_domain.tld_cer
 Wichtig für uns ist nur 'CommonName'; hier muss der Domainname stehen, z.B. 'domain.tld'. 
 Mit dem Inhalt von prosody_domain.tld_cert.csr lässt sich nun ein kostenloses signiertes Zertifikat erstellen, bei CaCert.org [7] oder StartCom [8].
 
+Näheres zu Zertifikaten (insbesondere Certificate chains) hier [14].
+
 Das Zertifikat einfügen in ~/var/prosody/ssl/prosody_domain.tld.crt
 
 Zertifikatsanfrage wieder entfernen:
@@ -170,7 +179,8 @@ modules_enabled = {
 };
 daemonize = false; -- IMPORTANT for daemontools! DO NOT EDIT!  
 data_path = "/home/UUSER/var/prosody/data";  
-log = { "*console" } -- IMPORTANT for daemontools! DO NOT EDIT!  
+log = { info = "*console" } -- IMPORTANT for daemontools! DO NOT EDIT! "*console" schickt den Output in daemontools Konsole. 
+-- log = { "*console" } -- diese Zeile anstelle obiger, wenn ihr auch Debug-Infos wollt. Achtung: IPs werden dann auch geloggt.
 allow_registration = false;  
 s2s_ports = { XXXXX } -- Server to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen!
 c2s_ports = { XXXXX } -- Client to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen! 
@@ -296,6 +306,75 @@ Trotzdem ist es noch eine gute Idee, bei deinem Registrar die entsprechenden DNS
 Zu guter Letzt: Teste deinen Prosody XMPP-Server im IM Observatory. 
 Das kann dann so [10] [11] aussehen.
 
+:: das Ganze nun aktuell halten ::
+
+Habt iht Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein wichtiges Update eines der Lua-Module gibt, werdet ihr sie updaten wollen.
+
+Links zum Im-Auge-behalten: 
+
+====
+prosody: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log) 
+OpenSSL: https://www.openssl.org/source/ 
+====
+
+::: prosody :::
+
+coming soon
+
+::: OpenSSL :::
+
+Das ist simpel. Wenn ihr eine neue Version gefunden habt, baut zuerst das Paket aus den neuen Quellen:
+
+====
+toast build https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+====
+
+War das erfolgreich, beendet prosody
+
+====
+svc -d ~/service/prosody
+====
+
+und entfernt die Verlinkung zum jetzigen OpenSSL:
+
+====
+toast disarm openssl
+====
+
+und fügt dann eine zum neuen hinzu:
+
+====
+toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+====
+
+Ihr solltet das gewünschte Ergebnis nun sehen können:
+
+====
+$ toast status openssl
+openssl
+  version 1.0.1j: stored
+    urls:
+      https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+    build 1: built
+  version 1.0.1l: stored
+    urls:
+      https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+    build 1: armed
+====
+
+Die vorige Version ist zwar noch "built" und vorhanden, aber nur die neue auch "armed".
+Wollt ihr die alte Version ganz loswerden, reicht ein
+
+====
+toast remove https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+====
+
+Startet nun natürlich noch prosody wieder:
+
+====
+svc -u ~/service/prosody
+====
+
 [0] https://xmpp.net/
 [1] http://pastebin.com/6ZmHsJ7U
 [2] https://wiki.uberspace.de/system:toast
@@ -310,3 +389,4 @@ Das kann dann so [10] [11] aussehen.
 [11] https://xmpp.net/result.php?id=77953
 [12] http://prosody.im/doc/advanced_ssl_config?s%5B%5D=ssl#options
 [13] http://www.openssl.org/docs/apps/dhparam.html
+[14] http://prosody.im/doc/certificates
