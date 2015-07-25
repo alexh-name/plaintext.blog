@@ -24,3 +24,14 @@ deny from all
 Options SymLinksIfOwnerMatch -Indexes
 
 AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresDefault "access plus 1 weeks"
+# CSS
+ExpiresByType text/css "access plus 1 weeks"
+# HTML
+ExpiresByType text/html "access plus 0 seconds"
+# JavaScript
+ExpiresByType application/javascript "access plus 1 weeks"
+</IfModule>
