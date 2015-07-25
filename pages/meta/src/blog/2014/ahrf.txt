@@ -1,0 +1,15 @@
+<!-- DATE: 2014-12-06 -->
+<!-- DESC: using ahrf -->
+
+: using ahrf
+
+Ypnose [1] finished his ascii file format + interpreter called ahrf [2]. 
+The interpreter is a very simple and elegant awk script, which makes it utterly easy to customize, and the file format is a pleasure to write, edit and read. 
+I switched my whole website from using self written html to ahrf - thus converting every single post so far - and it was really worth it. Having a simple, straight ahead human readable ascii of your posts and having them converted into shiny html for the web is just a very nice thing.
+
+Putting out new posts will be much easier and fun now.
+
+2014.12.06
+
+[1] http://ywstd.fr/
+[2] https://github.com/Ypnose/ahrf

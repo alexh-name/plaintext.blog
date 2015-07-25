@@ -1,0 +1,5 @@
+: nice font rendering
+
+(without corefonts)
+
+soon

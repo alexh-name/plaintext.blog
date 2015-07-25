@@ -1,0 +1,392 @@
+: prosody auf Uberspace :
+
+::: updates
+
+2015.01.21:
+
+Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
+Ich persönlich behalte die Option bei, da die Infos mir - nun ja - beim Debuggen helfen. Wie im Geiste des letzten Updates sei ohnehin gesagt: Wer die genutzte IP nirgendwo aufgezeichnet wissen möchte, sollte sie sowieso korrekt verschleiern, etwa mit TOR. Lernt und lehrt eure Nutzer, wie. Alles andere ist falsche Sicherheit.
+
+Außerdem habe ich noch eine kurze Beschreibung verlinkt, wie ihr Zertifikatketten korrekt zusammensetzt. Dank für die Anregung geht hier an @roflthecat.
+
+2015.01.13:
+
+Wie mir freundlicherweise von Moritz ( @el_golfo ) mitgeteilt wurde, fehlten in der SSL-Konfiguration die Optionen 
+
+====
+[...] "single_dh_use", "single_ecdh_use" [...]
+====
+
+wie sie hier beschrieben werden [12]. Die habe ich nun hinzugefügt, ist empfehlenswert. 
+Diese erschweren kurz gesagt eine potentielle Attacke auf die Server-Client-Verbindung, wenn OpenSSL "schwache" Primzahlen für DH-Parameter nutzt. OpenSSL tut das aber nur, wenn explizit gesetzt [13]. 
+Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürchtet.
+
+::: /updates
+
+Nach dieser Anleitung wird es möglich sein, prosody mit den derzeit stärksten ciphers zu betreiben.
+Das gibt dann beim IM Observatory [0] ein 'A'.
+
+Teile der Anleitung habe ich von hier [1] übernommen, da sie da schon ausformuliert waren.
+
+Zunächst installiert ihr euch die aktuelle OpenSSL-Version lokal in eurem $HOME mit toast [2] (dauert ca. 3-5 Minuten). 
+Auf https://www.openssl.org/source/ könnt ihr den Link zur neuesten Version finden, markiert mit '[LATEST]'.
+
+====
+toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+====
+
+Testen, welche Version von Lua von deinem Uberspace-Account verwendet wird:
+
+====
+lua -v
+ 
+Lua 5.1.4  Copyright (C) 1994-2008 Lua.org, PUC-Rio
+====
+
+5.1.4 passt! Denn Lua 5.2 wird aktuell noch nicht von Prosody unterstützt.
+
+Falls bei euch Lua 5.2 angezeigt wurde, ist bei euch sicherlich ein entsprechender Eintrag für PATH in ~/.bash_profile. 
+Das müsstet ihr anpassen.
+
+Als nächstes holen wir und mit luarocks die neuesten Module für prosody. PFS wird zB sonst nicht funktionieren [3]. 
+Dafür passen wir jetzt LUA_PATH und LUA_CPATH an, sonst kann lua die lokal installierten Module gleich nicht finden. 
+Anders als im Uberspace-Wiki beschrieben [4], werden wir den Pfad NICHT mit einem simplen
+
+====
+luarocks path >> .bash_profile
+====
+
+hinzufügen können (leider), sondern ihn so aussehen lassen:
+
+====
+# added for Prosody and Luarocks
+export LUA_PATH='/home/UUSER/.luarocks/share/lua/5.1/?.lua;/home/UUSER/.luarocks/share/lua/5.1/?/init.lua;./?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/home/UUSER/.luarocks/share/lua/5.1/?.lua;/home/UUSER/.luarocks/share/lua/5.1/?/init.lua;./?.lua;/usr/lib64/lua/5.1/?.lua;/usr/lib64/lua/5.1/?/init.lua;/home/UUSER/.luarocks/share/lua/5.1/?.lua;/home/UUSER/.luarocks/share/lua/5.1/?/init.lua;./?.lua'
+export LUA_CPATH='/home/UUSER/.luarocks/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?.so;/home/UUSER/.luarocks/lib/lua/5.1/?.so;./?.so;/usr/lib64/lua/5.1/?.so;/usr/lib64/lua/5.1/loadall.so;/home/UUSER/.luarocks/lib/lua/5.1/?.so'
+====
+
+Wieso? Unter anderem, weil sonst nicht euer lokal installiertes luarocks-Verzeichnis am Anfang des Pfades stehen würde. 
+Die lokal installierten Module sollen aber bevorzugt werden. 
+Ersetzt natürlich noch 'UUSER' (uberspace-user) mit eurem echten Nutzernamen:
+
+====
+sed 's/UUSER/HierEuerNutzername/g' -i ~/.bash_profile
+====
+
+Damit der Spaß auch Anwendung findet:
+
+====
+. ~/.bash_profile
+====
+
+Jetzt installieren wir die Module, die prosody braucht [5]. 
+Achtet auf die letzte Zeile. Hier können wir nämlich das lokal installierte, aktuelle OpenSSL jetzt für luasec gebrauchen:
+
+====
+luarocks install luasocket --local
+luarocks install luaexpat --local
+luarocks install luafilesystem --local
+luarocks install luasec --local OPENSSL_DIR=~/.toast/armed/usr/local/
+====
+
+Nach Erfolg sieht das dann etwa so aus:
+
+====
+luarocks list
+ 
+Installed rocks:
+----------------
+ 
+luaexpat
+   1.3.0-1 (installed) - /home/UUSER/.luarocks/lib/luarocks/rocks
+ 
+luafilesystem
+   1.6.2-2 (installed) - /home/UUSER/.luarocks/lib/luarocks/rocks
+ 
+luasec
+   0.5-2 (installed) - /home/UUSER/.luarocks/lib/luarocks/rocks
+ 
+luasocket
+   3.0rc1-1 (installed) - /home/UUSER/.luarocks/lib/luarocks/rocks
+====
+
+Jetzt kann es mit der eigentlichen Prosody Installation weitergehen!
+Aktuelle Quellen hier [6] zu finden.
+
+====
+toast arm https://prosody.im/downloads/source/prosody-0.9.6.tar.gz
+ 
+mkdir -p ~/var/prosody/data
+mkdir -p ~/var/prosody/ssl
+ 
+cd ~/var/prosody/ssl/
+openssl dhparam -out dh-4096.pem 4096
+openssl genrsa -out prosody_domain.tld_private.key 4096
+openssl req -new -key prosody_domain.tld_private.key -out prosody_domain.tld_cert.csr
+====
+
+Wichtig für uns ist nur 'CommonName'; hier muss der Domainname stehen, z.B. 'domain.tld'. 
+Mit dem Inhalt von prosody_domain.tld_cert.csr lässt sich nun ein kostenloses signiertes Zertifikat erstellen, bei CaCert.org [7] oder StartCom [8].
+
+Näheres zu Zertifikaten (insbesondere Certificate chains) hier [14].
+
+Das Zertifikat einfügen in ~/var/prosody/ssl/prosody_domain.tld.crt
+
+Zertifikatsanfrage wieder entfernen:
+
+====
+rm ~/var/prosody/ssl/prosody_domain.tld_cert.csr
+====
+
+Erstellt noch ein pid-file:
+
+====
+touch ~/var/prosody/prosody.pid
+====
+
+Und nun prosody konfigurieren: Eine kommentierte config liegt in ~/.toast/armed/etc/prosody/prosody.cfg.lua.
+Kann nicht schaden, die mal für Referenzen beiseite zu legen:
+
+====
+cp ~/.toast/armed/etc/prosody/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua.stock
+====
+
+Wir schreiben unsere config jedoch nach ~/var/prosody/data/prosody.cfg.lua, damit sie bei späteren Updates mit toast nicht überschrieben wird. 
+Folgende config wird so schon funktionieren, wie es die allermeisten brauchen. 
+Anpassen müsst ihr unbedingt wieder UUSER (siehe sed-Schnippsel), eure domain und die Ports, die ihr beim lieben Uberspace-Team vorher erfragt:
+
+====
+pidfile = "/home/UUSER/var/prosody/prosody.pid";
+admins = { "admin@domain.tld" }
+modules_enabled = {
+	"roster";
+	"saslauth";
+	"tls";
+	"dialback";
+	"disco";
+	"private";
+	"vcard";
+	"privacy";
+	"version";
+	"uptime";
+	"time";
+	"ping";
+	"posix";
+	"pep";
+	"register";
+	"admin_adhoc";
+	"motd";
+	"welcome";
+};
+daemonize = false; -- IMPORTANT for daemontools! DO NOT EDIT!  
+data_path = "/home/UUSER/var/prosody/data";  
+log = { info = "*console" } -- IMPORTANT for daemontools! DO NOT EDIT! "*console" schickt den Output in daemontools Konsole. 
+-- log = { "*console" } -- diese Zeile anstelle obiger, wenn ihr auch Debug-Infos wollt. Achtung: IPs werden dann auch geloggt.
+allow_registration = false;  
+s2s_ports = { XXXXX } -- Server to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen!
+c2s_ports = { XXXXX } -- Client to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen! 
+c2s_require_encryption = true  
+s2s_require_encryption = true  
+authentication = "internal_hashed" -- do not save passphrases in cleartext!
+ 
+VirtualHost "domain.tld" -- anpassen!  
+	enabled = true
+ 
+	ssl = {  
+		key = "/home/UUSER/var/prosody/ssl/prosody_domain.tld_private.key";
+		certificate = "/home/UUSER/var/prosody/ssl/prosody_domain.tld.crt";
+ 
+		-- Allow perfect forward secrecy.
+		dhparam = "/home/UUSER/var/prosody/ssl/dh-4096.pem";
+ 
+		-- Best ciphers for perfect forward secrecy.
+		ciphers = "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:EDH+aRSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128";
+ 
+        	options = { "no_sslv2", "no_sslv3", "no_ticket", "no_compression", "cipher_server_preference", "single_dh_use", "single_ecdh_use" }
+}
+====
+
+Nett zu haben ist auch die muc(multi user chat)-Funktion, sie erlaubt das erstellen von chatrooms. 
+Sie setzt allerdings eine subdomain voraus und ist daher davon abhängt, ob euer Zertifikat das zulässt. 
+Falls ja, könnt ihr folgendes an das Ende der config hängen:
+
+====
+Component "subdomain.domain.tld" "muc"
+	name = "EinName"
+	restrict_room_creation = false --- user dürfen Räume selbst erstellen
+====
+
+Jetzt verlinken wir unsere config dorthin, wo prosody sie erwarten wird:
+
+====
+rm ~/.toast/armed/etc/prosody/prosody.cfg.lua
+ln -s ~/var/prosody/data/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
+====
+
+und erstellen dann einen daemontools-service.
+Falls das euer erster ist:
+
+====
+uberspace-setup-svscan
+====
+
+sonst überspringen und hier weiter:
+
+====
+uberspace-setup-service prosody ~/.toast/armed/bin/prosody
+====
+
+Testen ob prosody läuft:
+
+====
+prosodyctl status
+ 
+Prosody is running with PID XXXX
+====
+
+Testen ob prosody auch die über luarocks installierten Module nutzt:
+
+====
+prosodyctl about
+ 
+Prosody unknown
+ 
+# Prosody directories
+Data directory:  	/home/UUSER/.toast/armed/var/lib/prosody
+Plugin directory:	/home/UUSER/.toast/pkg/prosody/v0.9.4/1/root/lib/prosody/modules/
+Config directory:	/home/UUSER/.toast/armed/etc/prosody
+Source directory:	/home/UUSER/.toast/pkg/prosody/v0.9.4/1/root/lib/prosody
+ 
+# Lua environment
+Lua version:             	Lua 5.1
+ 
+Lua module search paths:
+  /home/UUSER/.toast/pkg/prosody/v0.9.4/1/root/lib/prosody/?.lua
+  /home/UUSER/.luarocks/share/lua/5.1/?.lua
+  /home/UUSER/.luarocks/share/lua/5.1/?/init.lua
+  /usr/share/lua/5.1/?.lua
+  /usr/share/lua/5.1/?/init.lua
+  /home/UUSER/.luarocks/share/lua/5.1/?.lua
+  /home/UUSER/.luarocks/share/lua/5.1/?/init.lua
+  /usr/lib64/lua/5.1/?.lua
+  /usr/lib64/lua/5.1/?/init.lua
+  /home/UUSER/.luarocks/share/lua/5.1/?.lua
+  /home/UUSER/.luarocks/share/lua/5.1/?/init.lua
+ 
+Lua C module search paths:
+  /home/UUSER/.toast/pkg/prosody/v0.9.4/1/root/lib/prosody/?.so
+  /home/UUSER/.luarocks/lib/lua/5.1/?.so
+  /usr/lib/lua/5.1/?.so
+  /home/UUSER/.luarocks/lib/lua/5.1/?.so
+  /usr/lib64/lua/5.1/?.so
+  /usr/lib64/lua/5.1/loadall.so
+  /home/UUSER/.luarocks/lib/lua/5.1/?.so
+ 
+LuaRocks:        	Installed (2.1.2)
+ 
+# Lua module versions
+lfs:     	LuaFileSystem 1.6.2
+lxp:     	LuaExpat 1.3.0
+pposix:  	0.3.6
+socket:  	LuaSocket 3.0-rc1
+ssl:     	0.5.PR
+====
+
+Wichtig ist vorallem der letzte Eintrag: ssl 0.5.PR 
+Sollte hier nicht mindestens 0.5 (damit ist luasec gemeint) stehen, hast du wahrscheinlich deine .bash_profile nicht richtig editiert oder den neuen PATH nicht exportiert.
+
+Account erstellen:
+
+====
+prosodyctl adduser admin@domain.tld
+====
+
+Nun kannst du dich zB mit deinem client anmelden. Die meisten clients werden nur funktionieren, wenn du den c2s-Port mit angibst. 
+Trotzdem ist es noch eine gute Idee, bei deinem Registrar die entsprechenden DNS-Einträge vorzunehmen, wenn du magst [9].
+
+Zu guter Letzt: Teste deinen Prosody XMPP-Server im IM Observatory. 
+Das kann dann so [10] [11] aussehen.
+
+:: das Ganze nun aktuell halten ::
+
+Habt iht Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein wichtiges Update eines der Lua-Module gibt, werdet ihr sie updaten wollen.
+
+Links zum Im-Auge-behalten: 
+
+====
+prosody: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log) 
+OpenSSL: https://www.openssl.org/source/ 
+====
+
+::: prosody :::
+
+coming soon
+
+::: OpenSSL :::
+
+Das ist simpel. Wenn ihr eine neue Version gefunden habt, baut zuerst das Paket aus den neuen Quellen:
+
+====
+toast build https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+====
+
+War das erfolgreich, beendet prosody
+
+====
+svc -d ~/service/prosody
+====
+
+und entfernt die Verlinkung zum jetzigen OpenSSL:
+
+====
+toast disarm openssl
+====
+
+und fügt dann eine zum neuen hinzu:
+
+====
+toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+====
+
+Ihr solltet das gewünschte Ergebnis nun sehen können:
+
+====
+$ toast status openssl
+openssl
+  version 1.0.1j: stored
+    urls:
+      https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+    build 1: built
+  version 1.0.1l: stored
+    urls:
+      https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+    build 1: armed
+====
+
+Die vorige Version ist zwar noch "built" und vorhanden, aber nur die neue auch "armed".
+Wollt ihr die alte Version ganz loswerden, reicht ein
+
+====
+toast remove https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+====
+
+Startet nun natürlich noch prosody wieder:
+
+====
+svc -u ~/service/prosody
+====
+
+[0] https://xmpp.net/
+[1] http://pastebin.com/6ZmHsJ7U
+[2] https://wiki.uberspace.de/system:toast
+[3] http://prosody.im/doc/depends/luasec/prosody
+[4] https://wiki.uberspace.de/development:lua
+[5] http://prosody.im/doc/depends
+[6] http://prosody.im/downloads/source/
+[7] http://www.cacert.org/
+[8] https://www.startssl.com/
+[9] http://wiki.xmpp.org/web/SRV_Records
+[10] https://xmpp.net/result.php?id=77936
+[11] https://xmpp.net/result.php?id=77953
+[12] http://prosody.im/doc/advanced_ssl_config?s%5B%5D=ssl#options
+[13] http://www.openssl.org/docs/apps/dhparam.html
+[14] http://prosody.im/doc/certificates

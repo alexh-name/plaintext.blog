@@ -1,0 +1,2 @@
+cat extension/style.css > src/css/style.css
+cat extension/style.css.add >> src/css/style.css

@@ -1,0 +1,41 @@
+desc="$(<extension/description)"
+title="$(<extension/title)"
+
+list_h="\
+$(find src/blog/ -regextype posix-egrep -regex ".*\index.(txt|wtfhtml)$";\
+find src/{todo,about}/ -name index.* 2> /dev/null)"
+
+list_o="\
+$(find src/ \( -regextype posix-egrep -regex ".*\index.(txt|wtfhtml)$" ! \
+\( -wholename "src/blog/*" -or -wholename "src/todo/*" -or -wholename "src/about/*" \) \) \
+-printf '%T@ %p\n' | sort -k 1nr | sed 's/^[^ ]* //' )"
+
+# we replace '-' in the link-name, because whitespace in foldernames are replaced by '-' before.
+list="\
+$(for i in \
+$(print "$list_h\n$list_o" | cut -f 2 -d '/'); \
+do print "                       \<li\>\<a\ href\=\"\\/$i\\/\"\>\
+$(print $i | tr '-' ' ')\
+\<\\/a\>\<\\/li\>\\"; \
+done)"
+
+# escape: $.*[\]^&/
+
+menu="<nav>\\
+                <div id=\"backlink\">\\
+                        <a href=\"https:\\/\\/cosmofox\\.net\\/\">\&#8617;<\\/a>\\
+                <\\/div>\\
+                <div id=\"logo\">\\
+                        <a href=\"\\/\"><img src=\"\\/files\\/logo\\.png\" alt=\"$title\" ><\\/a>\\
+                <\\/div>\\
+                <div id=\"desc\">\\
+                        <p>$desc<\\/p>\\
+                <\\/div>\\
+                <ul>\\
+$list
+                <\\/ul>\\
+        <\\/nav>\\
+        <div id=\"paper\">\\
+        <article>"
+
+/bin/sed -e "s/<div>FOO<\/div>/$menu/" extension/layout > includes/layout

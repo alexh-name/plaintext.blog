@@ -1,0 +1,60 @@
+: first steps
+
+:: secure root
+
+As the default root password is available online, we'll need to change it.
+For the first login, you need to use:
+
+====
+user: nyx
+pw: actumagere
+====
+
+since it's not allowed to directly log in as root on nyx.
+You can now log into root:
+
+====
+su -
+pw: arslongavitabrevis
+====
+
+and set a unique password for root:
+
+====
+passwd
+====
+
+
+:: secure user
+
+::: add new unique user :::
+
+This is important as someone could use the online available pair of username and password otherwise. First we need to create another user.
+
+Still logged in as root, you can now create a unique user:
+
+====
+useradd -m -G users,wheel,audio,video,cron -s /bin/mksh NAME
+passwd NAME
+====
+
+Having a user in the group "wheel" is very important, otherwise you won't be able to gain root access.
+
+::: remove the default user :::
+
+First log out. First from root, than from the default user:
+
+====
+exit
+exit
+====
+
+Try to login as your unique user now. Did it work?
+Now log in again as root (remember too use the new password you've given earlier). Only root can remove a user:
+
+====
+su -
+userdel -r nyx
+====
+
+Well done.

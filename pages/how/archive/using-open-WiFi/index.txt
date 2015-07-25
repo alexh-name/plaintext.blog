@@ -1,0 +1,65 @@
+: using open WiFi
+
+(deutscher Text unten)
+
+:: Disclaimer (for the access points provided by me)
+
+These are the locations of all genuine access points provided by me:
+
+* 1 in DE, 14469 Potsdam, Bertha-von-Suttner-Str.
+
+All of them are exactly named "open WiFi. visit cosmofox.net/AP"
+
+I am not in control of TOR-network's quality in any direct manner. 
+
+I am just providing free and open access to it as good and secure as I can. You are responsible for taking security-measures on your side by yourself, whenever you are using a public WiFi, such as this one. In the following, I will list things you should keep in mind (without warranty of completeness).
+
+:: Things to keep in mind
+
+::: generally: Only use login data on encrypted websites. :::
+
+Using login data such as usernames and passwords through a public network can expose them to others. Protect them by using a secure tunnel (SSH, VPN, ...) or at least, only log into sites which encrypt the connection. Those site's addresses begin with "httpS" or are typically indicated by a lock/ shield/ etc by your browser.
+
+::: when using one of my open WiFis: You are browsing through TOR. :::
+
+TOR offers the possibility to surf with more anonymity. Also, it's the only way to share my internet access publicly without being responsible what /other/ people are doing with it. 
+On the downside, TOR can be occasionally slower than a direct access would be. Also, some servers block connections using TOR. 
+Learn more at torproject.org [1].
+
+::: when using one of my open WiFis: You are using my private connection. :::
+
+I previously routed all the open traffic through TOR [1] to prevent holding responsibility for what others do with my connection. Fortunately, a German Court decided this obsolete [2].
+This allows me to provide you with a speed up to 50mbits down / 10mbits up.
+
+
+: Ein offenes WLAN nutzen
+
+:: Haftungsausschluss (für die von mir betriebenen Netze)
+Dies sind die Standorte aller tatsächlich von mir betriebenen Netze:
+
+* 1 in DE, 14469 Potsdam, Bertha-von-Suttner-Str.
+
+Allesamt tragen exakt den Namen "open WiFi. visit cosmofox.net/AP"
+
+Ich habe keinen direkten Einfluss auf die Qualität des TOR-Netzwerks.
+Ich biete bloß einen offenen und kostenfreien Zugang zu dem Netzwerk, so gut und sicher es mir möglich ist. Für Sicherheitsmaßnahmen von Ihrer Seite, die Sie beachten sollten, wann immer Sie offene Netze nutzen (so wie dieses), sind Sie selber verantwortlich. Nachfolgend (ohne Anspruch auf Vollständigkeit) liste ich Dinge auf, die Sie im Hinterkopf beachten sollten.
+
+:: Was Sie beachten sollten
+
+::: generell: Benutzen Sie Zugangsdaten nur auf gesicherten Seiten. :::
+
+Die Eingabe von Zugangsdaten (wie Nutzernamen oder Passwörter) über offene Netze kann diese für andere zugänglich machen. Nutzen Sie also am besten einen sicheren Tunnel (SSH, VPN, ...) oder geben Sie wenigstens nur auf Webseiten ihre Zugangsdaten ein, die ihre Verbindungen verschlüsseln. Adressen solcher Seiten beginnen mit "httpS" oder werden von ihrem Browser typischerweise mit einem Schloss/ Schild/ etc gekennzeichnet.
+
+::: wenn Sie eines meiner "open WiFi"-Netze nutzen: Sie surfen über das TOR-Netzwerk. :::
+
+TOR bietet die Möglichkeit, mit mehr Anonymität zu surfen. Es ist außerdem die einzige Möglichkeit für mich, meinen Internetanschluss offen zu teilen, ohne verantwortlich gemacht zu werden, was /andere/ damit anstellen. 
+Nachteile sind, dass TOR gelegentlich langsamer ist als ein direkter Zugang und einige Server Verbindungen aus dem TOR-Netzwerk nicht zulassen. 
+Lernen Sie mehr über TOR auf torproject.org [1].
+
+::: wenn Sie eines meiner "open WiFi"-Netze nutzen: Sie nutzen meinen privaten Anschluss. :::
+
+Zuvor leitete ich sämtlichen offenen Verkehr durch TOR [1], um rechtlich nicht für das, was andere mit meinem Anchluss anstellen, verantwortlich zu sein. Zum Glück entschied nun ein Gericht, dass die sogenannte Störerhaftung ungültig [2] ist.
+Die erlaubt mir nun ein freies Netz mit Geschwindigkeiten von 50mbits down / 10mbits up zu bieten.
+
+[1] https://www.torproject.org/
+[2] http://www.wbs-law.de/abmahnung-filesharing/filesharing-entscheidung-bgh-keine-tatsaechliche-vermutung-fuer-taeterschaft-des-anschlussinhabers-wenn-zugriff-durch-dritte-moeglich-53379/>

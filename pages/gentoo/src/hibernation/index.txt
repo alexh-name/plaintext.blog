@@ -1,0 +1,132 @@
+: hibernation
+
+on a luks-encrypted root partition, inside swap-file and custom initramfs 
+aka suspend to disk
+
+date: 2014.03.13
+
+Only tested on an ext4-filesystem.
+
+Don't do something you are not sure of. This tutorial can lead to unbootable systems and data loss if done wrong. My advices here are based on my best knowledge and written to be understandable for most people. 
+Nevertheless, you are responsible for the things you do to your device.
+
+:: Requierments
+
+A linux-kernel, custom initramfs, sys-fs/e2fsprogs.
+
+::: Kernel configuration: :::
+
+====
+General setup  --->
+[*] Support for paging of anonymous memory (swap)
+ 
+Power management and ACPI options  --->
+[*] Hibernation (aka 'suspend to disk')
+====
+
+:: Preparing swap-file
+
+First, we need to create a file that will serve as the swap-file with the right size. 
+Attention: Be sure to be confident with the use of "dd". Using it wrong can destroy data very easily. 
+
+====
+dd if=/dev/zero of=PLACE-OF-SWAPFILE bs=1024 count=SIZE-IN-1024-BYTES
+====
+
+Replace "PLACE-OF-SWAPFILE" with the desired place of the swap-file (for example "/swapfile") and "SIZE-IN-1024-BYTES" with the desired size of the swap-file in bytes. 
+Next, we'll give it secure permissions:
+
+====
+chmod 600 /swapfile
+====
+
+And make it an actual swap-file:
+
+====
+mkswap /swapfile
+====
+
+To use it right now, do:
+
+====
+swapon /swapfile
+====
+
+To use it automatically after reboot, first add it to your fstab:
+
+====
+/swapfile	none	swap	sw	0 0
+====
+
+And make your init-system start the swap-services according to your system. 
+Using openrc, that would be:
+
+====
+rc-update add swap boot &amp;&amp; rc-update add swapfiles boot
+====
+
+:: Adding kernel options
+
+These are the needed kernel options: 
+
+1st:
+
+====
+resume=THE-DEVICE-WHERE-THE-SWAP-FILE-LIES-ON
+====
+
+Right. Not the file itself, but the decrypted device it lies on. 
+That might be /dev/dm-1 or /dev/mapper/root as examples. You need to know. 
+
+2nd:
+
+====
+resume_offset=#######
+====
+
+Here we need a value we get when running filefrag (part of sys-fs/e2fsprogs)
+
+====
+filefrag -v /swapfile
+====
+
+We'll get many lines. The third line on the top names the columns:
+
+====
+ext:     logical_offset:        physical_offset: length:   expected: flags:
+====
+
+Out of the first line of values we need the first value in the column "physical_offset:". 
+For example:
+
+====
+ ext:     logical_offset:        physical_offset: length:   expected: flags:
+   0:        0..   32767:      34816..     67583:  32768:       		
+====
+
+The desired value would be "25450496". 
+Here is a one-liner to get it for you:
+
+====
+filefrag -v /SWAP | grep '   0:' | cut -d ':' -f 3 | cut -d '.' -f 1 | sed 's/^[ \t]*//'
+====
+
+:: Adding the resume-part to your initramfs
+
+For making your system wake up from S5 power state to the session stored in the file instead of just booting normally,  we need to tell it so in the right moment.
+Remember: Your root partition needs to be already decrypted as it would be while a normal boot, but before letting the init system kick in to start a new session, we want the system to load the stored session. 
+Put something like the following after your decryption lines and before the ones who start the init:
+
+====
+RESMAJMIN=$(cat /sys/class/block/dm-1/dev) 
+echo $RESMAJMIN > /sys/power/resume
+====
+
+What do they do? The first line reads the major and minor number of the decrypted device the file lies on and stores them in the variable "RESMAJMIN". The second one writes them to the desired place to make the kernel take over the session stored in the file.
+
+====
+cat /sys/class/block/dm-*/dm/uuid
+====
+
+Can give you a hint what's the right dm-device. 
+Be carefull testing this. My first attempt always ended in a dangerously unstable system causing crashes and filesystem corruption.

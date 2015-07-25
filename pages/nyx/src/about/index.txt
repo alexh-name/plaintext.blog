@@ -1,0 +1,10 @@
+: about
+
+nyx is what I make out of the meta-Linux-distribution Gentoo.
+It aims to get as suckless as possible, step by step, thus taking some kind of top-down approach to a suckless Linux distribution.
+I'm constantly working on making it available to everyone and it shouldn't be taking much longer.
+You can follow my progress in this blog and on my git-repo [1].
+
+Also, I document everyday changes and progress here, as well as things that might be of interest for Gentoo- / Linux-users in general.
+
+[1] https://git.cosmofox.net

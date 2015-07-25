@@ -1,0 +1,8 @@
+<!-- DATE: 2014-06-08 -->
+<!-- DESC: open WiFi now w/o TOR-routing -->
+
+: 2014.06.08: open WiFi now without TOR-routing
+
+A German court decided the liable resposibility for connection owners obsolete! 
+I'm now able to provide up to 50mbit down / 10mbit up for anyone near my flat, as I don't have to route everything through TOR. 
+I will provide another AP with TOR-routig anyways as soon as possible.

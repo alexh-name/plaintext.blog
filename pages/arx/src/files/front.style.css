@@ -1,0 +1,23 @@
+@font-face{
+	font-family: 'crimson_textroman';
+	src: url('/files/fontfiles/crimsontext-roman-webfont.eot');
+	src: url('/files/fontfiles/crimsontext-roman-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/files/fontfiles/crimsontext-roman-webfont.woff') format('woff'),
+	url('/files/fontfiles/crimsontext-roman-webfont.ttf') format('truetype'),
+	url('/files/fontfiles/crimsontext-roman-webfont.svg#webfont') format('svg');
+}
+
+html {
+	font-family:crimson_textroman, serif;
+        background-color:Black;
+        font-size:100%;
+        text-align:center;
+}
+
+img {
+        max-width:100%;
+}
+
+h1,p {
+        color:White;
+}

@@ -1,0 +1,19 @@
+<!-- DATE: 2014-06-17 -->
+<!-- DESC: nice video playback with adobe flash -->
+
+: nice video playback with adobe flash (update)
+
+It appears that, in the new version (11.2.202.378) something's changed, so that
+
+====
+EnableLinuxHWVideoDecode = 1
+====
+leads to no advantage, but horribly unstable playback (radeon hd5700, mesa 8.1.0). Removing it, only leaving
+
+====
+OverrideGPUValidation = 1
+====
+
+is fine, giving the nice smooth & tearingless playback as before, also now without inverted colors.
+
+2014.06.17

@@ -1,0 +1,117 @@
+: owncloud on gentoo
+
+Needed packages:
+
+====
+www-apps/owncloud
+www-servers/lighttpd
+dev-lang/php
+====
+
+Create /etc/portage/package.use/owncloud with:
+
+====
+# required by virtual/httpd-php-5.5
+# required by www-apps/owncloud-7.0.1
+=dev-lang/php-5.5.16:5.5 curl fpm hash xmlwriter simplexml pdo json sqlite gd zip filter
+ 
+# required by dev-lang/php-5.5.16
+# required by www-apps/owncloud-7.0.1
+=app-admin/eselect-php-0.7.1-r3 fpm
+ 
+dev-lang/php iconv bzip2 crypt exif fileinfo session
+www-servers/lighttpd -php pcre
+====
+
+Start with installing app-admin/webapp-config and www-servers/lighttpd:
+
+====
+emerge -av1 app-admin/webapp-config && emerge -av www-servers/lighttpd
+====
+
+In '/etc/vhosts/webapp-config' replace:
+
+====
+vhost_server="apache"
+====
+
+with:
+
+====
+vhost_server="lighttpd"
+====
+
+Continue to install the rest:
+
+====
+emerge -avuN www-apps/owncloud dev-lang/php
+====
+
+In '/etc/lighttpd/lighttpd.conf' uncomment:
+
+====
+include "mod_fastcgi.conf"
+====
+
+and create '/etc/lighttpd/mod_fastcgi.conf' with this content:
+
+====
+server.modules += ("mod_fastcgi")
+fastcgi.server = ( ".php" =>
+  ( "localhost" =>
+    (
+      "host" => "127.0.0.1",
+      "port" => "9000"
+    )
+  )
+)
+====
+
+so that lighttpd actually executes some php.
+
+Also in '/etc/lighttpd/lighttpd.conf' add:
+
+====
+$HTTP["url"] =~ "^/owncloud/data/" {
+        url.access-deny = ("")
+}
+$HTTP["url"] =~ "^/owncloud($|/)" {
+        dir-listing.activate = "disable"
+}
+====
+
+as suggested in the owncloud documentation to make sensible data unreadable.
+
+In '/etc/php/fpm-php*/php-fpm.conf' uncomment:
+
+====
+; Unix user/group of processes
+; Note: The user is mandatory. If the group is not set, the default user's group
+;       will be used.
+user = lighttpd
+group = lighttpd
+====
+
+so that php code is executed with the permissions of our web server.
+
+To make sure that everything in the owncloud folder belongs to our webserver:
+
+====
+chown -R lighttpd:lighttpd /var/www/localhost/htdocs/owncloud
+====
+
+Finally start up our new services:
+
+====
+/etc/init.d/php-fpm start
+/etc/init.d/lighttpd start
+====
+
+and if they shall be started at bootup:
+
+====
+rc-update add php-fpm
+rc-update add lighttpd
+====
+
+<p>Now go and visit your servers subdirectory 'owncloud' with your browser and see if everything's fine.</p>

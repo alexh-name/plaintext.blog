@@ -1,0 +1,10 @@
+<!-- DATE: 2014-12-06 -->
+<!-- DESC: feeds now working -->
+
+: feeds are actually working now
+
+After importing all the posts and subpages to a more thought-through wswsh environment, feeds here and on all subpages are now actually working [0].
+
+2014.12.06
+
+[0] /atom.xml
