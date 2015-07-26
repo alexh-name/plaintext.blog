@@ -1,5 +1,37 @@
-: about :
+: about
 
-:: Why "Cosmofox"? ::
+:: Why "Cosmofox"?
 
 Why not?
+
+:: What is this ?
+
+Some kind of tech related blog or open notebook.
+
+:: What about?
+
+Whatever I stumbled upon / found out / tried out and want to share and / or
+want to look up later on.
+
+:: Are you stuck in the 90s? (aka your design sucks / y no JS yo?)
+
+My design might suck, but much more important is, that your design sucks much
+MUCH more if it depends on JS, databases and a CMS or framework with hundreds
+of thousands of lines of code just to display some text on the web [1]. Duh.
+Not to speak about the security implications.
+
+This site is generated with ahrf [2] and wswsh [3] and some of my own
+additions [4] [5]. What you see is a bunch of static plaintext files and that
+should be all you need for this kind of thing.
+
+When my design sucks, it's not the fault of those tools. Of course you can
+create awesome designs with just HTML and CSS.
+
+But: It is simple, functional, hackable, secure, fast and (as far as I can tell)
+accessible, which is more important anyway.
+
+[1] https://www.openhub.net/p/wordpress
+[2] https://github.com/Ypnose/ahrf
+[3] https://github.com/Ypnose/wswsh
+[4] https://github.com/snscltt/ahrf
+[5] https://github.com/snscltt/wswsh
