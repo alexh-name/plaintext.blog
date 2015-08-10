@@ -1,10 +1,5 @@
 : todo
 
-:: add
-
-* german version
-* usefull links
-
 :: migrate
 
-* howtos
+* a lot
