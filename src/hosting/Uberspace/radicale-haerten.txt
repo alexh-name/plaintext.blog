@@ -27,9 +27,16 @@ Dafür müssen wir erst sicher gehen, dass radicale mindestens python2.7.9 nutzt
 
 Ich habe radicale.py nach ~/bin/ und die config nach ~/etc/radicale/ gelegt. Bitte adaptieren wie nötig:
 
+Die Zeile in daemontools run sollte also python3 nutzen und also etwa so aussehen:
+
 ====
-sed -i -e 's/\/usr\/bin\/env\ python.*/\/usr\/bin\/env\ python3/' ~/bin/radicale.py \
-&& sed -i -e 's/protocol\ =\ .*/protocol\ =\ PROTOCOL_TLSv1_2/' ~/etc/radicale/config
+exec python3 ~/bin/radicale.py -D --config ~/etc/radicale/config  2>&1
+====
+
+Dann setzen wir noch ein aktuelles Protokoll in der config:
+
+====
+sed -i -e 's/protocol\ =\ .*/protocol\ =\ PROTOCOL_TLSv1_2/' ~/etc/radicale/config
 ====
 
 :: stärkere Cipher nutzen
