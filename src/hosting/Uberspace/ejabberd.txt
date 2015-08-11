@@ -83,7 +83,8 @@ exec $ERL $NAME $ERLANG_NODE -noinput -pa $EJABBERD_EBIN_PATH -mnesia dir '"/hom
 Im Grunde habe ich erstens die Funktion "live" auseinandergebröselt, sodass nurnoch der eine eigentliche Prozess übrig bleibt, und zwischen "exec" und "2>&1" gesetzt, und zweitens zurückverfolgt, welche notwendigen Variablen im Skript gesetzt werden und diese in korrekter Reihenfolge kopiert.
 
 
-/Achtung/:
+**Achtung**
+:
 
 * Prüft alle Variablen in eurer eigenen "ejabberd/sbin/ejabberdctl" im Installationsverzeichnis nach. Die Werte der Variablen werden bei der Installation erzeugt und werden von Installation zu Installation unterschiedlich sein. Z.B. müsst ihr unbedingt "/home/olek/_working/ejabberd/" überall durch euer eigenes Installationsverzeichnis ersetzen.
 * Wenn ihr eure Variablen aus der "ejabberd/sbin/ejabberdctl" übernehmt, wird euch auffallen, dass NODE=ejabberd gesetzt ist. Das wird bei einem shared hoster wie Uberspace zu Problemen führen. Normalerweise würdet ihr diesen Wert in einer eigenen Konfigurationsdatei überschreiben, aber mit dieser Methode müsst ihr sie hier ersetzen (was auch keine Nachteile hat). Setzt die Variable mit eurem Uberspace-Nutzernamen wie in ich meinem Beispiel mit "olek". (Das ganze hat zum Hintergrund, dass keine nodes mit gleichem Namen laufen können. Damit es also keine Überschneidungen mit anderen Nutzern auf dem gleichen Host gibt, ist der Nutzername eine gute Wahl, da der garantiert einzigartig ist.)
