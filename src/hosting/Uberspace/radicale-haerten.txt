@@ -1,5 +1,6 @@
 : radicales Crypto härten
 
+radicale ist ein Server für CardDAV und CalDAV. [0]
 In der default-Konfiguration [1] nutzt radicale keine verschlüsselte Verbindung. Das geht besser:
 
 :: Noch kein aktuelles OpenSSL installiert?
@@ -31,7 +32,7 @@ sed -i -e 's/\/usr\/bin\/env\ python.*/\/usr\/bin\/env\ python3/' ~/bin/radicale
 && sed -i -e 's/protocol\ =\ .*/protocol\ =\ PROTOCOL_TLSv1_2/' ~/etc/radicale/config
 ====
 
-:: staerkere Cipher nutzen
+:: stärkere Cipher nutzen
 
 An dieser Stelle wäre es schön, wenn wir Cipher für PFS nutzen könnten. Das ist ohne einen Eingriff in radicale selbst wohl aber nicht möglich. Wir könnten die verschiedenen  Diffie-Hellman-Ciphers auch einfach mit in die Liste nehmen, es würde an dieser Stelle aber nichts anderes bewirken, als jede Client-Server Kommunikation zu verlangsamen. Deshalb entscheide ich mich hier dafür, nur auf die nächststärkeren Cipher zurückzugreifen:
 
@@ -59,6 +60,7 @@ sed -i -e 's/ssl\ =.*/ssl\ =\ True/' ~/etc/radicale/config ; grep 'ssl = ' ~/etc
 
 Jetzt noch den Dienst neustarten!
 
+[0] http://radicale.org/
 [1] http://radicale.org/user_documentation/#idmain-configuration-file
 [2] https://wiki.uberspace.de/system:toast
 [3] https://docs.python.org/2/library/ssl.html#ssl.PROTOCOL_TLSv1_2
