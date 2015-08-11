@@ -1,11 +1,11 @@
 : radicales Crypto härten
 
-radicale ist ein Server für CardDAV und CalDAV. [0]
+radicale ist ein Server für CardDAV und CalDAV. [0] 
 In der default-Konfiguration [1] nutzt radicale keine verschlüsselte Verbindung. Das geht besser:
 
 :: Noch kein aktuelles OpenSSL installiert?
 
-Das brauchen wir später, um stärke Cipher nutzen zu können.
+Das brauchen wir später, um stärke Cipher nutzen zu können. 
 Hier setze ich toast voraus [2]. Wenn schon ein neueres OpenSSL installiert ist als das hier von mir vorgeschlagene, kann mit dem nächsten Punkt weitergemacht werden.
 Die Version kann mit
 
