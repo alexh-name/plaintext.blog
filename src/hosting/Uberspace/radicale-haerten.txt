@@ -1,9 +1,11 @@
 : radicales Crypto härten
 
+In der default-Konfiguration [1] nutzt radicale keine verschlüsselte Verbindung. Das geht besser:
+
 :: Noch kein aktuelles OpenSSL installiert?
 
 Das brauchen wir später, um stärke Cipher nutzen zu können.
-Hier setze ich toast voraus [1]. Wenn schon ein neueres OpenSSL installiert ist als das hier von mir vorgeschlagene, kann mit dem nächsten Punkt weitergemacht werden.
+Hier setze ich toast voraus [2]. Wenn schon ein neueres OpenSSL installiert ist als das hier von mir vorgeschlagene, kann mit dem nächsten Punkt weitergemacht werden.
 Die Version kann mit
 
 ====
@@ -20,7 +22,7 @@ Hier sollte nun "OpenSSL 1.0.1l 15 Jan 2015" ausgegeben werden.
 
 :: neuestes TLS-Protokoll nutzen
 
-Dafür müssen wir erst sicher gehen, dass radicale mindestens python2.7.9 nutzt [2]. Da Uberspace python3 mitbringt und radicale es auch unterstützt, nehmen wir einfach das.
+Dafür müssen wir erst sicher gehen, dass radicale mindestens python2.7.9 nutzt [3]. Da Uberspace python3 mitbringt und radicale es auch unterstützt, nehmen wir einfach das.
 
 Ich habe radicale.py nach ~/bin/ und die config nach ~/etc/radicale/ gelegt. Bitte adaptieren wie nötig:
 
@@ -44,7 +46,20 @@ Das kurze Skript sollte am Ende die gefundenen unterstützten Cipher ausgeben. D
 AES256-GCM-SHA384:AES256-SHA256:AES256-SHA
 ====
 
+:: auf Zertifikat und Key verweisen.
+
+Das macht ihr in der config mit "certificate" und "key".
+Noch kein Zertifikat? Tipps hier: [4]
+
+:: HTTPS aktivieren
+
+====
+sed -i -e 's/ssl\ =.*/ssl\ =\ True/' ~/etc/radicale/config ; grep 'ssl = ' ~/etc/radicale/config
+====
+
 Jetzt noch den Dienst neustarten!
 
-[1] https://wiki.uberspace.de/system:toast
-[2] https://docs.python.org/2/library/ssl.html#ssl.PROTOCOL_TLSv1_2
+[1] http://radicale.org/user_documentation/#idmain-configuration-file
+[2] https://wiki.uberspace.de/system:toast
+[3] https://docs.python.org/2/library/ssl.html#ssl.PROTOCOL_TLSv1_2
+[4] https://develovers.de/2015/03/ssl-bei-uberspace-einrichten/
