@@ -1,0 +1,20 @@
+: Crypto wall of shame
+
+Here I will post guides suggesting bad crypto who's authors didn't respond 4 weeks
+after I pointed out the bad suggestions. Then I will link to a better guide I found
+or wrote.
+
+- - -
+
+:: hyperrealm.com (libconfig) for insecure sources download
+
+Yes, this seems to be very common, but I have to start somewhere. 
+The authors of libconfig are promoting an insecure sources download via http without providing checksums. As there isn't any contact info I could find in a reasonable amount of time, I'm posting this here right away.
+
+::: alternatives
+
+Download via github [1]
+
+- - -
+
+[1] https://github.com/hyperrealm/libconfig
