@@ -44,14 +44,14 @@ sed -i -e 's/protocol\ =\ .*/protocol\ =\ PROTOCOL_TLSv1_2/' ~/etc/radicale/conf
 An dieser Stelle wäre es schön, wenn wir Cipher für PFS nutzen könnten. Das ist ohne einen Eingriff in radicale selbst wohl aber nicht möglich. Wir könnten die verschiedenen  Diffie-Hellman-Ciphers auch einfach mit in die Liste nehmen, es würde an dieser Stelle aber nichts anderes bewirken, als jede Client-Server Kommunikation zu verlangsamen. Deshalb entscheide ich mich hier dafür, nur auf die nächststärkeren Cipher zurückzugreifen:
 
 ====
-CIPHERS="$(openssl ciphers -tls1 \!DHE:\!EDH:\!DH:\!ECDHE:\!EECDH:\!ECDH:\!SRP:\!PSK:HIGH+AES256)" \
-&& sed -i -e "s/ciphers\ =\ .*/ciphers\ =\ "$CIPHERS"/" ~/etc/radicale/config ; echo "$CIPHERS"
+CIPHERS=$(openssl ciphers -tls1 '!DHE:!EDH:!DH:!ECDHE:!EECDH:!ECDH:!SRP:!PSK:HIGH+AES256') \
+&& sed -i -e "s/ciphers\ =\ .*/ciphers\ =\ "$CIPHERS"/" ~/etc/radicale/config ; grep 'ciphers = ' ~/etc/radicale/config
 ====
 
-Das kurze Skript sollte am Ende die gefundenen unterstützten Cipher ausgeben. Das sollte etwa so aussehen:
+Das kurze Skript sollte am Ende die gefundenen unterstützten Cipher ausgeben, die nun eingetragen wurden. Das sollte etwa so aussehen:
 
 ====
-AES256-GCM-SHA384:AES256-SHA256:AES256-SHA
+ciphers = AES256-GCM-SHA384:AES256-SHA256:AES256-SHA
 ====
 
 :: auf Zertifikat und Key verweisen.
