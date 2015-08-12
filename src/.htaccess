@@ -5,14 +5,8 @@ RewriteCond %{HTTPS} !=on
 RewriteCond %{ENV:HTTPS} !=on
 
 RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
-RewriteCond %{HTTP_HOST} !=cosmofox.net
-RewriteRule (.*) http://cosmofox.net/$1 [R=301,L]
-
-Redirect 301 /howtos/umurmur-auf-uberspace https://how.cosmofox.net/umurmur-auf-Uberspace/
-Redirect 301 /howtos/ejabberd-auf-uberspace https://how.cosmofox.net/ejabberd-auf-Uberspace/
-Redirect 301 /AP https://how.cosmofox.net/using-open-WiFi/
-Redirect 301 /ap https://how.cosmofox.net/using-open-WiFi/
-Redirect 301 /gen2 https://gentoo.cosmofox.net/
+RewriteCond %{HTTP_HOST} !=blog.cosmofox.net
+RewriteRule (.*) https://blog.cosmofox.net/$1 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
