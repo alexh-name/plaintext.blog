@@ -1,9 +1,7 @@
-<!-- DATE: 2015-08-12 -->
-<!-- DESC: updated umurmur guide -->
+<!-- DATE: 2015-08-11 -->
+<!-- DESC: blog update! -->
 
-: Update on the umurmur guide on Uberspace
+: This blog will be seeing updates again
 
-I gave the guide for umurmur on Uberspace [1] an overhaul. 
-It will now be compiled against mbedtls2.0 and it includes information on creating a self-signed certificate. Otherwise minor improvements and updates.
-
-[1] https://cosmofox.net/hosting/Uberspace/umurmur.html
+Although I never saw this blog as discontinued, I never posted much before on this one.
+I will migrate and combine my different very small blogs onto this one, which I have updated to host the src-files on github. Posting will now be easier and faster, and I really want to encourage everyone to suggest changes in the different guides I post by simply send in patches or pull requests.
