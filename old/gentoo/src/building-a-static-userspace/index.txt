@@ -1,9 +1,0 @@
-: building a static userspace
-
-:: 2014.06.09: abandoning global static* use flags
-
-I stopped using static and static-libs as global use flags, as a lot of applications don't handle this well. The packages which will keep the static use flag are mksh, cryptsetup and busybox (the former, because I just refuse to drop it on this one, also it's working flawlessly, the latter two because of their use in early userspaces). 
-This does not mean that I drop the goal of having a static user space. I will still try to replace as many applications as possible by suckless implementaions that build statically by default. 
-Here is why [1].
-
-[1] http://sta.li/faq

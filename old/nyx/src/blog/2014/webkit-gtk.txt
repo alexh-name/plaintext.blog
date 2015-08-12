@@ -1,9 +1,0 @@
-<!-- DATE: 2014-06-02 -->
-<!-- DESC: webkit-gtk update -->
-
-: webkit-gtk update
-
-Today, webkit-gtk-2.4.3 hit the portage-tree. Previously the newest version was 2.2.6. 
-This hopefully fixes the annoying segmentation violations in surf.
-
-2014.06.02

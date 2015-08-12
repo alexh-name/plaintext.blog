@@ -1,5 +1,0 @@
-: todo
-
-* posting more
-* publishing configs
-* get done with nyx

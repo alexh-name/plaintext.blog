@@ -1,8 +1,0 @@
-: Uberspace
-
-Uberspace [1] ist der shared hosting-Anbieter meiner Wahl.
-Die Anleitungen hier nutz(t)e ich da selber und sollten
-in anderen unixoiden Umgebungen mit den gleichen tollen
-gegebenen Freiheiten aehnlich gut funktionieren.
-
-[1] https://uberspace.de

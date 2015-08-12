@@ -1,5 +1,0 @@
-: todo
-
-:: migrate
-
-* a lot

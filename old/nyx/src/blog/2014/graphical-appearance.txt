@@ -1,9 +1,0 @@
-<!-- DATE: 2014-05-28 -->
-<!-- DESC: current graphical design -->
-
-: Current graphical appearance
-
-I took another approach too find practical, still decent looking settings for compton and colors for the terminal and dwm. [1]
-The GTK-theme still has to be found / made.
-
-[1] /files/2014-05-28-205713_2048x1152_scrot.png

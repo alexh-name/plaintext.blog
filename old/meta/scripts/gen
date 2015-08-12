@@ -1,7 +1,0 @@
-#!/bin/mksh
-
-mksh scripts/gen.layout
-mksh scripts/gen.css
-make
-scripts/insert.files
-scripts/gen.thispage

@@ -1,8 +1,0 @@
-#!/bin/sh
-
-for i in dest/*/*.html ; do \
-title=$(awk '/<h1>/{gsub(/^[\t ]+|[<\/>]|h1/,"");print $0;exit}' "$i")	# getting the title how it's done in wswsh
-/bin/sed -i "s/\">$title/\" class=\"thisPage\">$title/g" "$i"		# First set class 'thispage'. Thats already enough to indicate the current page by CSS.
-link="${title// /-}"							# When using sed in the next line, I needed to replace the link part too. To avoid troubles with spaces in links, spaces in titles are replaced by '-' in filenames.
-/bin/sed -i "s/<a href=\"\/$link\/\" class=\"thisPage\">$title<\/a>/\&\#91\; <a href=\"\/$link\/\" class=\"thisPage\">$title<\/a> \&\#93\;/g" "$i" ;		# Insert the indicator fpr the current page.
-done

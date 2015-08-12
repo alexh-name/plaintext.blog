@@ -1,6 +1,0 @@
-#!/bin/sh
-
-username=$(<extension/username)
-hostname=$(<extension/hostname)
-
-rsync -aPh --del -e ssh dest/ $username@$hostname:/var/www/virtual/$username/$(pwd | rev | cut -d '/' -f 1 | rev).$hostname/

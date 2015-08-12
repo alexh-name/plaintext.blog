@@ -1,7 +1,0 @@
-: about
-
-Here's where I put stuff that might be of interest for Gentoo-/ Linux-users in general. 
-Many of those things will be me documenting how I altered/ created stuff for my distro-projects nyx [1] and arx [2] or simply to my linking.
-
-[1] https://nyx.cosmofox.net
-[2] https://arx.cosmofox.net

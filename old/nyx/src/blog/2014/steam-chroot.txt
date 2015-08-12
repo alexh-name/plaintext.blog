@@ -1,9 +1,0 @@
-<!-- DATE: 2014-07-16 -->
-<!-- DESC: steam in a chroot -->
-
-: Steam in a 32-bit-chroot
-
-A 32-bit-chroot for steam is building right now. This will hopefully solve problems with remaining games (most of what I am able to test ran really great). 
-Besides from that having a 32-bit-chroot brings me very close to dropping multilib.
-
-2014.07.16
