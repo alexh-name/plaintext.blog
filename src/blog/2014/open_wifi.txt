@@ -1,9 +1,0 @@
-<!-- DATE: 2014-06-02 -->
-<!-- DESC: open WiFi back online-->
-
-: 2014.05.23: open WiFi back online
-
-My open WiFi with TOR-access is back and available. 
-The downtime was due to my change to another ISP. I ditched the new ISP's router and wanted to replace it by a new adapter for my RPi based own router. Unfortunately I received a revision that has troubles to function as access point.
-
-For now, the open WiFi is powered by the same adapter as before, until I sorted out the problems. The new adapter should have a much stronger signal.

@@ -1,7 +1,0 @@
-<!-- DATE: 2015-08-11 -->
-<!-- DESC: blog update! -->
-
-: This blog will be seeing updates again
-
-Although I never saw this blog as discontinued, I never posted much before on this one.
-I will migrate and combine my different very small blogs onto this one, which I have updated to host the src-files on github. Posting will now be easier and faster, and I really want to encourage everyone to suggest changes in the different guides I post by simply send in patches or pull requests.

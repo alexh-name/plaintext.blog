@@ -1,9 +1,0 @@
-<!-- DATE: 2015-08-12 -->
-<!-- DESC: updated umurmur guide -->
-
-: Update on the umurmur guide on Uberspace
-
-I gave the guide for umurmur on Uberspace [1] an overhaul. 
-It will now be compiled against polarssl and it includes information on creating a self-signed certificate. Otherwise minor improvements and updates.
-
-[1] https://cosmofox.net/hosting/Uberspace/umurmur.html
