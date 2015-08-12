@@ -110,7 +110,7 @@ Diese Parameter solltet ihr aber entkommentieren und unbedingt ändern:
 
 ====
 bindport = PORT; # Zu erfragen beim Uberspace-Team
-logfile = "/home/USER/var/log/umurmurd.log" # Ebenso. Wenn wir das nicht setzen, nervt umurmur womöglich SYSLOG.
+logfile = "/home/USER/var/log/umurmurd.log" # 'USER' mit eurem Usernamen ersetzen.'~' funktioniert hier nicht. Wenn wir das nicht setzen, nervt umurmur womöglich SYSLOG.
 ====
 
 Dann erstellt ihr letztlich noch wie gewohnt [1] einen Dienst:
