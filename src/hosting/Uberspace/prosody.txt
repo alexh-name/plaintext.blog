@@ -2,14 +2,14 @@
 
 ::: updates
 
-2015.01.21:
+:::: 2015.01.21
 
 Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
 Ich persönlich behalte die Option bei, da die Infos mir - nun ja - beim Debuggen helfen. Wie im Geiste des letzten Updates sei ohnehin gesagt: Wer die genutzte IP nirgendwo aufgezeichnet wissen möchte, sollte sie sowieso korrekt verschleiern, etwa mit TOR. Lernt und lehrt eure Nutzer, wie. Alles andere ist falsche Sicherheit.
 
 Außerdem habe ich noch eine kurze Beschreibung verlinkt, wie ihr Zertifikatketten korrekt zusammensetzt. Dank für die Anregung geht hier an @roflthecat.
 
-2015.01.13:
+:::: 2015.01.13
 
 Wie mir freundlicherweise von Moritz ( @el_golfo ) mitgeteilt wurde, fehlten in der SSL-Konfiguration die Optionen 
 
@@ -21,7 +21,7 @@ wie sie hier beschrieben werden [12]. Die habe ich nun hinzugefügt, ist empfehl
 Diese erschweren kurz gesagt eine potentielle Attacke auf die Server-Client-Verbindung, wenn OpenSSL "schwache" Primzahlen für DH-Parameter nutzt. OpenSSL tut das aber nur, wenn explizit gesetzt [13]. 
 Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürchtet.
 
-::: /updates
+- - -
 
 Nach dieser Anleitung wird es möglich sein, prosody mit den derzeit stärksten ciphers zu betreiben.
 Das gibt dann beim IM Observatory [0] ein 'A'.
