@@ -126,7 +126,7 @@ sed -e "s/\/home\/$USER\/bin\/umurmurd/\/home\/$USER\/bin\/umurmurd\ -d\ -r\ -c\
 sodass sie dann so aussehen sollte:
 
 ====
-exec $HOME/bin/umurmurd -d -r -c $HOME/etc/umurmur.conf 2>&amp;1
+exec /home/USER/bin/umurmurd -d -r -c /home/USER/etc/umurmur.conf 2>&amp;1
 ====
 
 Neues, schlankes und sicheres murmur!
