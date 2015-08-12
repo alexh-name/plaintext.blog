@@ -27,8 +27,8 @@ So gehts:
 Zunächst brauchen wir paar Abhängigkeiten:
 
 ====
-toast arm http://www.hyperrealm.com/libconfig/libconfig-1.4.9.tar.gz
-toast arm http://www.cmake.org/files/v3.3/cmake-3.3.0-rc2.tar.gz
+toast arm https://github.com/hyperrealm/libconfig/archive/v1.5.zip
+toast arm https://github.com/Kitware/CMake/archive/v3.3.0.zip
 toast arm https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.bz2
 toast arm https://github.com/protobuf-c/protobuf-c/releases/download/v1.1.1/protobuf-c-1.1.1.tar.gz
 toast arm https://tls.mbed.org/download/start/mbedtls-2.0.0-gpl.tgz
