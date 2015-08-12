@@ -1,8 +1,7 @@
-: Crypto wall of shame
+: Crypto Wall of Shame
 
 Here I will post guides suggesting bad crypto who's authors didn't respond 4 weeks
-after I pointed out the bad suggestions. Then I will link to a better guide I found
-or wrote.
+after I pointed out the bad suggestions. Then I will link to a better guide / suggestion I found or wrote.
 
 - - -
 
@@ -13,8 +12,9 @@ The authors of libconfig are promoting an insecure sources download via http wit
 
 ::: alternatives
 
-Download via github [1]
+There is a repo on github [1]. Unfortunately it lacks some files to build. As a workaround I added those from the tarball on their homepage to a fork of v1.5: [2]
 
 - - -
 
 [1] https://github.com/hyperrealm/libconfig
+[2] https://github.com/snscltt/libconfig
