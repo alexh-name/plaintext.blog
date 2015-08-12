@@ -3,6 +3,8 @@
 Here I will post anything suggesting bad crypto who's authors didn't respond 4 weeks
 after I pointed out the bad suggestions. Then I will link to an alternative I found or wrote.
 
+Follow on twitter: @CryptoShaming [0]
+
 Responds and corrections so far:
 *1*
 :)
@@ -20,5 +22,6 @@ There is a repo on github [1]. Unfortunately it lacks some files to build. As a 
 
 - - -
 
+[0] https://twitter.com/CryptoShaming
 [1] https://github.com/hyperrealm/libconfig
 [2] https://github.com/snscltt/libconfig
