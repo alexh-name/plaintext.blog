@@ -4,7 +4,7 @@
 
 :::: 2015.08.12
 
-umurmur hat sich natürlich weiterentwickelt und war so wie hier beschrieben nicht zu installieren. Ich habe die Anleitung neu verfasst, sodass sie für den Entwicklungsstand zur Zeit des Verfassens auf git und für die getaggte Version 0.2.16a funktioniert. Im Zuge dessen habe ich sie auch so angepasst, dass umurmur auch polarssl / mbedtls statt OpenSSL nutzt.
+umurmur hat sich natürlich weiterentwickelt und war so wie hier beschrieben nicht zu installieren. Ich habe die Anleitung neu verfasst, sodass sie für den Stand ef99834 auf git und für die getaggte Version 0.2.16a funktioniert. Im Zuge dessen habe ich sie auch so angepasst, dass umurmur auch polarssl statt OpenSSL nutzt.
 
 :::: 2014.11.08
 
@@ -27,12 +27,14 @@ So gehts:
 Zunächst brauchen wir paar Abhängigkeiten:
 
 ====
-toast arm https://github.com/hyperrealm/libconfig/archive/v1.5.zip
+toast arm https://github.com/snscltt/libconfig/archive/master.zip
 toast arm https://github.com/Kitware/CMake/archive/v3.3.0.zip
 toast arm https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.bz2
 toast arm https://github.com/protobuf-c/protobuf-c/releases/download/v1.1.1/protobuf-c-1.1.1.tar.gz
-toast arm https://tls.mbed.org/download/start/mbedtls-2.0.0-gpl.tgz
+toast arm https://tls.mbed.org/download/polarssl-1.2.15-gpl.tgz
 ====
+
+/Achtung: der Link zu den libconfig-Quellen weist auf einen Fork von mir. Hintergrund: Das Tarball auf der Homepage von hyperrealm (Autoren von libconfig) ist nur über http (also nicht https!) erreichbar und es gibt keine Checksums. Es gibt zwar ein Verzeichnis auf github [2], diesem fehlen aber ein paar Makefiles aus dem Tarball von der Homepage, weswegen es mit toast nicht kompilieren würde. Diese habe ich von dort in meinen Fork eingefügt, mehr habe ich nicht geändert./
 
 Bereitet ein Verzeichnis für die Quellen vor:
 
@@ -133,3 +135,4 @@ Neues, schlankes und sicheres murmur!
 
 
 [1] https://wiki.uberspace.de/system:daemontools
+[2] https://github.com/hyperrealm/libconfig
