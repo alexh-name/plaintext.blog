@@ -6,12 +6,7 @@
 
 umurmur hat sich natürlich weiterentwickelt und war so wie hier beschrieben nicht zu installieren. Ich habe die Anleitung neu verfasst, sodass sie für den Stand ef99834 auf git und für die getaggte Version 0.2.16a funktioniert. Im Zuge dessen habe ich sie auch so angepasst, dass umurmur auch polarssl statt OpenSSL nutzt.
 
-:::: 2014.11.08
-
-Ein paar Dinge haben sich geändert. Mittlerweile gibt es Version 0.2.15. Die konnte fertig gebaut aber auf Brechen nicht den in der Config festgelegten Port nutzen. Das ist weniger schlimm, da die Änderungen zu 0.2.14 marginal sind. Zumal können wir in 0.2.14 noch auf autotools (bäh) verzichten. 
-0.2.14 verlangt aber nach einem etwas älteren protobuf-c als dem, das ihr nach der bisherigen Anleitung bekommen hättet. Ich habe jetzt alles so angepasst, dass ihr die exakten Versionen der Abhängigkeiten bekommt, mit denen ich auch Erfolg hatte. 
-
-:::: #1
+:::: some days after heartbleed
 
 Wie mich Maximilian Berger freundlicherweise informierte, gibt murmur beim Start die verwendete openssl-Version aus. Nach dieser Info in der Log zu suchen war mir in der Eile wohl nicht in den Sinn gekommen. Die verwendete Version der neuesten statischen murmur-Version vor heartbleed-Bekanntmachung war 1.0.0l. Diese ist nicht betroffen. Sehr gute Nachricht also. Danke für den Hinweis. 
 
