@@ -28,12 +28,25 @@ Das gibt dann beim IM Observatory [0] ein 'A'.
 
 Teile der Anleitung habe ich von hier [1] übernommen, da sie da schon ausformuliert waren.
 
-Zunächst installiert ihr euch die aktuelle OpenSSL-Version lokal in eurem $HOME mit toast [2] (dauert ca. 3-5 Minuten). 
-Auf https://www.openssl.org/source/ könnt ihr den Link zur neuesten Version finden, markiert mit '[LATEST]'.
+:: Noch kein aktuelles OpenSSL installiert?
+
+Das brauchen wir später, um stärke Cipher nutzen zu können. 
+Hier setze ich toast voraus [2]. Wenn schon ein neueres OpenSSL installiert ist als das hier von mir vorgeschlagene, kann mit dem nächsten Punkt weitergemacht werden.
+Die Version kann mit
 
 ====
-toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+openssl version
 ====
+
+geprüft werden.
+
+====
+toast arm https://www.openssl.org/source/openssl-1.0.2d.tar.gz && openssl version
+====
+
+Hier sollte nun "OpenSSL 1.0.2d 9 Jul 2015" ausgegeben werden.
+
+:: lua vorbereiten
 
 Testen, welche Version von Lua von deinem Uberspace-Account verwendet wird:
 
@@ -48,7 +61,7 @@ Lua 5.1.4  Copyright (C) 1994-2008 Lua.org, PUC-Rio
 Falls bei euch Lua 5.2 angezeigt wurde, ist bei euch sicherlich ein entsprechender Eintrag für PATH in ~/.bash_profile. 
 Das müsstet ihr anpassen.
 
-Als nächstes holen wir und mit luarocks die neuesten Module für prosody. PFS wird zB sonst nicht funktionieren [3]. 
+Als nächstes holen wir uns mit luarocks die neuesten Module für prosody. PFS wird zB sonst nicht funktionieren [3]. 
 Dafür passen wir jetzt LUA_PATH und LUA_CPATH an, sonst kann lua die lokal installierten Module gleich nicht finden. 
 Anders als im Uberspace-Wiki beschrieben [4], werden wir den Pfad NICHT mit einem simplen
 
@@ -69,7 +82,7 @@ Die lokal installierten Module sollen aber bevorzugt werden.
 Ersetzt natürlich noch 'UUSER' (uberspace-user) mit eurem echten Nutzernamen:
 
 ====
-sed 's/UUSER/HierEuerNutzername/g' -i ~/.bash_profile
+sed "s/UUSER/$USER/g" -i ~/.bash_profile
 ====
 
 Damit der Spaß auch Anwendung findet:
@@ -108,6 +121,8 @@ luasec
 luasocket
    3.0rc1-1 (installed) - /home/UUSER/.luarocks/lib/luarocks/rocks
 ====
+
+:: prosody
 
 Jetzt kann es mit der eigentlichen Prosody Installation weitergehen!
 Aktuelle Quellen hier [6] zu finden.
@@ -206,7 +221,7 @@ VirtualHost "domain.tld" -- anpassen!
 ====
 
 Nett zu haben ist auch die muc(multi user chat)-Funktion, sie erlaubt das erstellen von chatrooms. 
-Sie setzt allerdings eine subdomain voraus und ist daher davon abhängt, ob euer Zertifikat das zulässt. 
+Sie setzt allerdings eine subdomain voraus und ist daher davon abhängig, ob euer Zertifikat das zulässt. 
 Falls ja, könnt ihr folgendes an das Ende der config hängen:
 
 ====
@@ -308,14 +323,13 @@ Das kann dann so [10] [11] aussehen.
 
 :: das Ganze nun aktuell halten ::
 
-Habt iht Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein wichtiges Update eines der Lua-Module gibt, werdet ihr sie updaten wollen.
+Habt ihr Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein wichtiges Update eines der Lua-Module gibt, werdet ihr sie updaten wollen.
 
 Links zum Im-Auge-behalten: 
 
-====
-prosody: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log) 
-OpenSSL: https://www.openssl.org/source/ 
-====
+* prosody: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log)
+
+* OpenSSL: https://www.openssl.org/source/
 
 ::: prosody :::
 
@@ -366,7 +380,7 @@ Die vorige Version ist zwar noch "built" und vorhanden, aber nur die neue auch "
 Wollt ihr die alte Version ganz loswerden, reicht ein
 
 ====
-toast remove https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+toast purge https://www.openssl.org/source/openssl-1.0.1j.tar.gz
 ====
 
 Startet nun natürlich noch prosody wieder:
