@@ -13,13 +13,13 @@ Die Version kann mit
 openssl version
 ====
 
-ausgegeben werden.
+geprüft werden.
 
 ====
-toast status openssl || toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz && openssl version
+toast arm https://www.openssl.org/source/openssl-1.0.2d.tar.gz && openssl version
 ====
 
-Hier sollte nun "OpenSSL 1.0.1l 15 Jan 2015" ausgegeben werden.
+Hier sollte nun "OpenSSL 1.0.2d 9 Jul 2015" ausgegeben werden.
 
 :: neuestes TLS-Protokoll nutzen
 
