@@ -162,12 +162,13 @@ Und nun prosody konfigurieren: Eine kommentierte config liegt in ~/.toast/armed/
 Kann nicht schaden, die mal für Referenzen beiseite zu legen:
 
 ====
-cp ~/.toast/armed/etc/prosody/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua.stock
+mkdir -p ~/etc/prosody
+cp ~/.toast/armed/etc/prosody/prosody.cfg.lua ~/etc/prosody/prosody.cfg.lua.stock
 ====
 
-Wir schreiben unsere config jedoch nach ~/var/prosody/data/prosody.cfg.lua, damit sie bei späteren Updates mit toast nicht überschrieben wird. 
+Wir schreiben unsere config jedoch nach ~/etc/prosody/prosody.cfg.lua, damit sie bei späteren Updates mit toast nicht überschrieben wird. 
 Folgende config wird so schon funktionieren, wie es die allermeisten brauchen. 
-Anpassen müsst ihr unbedingt wieder UUSER (siehe sed-Schnippsel), eure domain und die Ports, die ihr beim lieben Uberspace-Team vorher erfragt:
+Anpassen müsst ihr unbedingt wieder UUSER (siehe sed-Schnippsel oben), eure Domain und die Ports, die ihr beim lieben Uberspace-Team vorher erfragt:
 
 ====
 pidfile = "/home/UUSER/var/prosody/prosody.pid";
@@ -234,7 +235,7 @@ Jetzt verlinken wir unsere config dorthin, wo prosody sie erwarten wird:
 
 ====
 rm ~/.toast/armed/etc/prosody/prosody.cfg.lua
-ln -s ~/var/prosody/data/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
+ln -s ~/etc/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
 ====
 
 und erstellen dann einen daemontools-service.
