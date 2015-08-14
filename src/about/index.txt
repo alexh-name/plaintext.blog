@@ -6,7 +6,8 @@ Why not?
 
 :: What is this?
 
-Some kind of tech related blog or open notebook.
+Some kind of tech related blog or open notebook. 
+The txt-files are in a github-repo, so feel encouraged to contribute. [0]
 
 :: What about?
 
@@ -32,6 +33,7 @@ he is the original creator of those tools.
 But: It is simple, functional, hackable, secure, fast and (as far as I can tell)
 accessible, which is more important anyway.
 
+[0] https://github.com/snscltt/cosmofox.net
 [1] https://www.openhub.net/p/wordpress
 [2] https://github.com/Ypnose/ahrf
 [3] https://github.com/Ypnose/wswsh
