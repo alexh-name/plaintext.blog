@@ -2,6 +2,10 @@
 
 ::: updates
 
+:::: 2015.08.15
+
+Die Installation von cmake und libconfig per toast wurde korrigiert.
+
 :::: 2015.08.12
 
 umurmur hat sich natürlich weiterentwickelt und war so wie hier beschrieben nicht zu installieren. Ich habe die Anleitung neu verfasst, sodass sie für den Stand ef99834 auf git und für die getaggte Version 0.2.16a funktioniert. Im Zuge dessen habe ich sie auch so angepasst, dass umurmur auch polarssl statt OpenSSL nutzt.
@@ -22,14 +26,14 @@ So gehts:
 Zunächst brauchen wir paar Abhängigkeiten:
 
 ====
-toast arm https://github.com/snscltt/libconfig/archive/master.zip
-toast arm https://github.com/Kitware/CMake/archive/v3.3.0.zip
+toast arm libconfig/v1.5-snscltt: https://github.com/snscltt/libconfig/archive/v1.5-snscltt.tar.gz
+toast arm cmake/v3.3.0: https://github.com/Kitware/CMake/archive/v3.3.0.zip
 toast arm https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.bz2
 toast arm https://github.com/protobuf-c/protobuf-c/releases/download/v1.1.1/protobuf-c-1.1.1.tar.gz
 toast arm https://tls.mbed.org/download/polarssl-1.2.15-gpl.tgz
 ====
 
-/Achtung: der Link zu den libconfig-Quellen weist auf einen Fork von mir. Hintergrund: Das Tarball auf der Homepage von hyperrealm (Autoren von libconfig) ist nur über http (also nicht https!) erreichbar und es gibt keine Checksums. Es gibt zwar ein Verzeichnis auf github [2], diesem fehlen aber ein paar Makefiles aus dem Tarball von der Homepage, weswegen es mit toast nicht kompilieren würde. Diese habe ich von dort in meinen Fork eingefügt, mehr habe ich nicht geändert./
+/Achtung: der Link zu den libconfig-Quellen weist auf einen Fork von mir. Hintergrund: Das Tarball auf der Homepage von hyperrealm (Autoren von libconfig) ist nur über http (also nicht https!) erreichbar und es gibt keine Checksums. Auf Anfrage wurden nun auch alle nötigen Dateien dem github-Repo hinzugefügt. Ich habe nur den entsprechenden Commit der letzten veröffentlichten Version 1.5 hinzugefügt. [3] [4]/
 
 Bereitet ein Verzeichnis für die Quellen vor:
 
@@ -131,3 +135,5 @@ Neues, schlankes und sicheres murmur!
 
 [1] https://wiki.uberspace.de/system:daemontools
 [2] https://github.com/hyperrealm/libconfig
+[3] https://github.com/snscltt/libconfig/releases/tag/v1.5-snscltt
+[4] https://github.com/snscltt/libconfig/commit/a394d51bd1bd9a3d731493093cdd55aaef70df09
