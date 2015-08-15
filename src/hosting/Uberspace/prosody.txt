@@ -330,7 +330,7 @@ prosodyctl adduser admin@domain.tld
 ====
 
 Nun kannst du dich zB mit deinem client anmelden. Die meisten clients werden nur funktionieren, wenn du den c2s-Port mit angibst. 
-Trotzdem ist es noch eine gute Idee, bei deinem Registrar die entsprechenden DNS-Einträge vorzunehmen, wenn du magst [9].
+Trotzdem ist es noch eine gute Idee, bei deinem Registrar die entsprechenden DNS-Einträge vorzunehmen, wenn du magst [9] [15].
 
 Zu guter Letzt: Teste deinen Prosody XMPP-Server im IM Observatory. 
 Das kann dann so [10] [11] aussehen.
@@ -462,3 +462,4 @@ svc -u ~/service/prosody
 [12] http://prosody.im/doc/advanced_ssl_config?s%5B%5D=ssl#options
 [13] http://www.openssl.org/docs/apps/dhparam.html
 [14] http://prosody.im/doc/certificates
+[15] http://prosody.im/doc/dns
