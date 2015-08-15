@@ -1,0 +1,9 @@
+<!-- DATE: 2015-08-15 -->
+<!-- DESC: updated prosody guide -->
+
+: Update on the prosody guide on Uberspace
+
+Now I gave the guide for prosody on Uberspace [1] an overhaul. 
+It's more precise and includes directions to update prosody later on. Also there are links to guides for muc and filetransfer by Tim Krieger. Thanks!
+
+[1] https://cosmofox.net/hosting/Uberspace/prosody.html

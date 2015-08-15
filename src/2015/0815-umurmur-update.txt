@@ -1,0 +1,8 @@
+<!-- DATE: 2015-08-15 -->
+<!-- DESC: updated umurmur guide (again) -->
+
+: Update on the umurmur guide on Uberspace (again)
+
+Some directions on installing dependencies are more precise now. [1]
+
+[1] https://cosmofox.net/hosting/Uberspace/umurmur.html
