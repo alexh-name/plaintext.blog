@@ -387,6 +387,19 @@ Das sollte alles sein. Dienst wieder starten:
 svc -u ~/service/prosody
 ====
 
+Ist alles ok, kann die alte Version aus toast entfernt werden. 
+Vorhandene Versionen prüfen:
+
+====
+toast status prosody
+====
+
+Alte Version löschen:
+
+====
+toast remove https://prosody.im/downloads/source/prosody-0.9.6.tar.gz
+====
+
 ::: OpenSSL :::
 
 Das ist simpel. Wenn ihr eine neue Version gefunden habt, baut zuerst das Paket aus den neuen Quellen:
