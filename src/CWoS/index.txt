@@ -18,10 +18,15 @@ The authors of libconfig are promoting an insecure sources download via http wit
 
 ::: alternatives
 
-There is a repo on github [1]. Unfortunately it lacks some files to build. As a workaround I added those from the tarball on their homepage to a fork of v1.5: [2]
+There is a repo on github [1].
+
+<del>Unfortunately it lacks some files to build. As a workaround I added those from the tarball on their homepage</del>
+
+They now added the missing files to build it [3]. I applied the commit to a fork of v1.5: [2]
 
 - - -
 
 [0] https://twitter.com/CryptoShaming
 [1] https://github.com/hyperrealm/libconfig
 [2] https://github.com/snscltt/libconfig
+[3] https://github.com/hyperrealm/libconfig/commit/7acace98915ac3831f219aadef968e9e733cc9bf
