@@ -248,6 +248,8 @@ Component "subdomain.domain.tld" "muc"
 	restrict_room_creation = false --- user dürfen Räume selbst erstellen
 ====
 
+Siehe auch [16].
+
 Jetzt verlinken wir unsere Config dorthin, wo prosody sie erwarten wird:
 
 ====
