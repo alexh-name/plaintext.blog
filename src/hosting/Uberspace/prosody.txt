@@ -379,7 +379,7 @@ ln -s ~/etc/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
 
 **Achtung:**
 
-In einer früheren Version dieser Anleitung hatte ich die Config nach ~/var/prosody/data gelegt. Wer danach vorgegangen ist, verschiebt diese also vorher auch nach ~/etc/prosody oder passt die Zeile oben noch an.
+/In einer früheren Version dieser Anleitung hatte ich die Config nach ~/var/prosody/data gelegt. Wer danach vorgegangen ist, verschiebt diese also vorher auch nach ~/etc/prosody oder passt die Zeile oben noch an./
 
 Das sollte alles sein. Dienst wieder starten:
 
