@@ -11,12 +11,18 @@ Responds and corrections so far:
 
 - - -
 
-:: hyperrealm.com (libconfig) for insecure sources download
+:: insecure sources and/or binary distribution
 
 Yes, this seems to be very common, but I have to start somewhere. 
-The authors of libconfig are promoting an insecure sources download via http without providing checksums. As there isn't any contact info I could find in a reasonable amount of time, I'm posting this here right away.
+Sources or binaries are too often offered by insecure download via http without providing checksums.
 
-::: alternatives
+::: hyperrealm.com (libconfig)
+
+Right here: [4]
+
+As there isn't any contact info I could find in a reasonable amount of time, I'm posting this here right away.
+
+:::: alternatives
 
 There is a repo on github [1].
 
@@ -30,3 +36,4 @@ They now added the missing files to build it [3]. I applied the commit to a fork
 [1] https://github.com/hyperrealm/libconfig
 [2] https://github.com/snscltt/libconfig
 [3] https://github.com/hyperrealm/libconfig/commit/7acace98915ac3831f219aadef968e9e733cc9bf
+[4] http://www.hyperrealm.com/libconfig/
