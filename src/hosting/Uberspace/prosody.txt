@@ -335,6 +335,14 @@ Trotzdem ist es noch eine gute Idee, bei deinem Registrar die entsprechenden DNS
 Zu guter Letzt: Teste deinen Prosody XMPP-Server im IM Observatory. 
 Das kann dann so [10] [11] aussehen.
 
+::: weiteres
+
+* Multi-User Chat [16]
+* Filetransfer mittels mod_proxy65 [17]
+
+Danke Tim Krieger!
+
+
 :: das Ganze nun aktuell halten ::
 
 Habt ihr Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein wichtiges Update eines der Lua-Module gibt, werdet ihr sie updaten wollen.
@@ -476,3 +484,5 @@ svc -u ~/service/prosody
 [13] http://www.openssl.org/docs/apps/dhparam.html
 [14] http://prosody.im/doc/certificates
 [15] http://prosody.im/doc/dns
+[16] http://mobybit.de/2015/03/29/multi-user-chat-in-prosody-auf-uberspace/
+[17] http://mobybit.de/2015/03/29/filetransfer-mittels-mod_proxy65-in-prosody-auf-uberspace/
