@@ -6,6 +6,10 @@
 
 Allgemeine Überarbeitung. Neu: Prosody updaten.
 
+::::: #2
+
+Anleitungen für muc und filetransfer von Tim Krieger. Danke!
+
 :::: 2015.01.21
 
 Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-Config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
