@@ -2,9 +2,13 @@
 
 ::: updates
 
+:::: 2015.08.15
+
+Allgemeine Überarbeitung. Neu: Prosody updaten.
+
 :::: 2015.01.21
 
-Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
+Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-Config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
 Ich persönlich behalte die Option bei, da die Infos mir - nun ja - beim Debuggen helfen. Wie im Geiste des letzten Updates sei ohnehin gesagt: Wer die genutzte IP nirgendwo aufgezeichnet wissen möchte, sollte sie sowieso korrekt verschleiern, etwa mit TOR. Lernt und lehrt eure Nutzer, wie. Alles andere ist falsche Sicherheit.
 
 Außerdem habe ich noch eine kurze Beschreibung verlinkt, wie ihr Zertifikatketten korrekt zusammensetzt. Dank für die Anregung geht hier an @roflthecat.
@@ -128,18 +132,27 @@ Jetzt kann es mit der eigentlichen Prosody Installation weitergehen!
 Aktuelle Quellen hier [6] zu finden.
 
 ====
-toast arm https://prosody.im/downloads/source/prosody-0.9.6.tar.gz
+toast arm https://prosody.im/downloads/source/prosody-0.9.8.tar.gz
  
 mkdir -p ~/var/prosody/data
 mkdir -p ~/var/prosody/ssl
- 
+====
+
+Wir erstellen jetzt noch Diffie-Hellman-Parameter für PFS (was eine Weile dauern wird):
+
+====
 cd ~/var/prosody/ssl/
 openssl dhparam -out dh-4096.pem 4096
+====
+
+Und dann noch Zertifikate. Wer schon welche hat, überspringt hier.
+
+====
 openssl genrsa -out prosody_domain.tld_private.key 4096
 openssl req -new -key prosody_domain.tld_private.key -out prosody_domain.tld_cert.csr
 ====
 
-Wichtig für uns ist nur 'CommonName'; hier muss der Domainname stehen, z.B. 'domain.tld'. 
+Wichtig für uns ist dabei nur 'CommonName'; hier muss der Domainname stehen, z.B. 'domain.tld'. 
 Mit dem Inhalt von prosody_domain.tld_cert.csr lässt sich nun ein kostenloses signiertes Zertifikat erstellen, bei CaCert.org [7] oder StartCom [8].
 
 Näheres zu Zertifikaten (insbesondere Certificate chains) hier [14].
@@ -158,7 +171,7 @@ Erstellt noch ein pid-file:
 touch ~/var/prosody/prosody.pid
 ====
 
-Und nun prosody konfigurieren: Eine kommentierte config liegt in ~/.toast/armed/etc/prosody/prosody.cfg.lua.
+Und nun prosody konfigurieren: Eine kommentierte Config liegt in ~/.toast/armed/etc/prosody/prosody.cfg.lua.
 Kann nicht schaden, die mal für Referenzen beiseite zu legen:
 
 ====
@@ -166,8 +179,8 @@ mkdir -p ~/etc/prosody
 cp ~/.toast/armed/etc/prosody/prosody.cfg.lua ~/etc/prosody/prosody.cfg.lua.stock
 ====
 
-Wir schreiben unsere config jedoch nach ~/etc/prosody/prosody.cfg.lua, damit sie bei späteren Updates mit toast nicht überschrieben wird. 
-Folgende config wird so schon funktionieren, wie es die allermeisten brauchen. 
+Wir schreiben unsere Config jedoch nach ~/etc/prosody/prosody.cfg.lua, damit sie bei späteren Updates mit toast nicht überschrieben wird. 
+Folgende Config wird so schon funktionieren, wie es die allermeisten brauchen. 
 Anpassen müsst ihr unbedingt wieder UUSER (siehe sed-Schnippsel oben), eure Domain und die Ports, die ihr beim lieben Uberspace-Team vorher erfragt:
 
 ====
@@ -223,7 +236,7 @@ VirtualHost "domain.tld" -- anpassen!
 
 Nett zu haben ist auch die muc(multi user chat)-Funktion, sie erlaubt das erstellen von chatrooms. 
 Sie setzt allerdings eine subdomain voraus und ist daher davon abhängig, ob euer Zertifikat das zulässt. 
-Falls ja, könnt ihr folgendes an das Ende der config hängen:
+Falls ja, könnt ihr folgendes an das Ende der Config hängen:
 
 ====
 Component "subdomain.domain.tld" "muc"
@@ -231,7 +244,7 @@ Component "subdomain.domain.tld" "muc"
 	restrict_room_creation = false --- user dürfen Räume selbst erstellen
 ====
 
-Jetzt verlinken wir unsere config dorthin, wo prosody sie erwarten wird:
+Jetzt verlinken wir unsere Config dorthin, wo prosody sie erwarten wird:
 
 ====
 rm ~/.toast/armed/etc/prosody/prosody.cfg.lua
@@ -328,13 +341,51 @@ Habt ihr Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein 
 
 Links zum Im-Auge-behalten: 
 
-* prosody: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log)
+::::: prosody 
 
-* OpenSSL: https://www.openssl.org/source/
+* Homepage: https://prosody.im
+* Sources: https://prosody.im/downloads/source/
+* Feed: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log)
+
+::::: OpenSSL
+
+* Sources: https://www.openssl.org/source/
 
 ::: prosody :::
 
-coming soon
+Es ist eigentlich ganz simpel. Auf den Seiten / im Feed könnt ihr nach neuen Versionen Ausschau halten. Dabei wäre gut, auch die Changelogs zu beachten. Vielleicht wird es in Zukunft Inkompatibilitäten in der Config etc. geben, die ihr dann beachten müsst. Ich werde versuchen diesen Guide aktuell zu halten und auf sowas einzugehen, aber garantiere eben nichts. 
+Wenn es eine neue Version gibt, installiert sie einfach wie zuvor, mit dem neuen DL-Link, aber stoppt vorher noch den laufenden Dienst:
+
+====
+svc -d ~/service/prosody && toast arm https://prosody.im/downloads/source/prosody-0.9.8.tar.gz
+====
+
+Sollte es Abhängigkeiten zu neueren Versionen der Lua-Bibliotheken geben, genügt es, wie bei derer ersten Installation vorzugehen. Luarocks installiert ohne weiteres einfach die neueste Version, das es findet:
+
+====
+luarocks install luasocket --local
+luarocks install luaexpat --local
+luarocks install luafilesystem --local
+luarocks install luasec --local OPENSSL_DIR=~/.toast/armed/usr/local/
+====
+
+Nun liegt im neuen Verzeichnis natürlich wieder eine Beispielconfig und nicht mehr unser SymLink zu unserer eigenen. Das stellen wir wieder her (aber legen auch wieder die neuere Standardconfig für Referenzen beiseite):
+
+====
+cp ~/.toast/armed/etc/prosody/prosody.cfg.lua ~/etc/prosody/prosody.cfg.lua.stock
+rm ~/.toast/armed/etc/prosody/prosody.cfg.lua
+ln -s ~/etc/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
+====
+
+**Achtung:**
+
+In einer früheren Version dieser Anleitung hatte ich die Config nach ~/var/prosody/data gelegt. Wer danach vorgegangen ist, verschiebt diese also vorher auch nach ~/etc/prosody oder passt die Zeile oben noch an.
+
+Das sollte alles sein. Dienst wieder starten:
+
+====
+svc -u ~/service/prosody
+====
 
 ::: OpenSSL :::
 
@@ -381,7 +432,13 @@ Die vorige Version ist zwar noch "built" und vorhanden, aber nur die neue auch "
 Wollt ihr die alte Version ganz loswerden, reicht ein
 
 ====
-toast purge https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+toast remove https://www.openssl.org/source/openssl-1.0.1j.tar.gz
+====
+
+Jetzt installieren wir den luarock luasec noch neu, gegen das neue OpenSSL:
+
+====
+luarocks install luasec --local OPENSSL_DIR=~/.toast/armed/usr/local/
 ====
 
 Startet nun natürlich noch prosody wieder:
