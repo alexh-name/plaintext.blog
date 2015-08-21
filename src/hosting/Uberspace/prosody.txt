@@ -2,13 +2,14 @@
 
 ::: updates
 
+:::: 2015.08.21
+
+Ungenauigkeiten bzgl. Ort der Config korrigiert. Dank an Thomas Kammerer.
+
 :::: 2015.08.15
 
-Allgemeine Überarbeitung. Neu: Prosody updaten.
-
-::::: #2
-
-Anleitungen für muc und filetransfer von Tim Krieger. Danke!
+* Allgemeine Überarbeitung. Neu: Prosody updaten.
+* Anleitungen für muc und filetransfer von Tim Krieger. Danke!
 
 :::: 2015.01.21
 
