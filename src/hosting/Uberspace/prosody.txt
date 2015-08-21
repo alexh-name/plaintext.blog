@@ -358,13 +358,13 @@ Habt ihr Wind bekommen, dass es eine neue Version von prosody, OpenSSL oder ein 
 
 Links zum Im-Auge-behalten: 
 
-::::: prosody 
+:::: prosody
 
 * Homepage: https://prosody.im
 * Sources: https://prosody.im/downloads/source/
 * Feed: http://hg.prosody.im/0.9/atom-log (und in Zukunft http://hg.prosody.im/0.10/atom-log)
 
-::::: OpenSSL
+:::: OpenSSL
 
 * Sources: https://www.openssl.org/source/
 
