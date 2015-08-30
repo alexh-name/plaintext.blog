@@ -1,0 +1,9 @@
+<!-- DATE: 2015-08-30 -->
+<!-- DESC: list of usefull links -->
+
+: list of usefull links
+
+I started a list of links that help(ed) me a lot and therefore might be usefull to others. 
+I just started with what came to my might first, so it's very incomplete. I will grow it continuously. [1]
+
+[1] https://cosmofox.net/links/
