@@ -1,0 +1,23 @@
+: usefull links
+
+:: ywstd.fr - "Ypnose's enclave"
+
+Creator of wswsh, ahrf and other nice and usefull stuff, who has been very helpfull.
+Loves simple and suckless software. [1]
+
+:: decentsecurity.com - "Start somewhere. Start here."
+
+Entry level guides to security. 
+Pass by to get started or to keep up with the latest essentials. 
+Also has an enterprise level section. [2]
+
+:: bolthole.com - "bolt-hole: a place of escape or refuge"
+
+Collection of guides to get into programming and other stuff. 
+The tutorials for AWK and KSH helped me a lot. [3]
+
+
+[1] http://ywstd.fr/
+[2] http://decentsecurity.com/
+[3] http://bolthole.com/
+
