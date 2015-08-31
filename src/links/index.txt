@@ -1,8 +1,8 @@
-: usefull links
+: useful links
 
 :: ywstd.fr - "Ypnose's enclave"
 
-Creator of wswsh, ahrf and other nice and usefull stuff, who has been very helpfull.
+Creator of wswsh, ahrf and other nice and useful stuff, who has been very helpful.
 Loves simple and suckless software. [1]
 
 :: decentsecurity.com - "Start somewhere. Start here."
