@@ -1,0 +1,12 @@
+<!-- DATE: 2015-09-22 -->
+<!-- DESC: CWoS news -->
+
+: Short update on the Crypto Wall of Shame
+
+So far out of three complains I made, two were answered. 
+A hosting company rewrote a tutorial and hyperrealm (folks behind libconfig) are providing
+ready-to-build sources over github. Unfortunatly, they are still promoting a http-download
+of the sources on their homepage - without checksums.
+
+Kitware (folks behind cmake) didn't respond at all. They are providing sources via github,
+also via http-download on their server, including binaries - all without checksums.
