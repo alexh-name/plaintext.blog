@@ -20,7 +20,7 @@ Sources or binaries are too often offered by insecure download via http without 
 
 Insecure sources and binaries download here: [5]
 
-I contacted them 20150812 and did'nt get any answer.
+I contacted them 20150812 and didn't get any answer.
 
 :::: alternatives
 
