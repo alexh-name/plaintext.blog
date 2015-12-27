@@ -358,6 +358,7 @@ Danke Tim Krieger!
 :::: libevent
 
 Für weniger CPU load bei vielen Verbindungen empfiehlt sich libevent als alternatives backend. [18]
+Es kann jedoch zu DNS-Problemen kommen, die in einer kommenden Version verbessert werden. [19]
 
 Zunächst bauen:
 
@@ -532,3 +533,4 @@ svc -u ~/service/prosody
 [16] http://mobybit.de/2015/03/29/multi-user-chat-in-prosody-auf-uberspace/
 [17] http://mobybit.de/2015/03/29/filetransfer-mittels-mod_proxy65-in-prosody-auf-uberspace/
 [18] http://prosody.im/doc/libevent
+[19] https://prosody.im/issues/issue/555
