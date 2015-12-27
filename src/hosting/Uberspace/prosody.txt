@@ -526,8 +526,8 @@ svc -u ~/service/prosody
 [7] http://www.cacert.org/
 [8] https://www.startssl.com/
 [9] http://wiki.xmpp.org/web/SRV_Records
-[10] https://xmpp.net/result.php?id=77936
-[11] https://xmpp.net/result.php?id=77953
+[10] https://xmpp.net/result.php?id=82990
+[11] https://xmpp.net/result.php?id=85172
 [12] http://prosody.im/doc/advanced_ssl_config?s%5B%5D=ssl#options
 [13] http://www.openssl.org/docs/apps/dhparam.html
 [14] http://prosody.im/doc/certificates
