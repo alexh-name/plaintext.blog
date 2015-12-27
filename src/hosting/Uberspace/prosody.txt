@@ -350,6 +350,8 @@ Das kann dann so [10] [11] aussehen.
 
 ::: weiteres
 
+:::: weitere XMPP-Funktionen
+
 * Multi-User Chat [16]
 * Filetransfer mittels mod_proxy65 [17]
 
