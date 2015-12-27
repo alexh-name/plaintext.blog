@@ -1,8 +1,5 @@
 : about
 
-:: Why "Cosmofox"?
-
-Why not?
 
 :: What is this?
 
@@ -14,26 +11,20 @@ The txt-files are in a github-repo, so feel encouraged to contribute. [0]
 Whatever I stumble upon / find out / try out and want to share and / or
 want to look up later on.
 
-:: Are you stuck in the 90s? (aka your design sucks / y no JS yo?)
-
-I think that designs suck when they need JS, databases and a CMS or framework
-with hundreds of thousands of lines of code just to display some text on the web [1].
-Duh.
-Not to speak about the security implications.
+:: What else?
 
 This site is generated with ahrf [2] and wswsh [3] and some of my own
 additions [4] [5]. What you see is a bunch of static plaintext files and that
 should be all you need for this kind of thing.
-No JS.
 
-When my design sucks, it's not the fault of those tools. Of course you can
-create awesome designs with just HTML and CSS. Check out Ypnose's website [6],
+Check out Ypnose's website [6],
 he is the original creator of those tools.
 
-But: It is simple, functional, hackable, secure, fast and (as far as I can tell)
-accessible, which is more important anyway.
+No JS. I don't like to use it for design and layout.
 
-[0] https://github.com/snscltt/cosmofox.net
+I try to keep this as accessible as possible, feel free to give me a hint were it isn't.
+
+[0] https://github.com/snscltt/pomm.es
 [1] https://www.openhub.net/p/wordpress
 [2] https://github.com/Ypnose/ahrf
 [3] https://github.com/Ypnose/wswsh
