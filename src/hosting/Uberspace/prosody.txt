@@ -2,6 +2,10 @@
 
 ::: updates
 
+:::: 2015.12.27
+
+libevent als backend für connection handling hinzugefügt. Dank an Christian Schneppe!
+
 :::: 2015.08.21
 
 Ungenauigkeiten bzgl. Ort der Config korrigiert. Dank an Thomas Kammerer.
@@ -351,6 +355,38 @@ Das kann dann so [10] [11] aussehen.
 
 Danke Tim Krieger!
 
+:::: libevent
+
+Für weniger CPU load bei vielen Verbindungen empfiehlt sich libevent als alternatives backend. [18]
+
+Zunächst bauen:
+
+====
+toast arm https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
+====
+
+dann mit luarocks installieren:
+
+====
+luarocks install luaevent --local EVENT_LIBDIR=/home/$USER/.toast/armed/lib
+====
+
+in der config kann jetzt der entsprechende wert gesetzt werden. Der muss sich im globalen Bereich befinden:
+
+====
+use_libevent = true
+====
+
+nach einem Neustart sollte nun folgende Zeile beim Start im Log auftauchen:
+
+====
+general    info    Prosody is using the epoll backend for connection handling
+====
+
+wichtig ist hier 'epoll backend'.
+
+Dank an Christian Schneppe!
+
 
 :: das Ganze nun aktuell halten ::
 
@@ -495,3 +531,4 @@ svc -u ~/service/prosody
 [15] http://prosody.im/doc/dns
 [16] http://mobybit.de/2015/03/29/multi-user-chat-in-prosody-auf-uberspace/
 [17] http://mobybit.de/2015/03/29/filetransfer-mittels-mod_proxy65-in-prosody-auf-uberspace/
+[18] http://prosody.im/doc/libevent
