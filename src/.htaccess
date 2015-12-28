@@ -14,7 +14,6 @@ Redirect 301 /howtos/ejabberd-auf-uberspace /hosting/Uberspace/ejabberd.html
 #Redirect 301 /AP https://how.cosmofox.net/using-open-WiFi/
 #Redirect 301 /ap https://how.cosmofox.net/using-open-WiFi/
 #Redirect 301 /gen2 https://gentoo.cosmofox.net/
-Redirect 301 /atom.xml https://blog.cosmofox.net/atom.xml
 
 ErrorDocument 403 /about/
 ErrorDocument 404 /about/
