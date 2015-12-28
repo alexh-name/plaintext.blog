@@ -1,15 +1,16 @@
 DirectoryIndex index.html
 
 RewriteEngine On
+
 RewriteCond %{HTTPS} !=on
 RewriteCond %{ENV:HTTPS} !=on
-
 RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
-RewriteCond %{HTTP_HOST} !=cosmofox.net
-RewriteRule (.*) http://cosmofox.net/$1 [R=301,L]
 
-Redirect 301 /howtos/umurmur-auf-uberspace https://cosmofox.net/hosting/Uberspace/umurmur.html
-Redirect 301 /howtos/ejabberd-auf-uberspace https://cosmofox.net/hosting/Uberspace/ejabberd.html
+RewriteCond %{HTTP_HOST} !=pomm.es
+RewriteRule (.*) https://pomm.es/$1 [R=301,L]
+
+Redirect 301 /howtos/umurmur-auf-uberspace /hosting/Uberspace/umurmur.html
+Redirect 301 /howtos/ejabberd-auf-uberspace /hosting/Uberspace/ejabberd.html
 Redirect 301 /AP https://how.cosmofox.net/using-open-WiFi/
 Redirect 301 /ap https://how.cosmofox.net/using-open-WiFi/
 Redirect 301 /gen2 https://gentoo.cosmofox.net/
