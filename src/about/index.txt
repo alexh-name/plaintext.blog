@@ -1,15 +1,16 @@
 : about
 
+When you have followed a security critical guide, you should keep your stuff up to date.
+I'll try to do the same so I recommend subscribing to the feed [7] or twitter [8] to get the changes.
+
+*I cannot guarantee for anything and you are responsible by yourself.*
+
 /'Cause it all already sucks enough/
 
 :: What is this?
 
 Some kind of tech related blog or open notebook. 
 The txt-files are in a github-repo, so feel encouraged to contribute. [0]
-When you have followed a security critical guide, you should keep your stuff up to date.
-I'll try to do the same so I recommend subscribing to the feed [7] or twitter [8] get the changes.
-
-*I cannot guarantee for anything and you are responsible by yourself.*
 
 :: What about?
 

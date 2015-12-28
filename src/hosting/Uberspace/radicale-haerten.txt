@@ -1,5 +1,8 @@
 : radicales Crypto härten
 
+/This guide is security critical. See [6]/
+/Diese Anleitung ist sicherheitskritisch. Siehe [6]/
+
 radicale ist ein Server für CardDAV und CalDAV. [0] 
 In der default-Konfiguration [1] nutzt radicale keine verschlüsselte Verbindung. Das geht besser:
 
@@ -80,4 +83,5 @@ Siehe auch:
 [2] https://wiki.uberspace.de/system:toast
 [3] https://docs.python.org/2/library/ssl.html#ssl.PROTOCOL_TLSv1_2
 [4] https://develovers.de/2015/03/ssl-bei-uberspace-einrichten/
+[6] /about/
 [5] http://frank.zisko.io/leitstelle/2015-04-01-radicale-uberspace/
