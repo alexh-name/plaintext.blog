@@ -22,7 +22,7 @@ he is the original creator of those tools.
 
 No JS. I don't like to use it for design and layout.
 
-I try to keep this as accessible as possible, feel free to give me a hint were it isn't.
+I try to keep this as accessible as possible, feel free to give me a hint where it isn't.
 
 [0] https://github.com/snscltt/pomm.es
 [1] https://www.openhub.net/p/wordpress
