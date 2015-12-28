@@ -1,0 +1,11 @@
+: contact
+
+* mail: mail at pomm.es
+* twitter: @snscltt [1]
+
+or see below for
+
+* xmpp
+* mumble
+
+[1] https://twitter.com/snscltt
