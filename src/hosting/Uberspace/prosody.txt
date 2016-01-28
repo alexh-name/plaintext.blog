@@ -6,6 +6,10 @@
 
 ::: updates
 
+:::: 2016.01.28
+
+Ungenauigkeiten bzgl. Ort der Config erneut korrigiert. Noch mal Dank an Thomas Kammerer!
+
 :::: 2015.12.27
 
 libevent als backend für connection handling hinzugefügt. Dank an Christian Schneppe!
