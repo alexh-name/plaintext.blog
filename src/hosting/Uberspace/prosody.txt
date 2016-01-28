@@ -434,7 +434,7 @@ Nun liegt im neuen Verzeichnis natürlich wieder eine Beispielconfig und nicht m
 ====
 cp ~/.toast/armed/etc/prosody/prosody.cfg.lua ~/etc/prosody/prosody.cfg.lua.stock
 rm ~/.toast/armed/etc/prosody/prosody.cfg.lua
-ln -s ~/etc/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
+ln -s ~/etc/prosody/prosody.cfg.lua ~/.toast/armed/etc/prosody/prosody.cfg.lua
 ====
 
 **Achtung:**
