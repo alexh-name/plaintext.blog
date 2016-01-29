@@ -4,43 +4,14 @@
 
 /Diese Anleitung ist sicherheitskritisch. Siehe [20]/
 
-::: updates
+::: latest update
 
-:::: 2016.01.28
+:::: 2016.01.29
 
-Ungenauigkeiten bzgl. Ort der Config erneut korrigiert. Noch mal Dank an Thomas Kammerer!
+Aktualisierung der Versionen von OpenSSL, prosody und den lua-Modulen.
+Außerdem neu ist ein Abschnitt über die Verwendung von Let’s Encrypt. Dank an mcnesium! [22]
 
-:::: 2015.12.27
-
-libevent als backend für connection handling hinzugefügt. Dank an Christian Schneppe!
-
-:::: 2015.08.21
-
-Ungenauigkeiten bzgl. Ort der Config korrigiert. Dank an Thomas Kammerer.
-
-:::: 2015.08.15
-
-* Allgemeine Überarbeitung. Neu: Prosody updaten.
-* Anleitungen für muc und filetransfer von Tim Krieger. Danke!
-
-:::: 2015.01.21
-
-Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-Config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
-Ich persönlich behalte die Option bei, da die Infos mir - nun ja - beim Debuggen helfen. Wie im Geiste des letzten Updates sei ohnehin gesagt: Wer die genutzte IP nirgendwo aufgezeichnet wissen möchte, sollte sie sowieso korrekt verschleiern, etwa mit TOR. Lernt und lehrt eure Nutzer, wie. Alles andere ist falsche Sicherheit.
-
-Außerdem habe ich noch eine kurze Beschreibung verlinkt, wie ihr Zertifikatketten korrekt zusammensetzt. Dank für die Anregung geht hier an @roflthecat.
-
-:::: 2015.01.13
-
-Wie mir freundlicherweise von Moritz ( @el_golfo ) mitgeteilt wurde, fehlten in der SSL-Konfiguration die Optionen 
-
-====
-[...] "single_dh_use", "single_ecdh_use" [...]
-====
-
-wie sie hier beschrieben werden [12]. Die habe ich nun hinzugefügt, ist empfehlenswert. 
-Diese erschweren kurz gesagt eine potentielle Attacke auf die Server-Client-Verbindung, wenn OpenSSL "schwache" Primzahlen für DH-Parameter nutzt. OpenSSL tut das aber nur, wenn explizit gesetzt [13]. 
-Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürchtet.
+Alle vorigen Änderungen am Ende der Seite.
 
 - - -
 
@@ -533,6 +504,44 @@ Startet nun natürlich noch prosody wieder:
 svc -u ~/service/prosody
 ====
 
+::: frühere Änderungen
+
+:::: 2016.01.28
+
+Ungenauigkeiten bzgl. Ort der Config erneut korrigiert. Noch mal Dank an Thomas Kammerer!
+
+:::: 2015.12.27
+
+libevent als backend für connection handling hinzugefügt. Dank an Christian Schneppe!
+
+:::: 2015.08.21
+
+Ungenauigkeiten bzgl. Ort der Config korrigiert. Dank an Thomas Kammerer.
+
+:::: 2015.08.15
+
+* Allgemeine Überarbeitung. Neu: Prosody updaten.
+* Anleitungen für muc und filetransfer von Tim Krieger. Danke!
+
+:::: 2015.01.21
+
+Diesmal habe ich auf Anfrage von @el_golfo angehängt, wie ihr euer OpenSSL updatet und die Beispiel-Config angepasst, sodass der Server keine Debug-Infos mehr loggt und damit auch keine IPs mehr.
+Ich persönlich behalte die Option bei, da die Infos mir - nun ja - beim Debuggen helfen. Wie im Geiste des letzten Updates sei ohnehin gesagt: Wer die genutzte IP nirgendwo aufgezeichnet wissen möchte, sollte sie sowieso korrekt verschleiern, etwa mit TOR. Lernt und lehrt eure Nutzer, wie. Alles andere ist falsche Sicherheit.
+
+Außerdem habe ich noch eine kurze Beschreibung verlinkt, wie ihr Zertifikatketten korrekt zusammensetzt. Dank für die Anregung geht hier an @roflthecat.
+
+:::: 2015.01.13
+
+Wie mir freundlicherweise von Moritz ( @el_golfo ) mitgeteilt wurde, fehlten in der SSL-Konfiguration die Optionen 
+
+====
+[...] "single_dh_use", "single_ecdh_use" [...]
+====
+
+wie sie hier beschrieben werden [12]. Die habe ich nun hinzugefügt, ist empfehlenswert. 
+Diese erschweren kurz gesagt eine potentielle Attacke auf die Server-Client-Verbindung, wenn OpenSSL "schwache" Primzahlen für DH-Parameter nutzt. OpenSSL tut das aber nur, wenn explizit gesetzt [13]. 
+Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürchtet.
+
 [0] https://xmpp.net/
 [1] http://pastebin.com/6ZmHsJ7U
 [2] https://wiki.uberspace.de/system:toast
@@ -555,3 +564,4 @@ svc -u ~/service/prosody
 [19] https://prosody.im/issues/issue/555
 [20] /about/
 [21] https://wiki.uberspace.de/webserver:https
+[22] https://github.com/mcnesium
