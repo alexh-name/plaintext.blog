@@ -279,16 +279,16 @@ Testen ob prosody auch die über luarocks installierten Module nutzt:
 ====
 prosodyctl about
 Prosody unknown
-
+ 
 # Prosody directories
 Data directory:   /home/UUSER/.toast/armed/var/lib/prosody
 Plugin directory: /home/UUSER/.toast/armed/lib/prosody/modules/
 Config directory: /home/UUSER/.toast/armed/etc/prosody
 Source directory: /home/UUSER/.toast/armed/lib/prosody
-
+ 
 # Lua environment
 Lua version:              Lua 5.1
-
+ 
 Lua module search paths:
   /home/UUSER/.toast/armed/lib/prosody/?.lua
   /home/UUSER/.luarocks/share/lua/5.1/?.lua
@@ -301,7 +301,7 @@ Lua module search paths:
   /usr/lib64/lua/5.1/?/init.lua
   /home/UUSER/.luarocks/share/lua/5.1/?.lua
   /home/UUSER/.luarocks/share/lua/5.1/?/init.lua
-
+ 
 Lua C module search paths:
   /home/UUSER/.toast/armed/lib/prosody/?.so
   /home/UUSER/.luarocks/lib/lua/5.1/?.so
@@ -310,9 +310,9 @@ Lua C module search paths:
   /usr/lib64/lua/5.1/?.so
   /usr/lib64/lua/5.1/loadall.so
   /home/UUSER/.luarocks/lib/lua/5.1/?.so
-
+ 
 LuaRocks:         Installed (2.1.2)
-
+ 
 # Lua module versions
 lfs:      LuaFileSystem 1.6.3
 lxp:      LuaExpat 1.3.0
