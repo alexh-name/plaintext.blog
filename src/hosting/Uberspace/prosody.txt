@@ -206,21 +206,22 @@ modules_enabled = {
 	"motd";
 	"welcome";
 };
-daemonize = false; -- IMPORTANT for daemontools! DO NOT EDIT!  
-data_path = "/home/UUSER/var/prosody/data";  
-log = { info = "*console" } -- IMPORTANT for daemontools! DO NOT EDIT! "*console" schickt den Output in daemontools Konsole. 
+daemonize = false; -- IMPORTANT for daemontools! DO NOT EDIT!
+data_path = "/home/UUSER/var/prosody/data";
+log = { info = "*console" } -- IMPORTANT for daemontools! DO NOT EDIT! "*console" schickt den Output in daemontools Konsole.
 -- log = { "*console" } -- diese Zeile anstelle obiger, wenn ihr auch Debug-Infos wollt. Achtung: IPs werden dann auch geloggt.
-allow_registration = false;  
+allow_registration = false;
 s2s_ports = { XXXXX } -- Server to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen!
-c2s_ports = { XXXXX } -- Client to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen! 
-c2s_require_encryption = true  
-s2s_require_encryption = true  
+c2s_ports = { XXXXX } -- Client to Server - freien TCP Port bei hallo@uberspace.de anfragen & eintragen!
+c2s_require_encryption = true
+s2s_require_encryption = true
+s2s_secure_auth = true
 authentication = "internal_hashed" -- do not save passphrases in cleartext!
  
-VirtualHost "domain.tld" -- anpassen!  
+VirtualHost "domain.tld" -- anpassen!
 	enabled = true
  
-	ssl = {  
+	ssl = {
 		key = "/home/UUSER/var/prosody/ssl/prosody_domain.tld_private.key";
 		certificate = "/home/UUSER/var/prosody/ssl/prosody_domain.tld.crt";
  
@@ -230,8 +231,11 @@ VirtualHost "domain.tld" -- anpassen!
 		-- Best ciphers for perfect forward secrecy.
 		ciphers = "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:EDH+aRSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128";
  
-        	options = { "no_sslv2", "no_sslv3", "no_ticket", "no_compression", "cipher_server_preference", "single_dh_use", "single_ecdh_use" }
-}
+		-- Where Uberspace (or CentOS in general) stores it's trusted CAs.
+		cafile = "/etc/pki/tls/certs/ca-bundle.crt";
+ 
+		options = { "no_sslv2", "no_sslv3", "no_ticket", "no_compression", "cipher_server_preference", "single_dh_use", "single_ecdh_use" }
+  }
 ====
 
 Nett zu haben ist auch die muc(multi user chat)-Funktion, sie erlaubt das erstellen von chatrooms. 
