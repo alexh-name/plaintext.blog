@@ -164,7 +164,7 @@ openssl dhparam -out dh-4096.pem 4096
 
 Und dann noch Zertifikate. Wer schon welche hat, überspringt hier.
 
-Uberspace mit eigenen Scripten an, kostenlose Zertifikate von Letsencrypt zu installieren [21]. Diese können in die Prosody-Konfiguration übernommen werden. Am besten per Symlink, damit man beim Erneuern der Zertifikate nicht vergisst, sie für Prosody ebenfalls anzupassen:
+Uberspace bietet mit eigenen Scripten an, kostenlose Zertifikate von Letsencrypt zu installieren [21]. Diese können in die Prosody-Konfiguration übernommen werden. Am besten per Symlink, damit man beim Erneuern der Zertifikate nicht vergisst, sie für Prosody ebenfalls anzupassen:
 
 ====
 cd ~/var/prosody/ssl/
