@@ -62,7 +62,7 @@ openssl version
 geprüft werden.
 
 ====
-toast arm https://www.openssl.org/source/openssl-1.0.2d.tar.gz && openssl version
+toast arm https://www.openssl.org/source/openssl-1.0.2f.tar.gz && openssl version
 ====
 
 Hier sollte nun "OpenSSL 1.0.2d 9 Jul 2015" ausgegeben werden.
@@ -469,7 +469,7 @@ toast remove https://prosody.im/downloads/source/prosody-0.9.6.tar.gz
 Das ist simpel. Wenn ihr eine neue Version gefunden habt, baut zuerst das Paket aus den neuen Quellen:
 
 ====
-toast build https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+toast build https://www.openssl.org/source/openssl-1.0.2f.tar.gz
 ====
 
 War das erfolgreich, beendet prosody
@@ -487,7 +487,7 @@ toast disarm openssl
 und fügt dann eine zum neuen hinzu:
 
 ====
-toast arm https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+toast arm https://www.openssl.org/source/openssl-1.0.2f.tar.gz
 ====
 
 Ihr solltet das gewünschte Ergebnis nun sehen können:
@@ -499,9 +499,9 @@ openssl
     urls:
       https://www.openssl.org/source/openssl-1.0.1j.tar.gz
     build 1: built
-  version 1.0.1l: stored
+  version 1.0.2f: stored
     urls:
-      https://www.openssl.org/source/openssl-1.0.1l.tar.gz
+      https://www.openssl.org/source/openssl-1.0.2f.tar.gz
     build 1: armed
 ====
 
