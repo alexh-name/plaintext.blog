@@ -65,7 +65,7 @@ geprüft werden.
 toast arm https://www.openssl.org/source/openssl-1.0.2f.tar.gz && openssl version
 ====
 
-Hier sollte nun "OpenSSL 1.0.2d 9 Jul 2015" ausgegeben werden.
+Hier sollte nun "OpenSSL 1.0.2e 3 Dec 2015" ausgegeben werden.
 
 :: lua vorbereiten
 
