@@ -334,11 +334,11 @@ Lua C module search paths:
 LuaRocks:        	Installed (2.1.2)
  
 # Lua module versions
-lfs:     	LuaFileSystem 1.6.2
-lxp:     	LuaExpat 1.3.0
-pposix:  	0.3.6
-socket:  	LuaSocket 3.0-rc1
-ssl:     	0.5.PR
+lfs:      LuaFileSystem 1.6.3
+lxp:      LuaExpat 1.3.0
+pposix:   0.3.6
+socket:   LuaSocket 3.0-rc1
+ssl:      0.5.1
 ====
 
 Wichtig ist vorallem der letzte Eintrag: ssl 0.5.PR 
