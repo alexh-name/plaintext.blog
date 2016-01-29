@@ -149,7 +149,7 @@ Jetzt kann es mit der eigentlichen Prosody Installation weitergehen!
 Aktuelle Quellen hier [6] zu finden.
 
 ====
-toast arm https://prosody.im/downloads/source/prosody-0.9.8.tar.gz
+toast arm https://prosody.im/downloads/source/prosody-0.9.10.tar.gz
  
 mkdir -p ~/var/prosody/data
 mkdir -p ~/var/prosody/ssl
@@ -421,7 +421,7 @@ Es ist eigentlich ganz simpel. Auf den Seiten / im Feed könnt ihr nach neuen Ve
 Wenn es eine neue Version gibt, installiert sie einfach wie zuvor, mit dem neuen DL-Link, aber stoppt vorher noch den laufenden Dienst:
 
 ====
-svc -d ~/service/prosody && toast arm https://prosody.im/downloads/source/prosody-0.9.8.tar.gz
+svc -d ~/service/prosody && toast disarm prosody && toast arm https://prosody.im/downloads/source/prosody-0.9.10.tar.gz
 ====
 
 Sollte es Abhängigkeiten zu neueren Versionen der Lua-Bibliotheken geben, genügt es, wie bei derer ersten Installation vorzugehen. Luarocks installiert ohne weiteres einfach die neueste Version, das es findet:
