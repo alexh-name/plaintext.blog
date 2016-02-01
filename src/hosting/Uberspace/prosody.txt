@@ -345,6 +345,36 @@ Zu guter Letzt: Teste deinen Prosody XMPP-Server im IM Observatory.
 Das kann dann so [10] [11] aussehen.
 
 
+::: Probleme
+
+:::: custom Ports
+
+Da alle, die diese Anleitung tatsächlich auch auf einem Uberspace umsetzen nicht den Standard-Port 5222 nutzen können, kann dies auch alle davon betreffen. Im Sinne der Erfinder sollte eine Abweichung folgendermaßen trotzdem funktionieren: Du hinterlegst SRV-Einträge im DNS, sodass Clients und Server den richtigen Port finden: [9] [15].
+Ansonsten sollte es möglich sein, dem Client den richtigen Port manuell mitzuteilen.
+
+Beides funktioniert in der Praxis nicht immer.
+
+Einige Clients mögen keine manuellen Einstellungen diebezüglich entgegen nehmen:
+
+Und manchmal funktioniert das Auffinden der Ports trotz grundsätzlicher SRV-Anfrage anscheinend nicht. Abhilfe schafft da der manuelle Eintrag im Client.
+
+Woran die SRV-Anfragen manchmal scheitern, versuche ich noch herauszufinden.
+
+Bislang habe ich geprüft, ob und von wo die SRV-Anfragen bei welchen DNS-Servern korrekt ausfallen, wenn ich sie mit dig ausführe:
+
+Vodafone DSL:
+
+* 8.8.8.8 (Google)
+* 8.8.4.4 (Google)
+
+Mobilfunknetz der Telekom:
+
+* 10.74.210.210 (zugeteilte Server)
+* 10.74.210.211 (zugeteilte Server)
+
+to be continued ...
+
+
 ::: weiteres
 
 :::: weitere XMPP-Funktionen
