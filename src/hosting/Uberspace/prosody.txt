@@ -344,6 +344,7 @@ Trotzdem ist es noch eine gute Idee, bei deinem Registrar die entsprechenden DNS
 Zu guter Letzt: Teste deinen Prosody XMPP-Server im IM Observatory. 
 Das kann dann so [10] [11] aussehen.
 
+
 ::: weiteres
 
 :::: weitere XMPP-Funktionen
