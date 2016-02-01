@@ -6,6 +6,10 @@
 
 ::: latest update
 
+:::: 2016.02.01
+
+Ich schleiche mich an die Gründe heran, wieso Clients manchmal nicht den c2s-Port finden.
+
 :::: 2016.01.29 #2
 
 Änderung der Config, sodass S2S-Authentifizierung nur noch auf Zertifikaten und nicht mehr auf DNS beruht.
