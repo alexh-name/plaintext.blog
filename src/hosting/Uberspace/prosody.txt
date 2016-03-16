@@ -6,6 +6,10 @@
 
 ::: latest update
 
+:::: 2016.03.17
+
+Neue luasec-Version erschienen. Diese funktioniert aber nur mit lua 5.2+ und somit nicht mit prosody 0.9
+
 :::: 2016.02.01
 
 Ich schleiche mich an die Gründe heran, wieso Clients manchmal nicht den c2s-Port finden.
@@ -98,7 +102,7 @@ Achtet auf die letzte Zeile. Hier können wir nämlich das lokal installierte, a
 luarocks install luasocket --local
 luarocks install luaexpat --local
 luarocks install luafilesystem --local
-luarocks install luasec --local OPENSSL_DIR=~/.toast/armed/usr/local/
+luarocks install luasec 0.5.1 --local OPENSSL_DIR=~/.toast/armed/usr/local/
 ====
 
 Nach Erfolg sieht das dann etwa so aus:
