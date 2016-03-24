@@ -8,7 +8,7 @@
 
 :::: 2016.03.17
 
-Neue luasec-Version erschienen. Diese funktioniert aber nur mit lua 5.2+ und somit nicht mit prosody 0.9
+Neue luasec-Version erschienen. Diese funktioniert aber nur mit lua 5.2+ und somit nicht mit prosody 0.9 [23]
 
 :::: 2016.02.01
 
@@ -612,3 +612,4 @@ Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürc
 [20] /about/
 [21] https://wiki.uberspace.de/webserver:https
 [22] https://github.com/mcnesium
+[23] https://github.com/brunoos/luasec/blob/master/CHANGELOG
