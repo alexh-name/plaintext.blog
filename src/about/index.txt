@@ -17,6 +17,12 @@ The txt-files are in a github-repo, so feel encouraged to contribute. [0]
 Whatever I stumble upon / find out / try out and want to share and / or
 want to look up later on.
 
+:: Who am I?
+
+My name is Alex. I'm studying philosophy and classics.
+My cyber-fu is self-taught.
+I can relate to [9].
+
 :: What else?
 
 This site is generated with ahrf [2] and wswsh [3] and some of my own
@@ -39,3 +45,4 @@ I try to keep this as accessible as possible, feel free to give me a hint where 
 [6] http://ywstd.fr
 [7] /atom.xml
 [8] /contact/
+[9] http://suckless.org/philosophy
