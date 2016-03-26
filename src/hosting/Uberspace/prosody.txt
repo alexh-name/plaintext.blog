@@ -229,6 +229,7 @@ c2s_require_encryption = true
 s2s_require_encryption = true
 s2s_secure_auth = true
 authentication = "internal_hashed" -- do not save passphrases in cleartext!
+interfaces = {"x.x.x.x", "x:x:x:x:x:x:x:x"} -- IPv4 und v6 zB unter https://uberspace.de/dashboard/datasheet nach schauen - führt ansonsten zu hohem load! [24]
  
 VirtualHost "domain.tld" -- anpassen!
 	enabled = true
@@ -613,3 +614,4 @@ Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürc
 [21] https://wiki.uberspace.de/webserver:https
 [22] https://github.com/mcnesium
 [23] https://github.com/brunoos/luasec/blob/master/CHANGELOG
+[24] https://prosody.im/issues/issue/649
