@@ -19,8 +19,10 @@ want to look up later on.
 
 :: Who am I?
 
-My name is Alex. I'm studying philosophy and classics.
-My cyber-fu is self-taught.
+My name is Alex. I'm studying philosophy and classics. 
+My cyber-fu is self-taught. 
+My main interest in technology is the conflict between simplicity, security
+ and usability in software. 
 I can relate to [9].
 
 :: What else?
