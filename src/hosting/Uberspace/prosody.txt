@@ -6,6 +6,10 @@
 
 ::: latest update
 
+:::: 2016.03.26 [master d2f0818]
+
+Problem mit hohem load bei s2sout gelöst. Dank an Adoa Coturnix! [24]
+
 :::: 2016.03.17
 
 Neue luasec-Version erschienen. Diese funktioniert aber nur mit lua 5.2+ und somit nicht mit prosody 0.9 [23]
