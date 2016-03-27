@@ -250,7 +250,7 @@ VirtualHost "domain.tld" -- anpassen!
 		dhparam = "/home/UUSER/var/prosody/ssl/dh-4096.pem";
  
 		-- Best ciphers for perfect forward secrecy.
-		-- ciphers = "HIGH+kEDH:HIGH+kEECDH:!HIGH+DSA:!HIGH+ECDSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128";
+		-- ciphers = "HIGH+kEDH:HIGH+kEECDH:!HIGH+DSA:!HIGH+ECDSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!SHA";
  
 		-- Where Uberspace (or CentOS in general) stores it's trusted CAs.
 		cafile = "/etc/pki/tls/certs/ca-bundle.crt";
