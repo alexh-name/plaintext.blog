@@ -246,14 +246,28 @@ VirtualHost "domain.tld" -- anpassen!
 		dhparam = "/home/UUSER/var/prosody/ssl/dh-4096.pem";
  
 		-- Best ciphers for perfect forward secrecy.
-		ciphers = "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:EDH+aRSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128";
+		-- ciphers = "HIGH+kEDH:HIGH+kEECDH:!HIGH+DSA:!HIGH+ECDSA:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128";
  
 		-- Where Uberspace (or CentOS in general) stores it's trusted CAs.
 		cafile = "/etc/pki/tls/certs/ca-bundle.crt";
  
-		options = { "no_sslv2", "no_sslv3", "no_ticket", "no_compression", "cipher_server_preference", "single_dh_use", "single_ecdh_use" }
+		-- mittlerweile Standard: options = { "no_sslv2", "no_sslv3", "no_ticket", "no_compression", "cipher_server_preference", "single_dh_use", "single_ecdh_use" }
   }
 ====
+
+*ACHTUNG:*
+
+Das Team hinter Prosody empfiehlt, die Liste der Ciphers _nicht_ anzupassen. [25] Daher habe ich die entsprechende Zeile auskommentiert. 
+Ich möchte dennoch meine angepasste Liste vorschlagen, welche zusätzlich zu den Standardoptionen folgende Cipher aus der Benutzung ausschliesst:
+
+* CAMELLIA128
+* AES128
+* DSA
+* ECDSA
+* DSS
+
+und ausschließlich Cipher mit PFS enthält. [26]
+
 
 Nett zu haben ist auch die muc(multi user chat)-Funktion, sie erlaubt das erstellen von chatrooms. 
 Sie setzt allerdings eine subdomain voraus und ist daher davon abhängig, ob euer Zertifikat das zulässt. 
@@ -619,3 +633,5 @@ Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürc
 [22] https://github.com/mcnesium
 [23] https://github.com/brunoos/luasec/blob/master/CHANGELOG
 [24] https://prosody.im/issues/issue/649
+[25] http://prosody.im/doc/advanced_ssl_config
+[26] http://prosody.im/doc/advanced_ssl_config#ciphers
