@@ -1,4 +1,4 @@
-: team chat
+: free team chat
 
 This page serves the high cause of liberating public
 in-game voice chats from disturbing private telephone
