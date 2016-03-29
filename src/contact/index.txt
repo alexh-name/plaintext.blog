@@ -1,7 +1,7 @@
 : contact
 
 * mail: a at pomm.es (pgp: [1])
-* twitter: @snscltt [2]
+* twitter: @pomm_es [2]
 
 or see below for
 
@@ -9,4 +9,4 @@ or see below for
 * mumble
 
 [1] /files/a.pomm.es.asc
-[2] https://twitter.com/snscltt
+[2] https://twitter.com/pomm_es
