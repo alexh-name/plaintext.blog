@@ -1,8 +1,19 @@
-: free team chat
+: free Team Chat
 
 This page serves the high cause of liberating public
-in-game voice chats from disturbing private telephone
-sex in native languages.
+in-game voice chats from disturbing private conversations
+in non-common languages.
+
+:: the Problem
+
+Some people need to talk constantly even while playing
+tactical team-based games without feeling the need to even
+use a language everybody understands.
+
+While this is disturbing and annoying, there is now a
+simple fix:
+
+:: the Fix
 
 Whoever can't afford a private server for such action
 can simply use this one. 
@@ -10,14 +21,14 @@ Yes. You all pissed me off just enough to spend my free
 time doing this.
 
 Just follow this easy steps to enjoy your very own channel
-where you can masturbate to your team mates' voices in any
-foreign language you like:
+where you can scream and shout in any foreign language you
+like:
 
 * Get the free app mumble: [1]
 * Follow it's easy sound wizard for optimal adjustments
-* Klick on this link to join my server: [2]
+* Klick on this link to join this server: [2]
 * Grab a free channel
-* Scream and shout whatever the fuck you want _without_ disturbing everyone else, like a decent human being
+* Scream and shout whatever the fuck you want _without_ disturbing everyone else
 
 [1] http://wiki.mumble.info/wiki/Main_Page
 [2] mumble://pomm.es:62877
