@@ -4,7 +4,7 @@
 
 ::: Stadtteilladen Zielona Góra: 
 
-hostet "Internationalistischer Abend"
+* Hostet "Internationalistischer Abend".
 
 ::: Internationalistischer Abend [1]:
 
@@ -29,7 +29,7 @@ hostet "Internationalistischer Abend"
 
 ::: Demokratische Komitees Palästinas - Berlin e.V.:
 
-Referieren über "Widerstand gegen Apartheid, Boykott-Kampagne und dem Projekt eines säkulären und demokratischen Palästina (Einstaatenlösung)." [1]
+* Referieren über "Widerstand gegen Apartheid, Boykott-Kampagne und dem Projekt eines säkulären und demokratischen Palästina (Einstaatenlösung)." [1]
 
 
 :: nicht gegen Antisemitismus positioniert
