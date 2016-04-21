@@ -17,7 +17,6 @@ Redirect 301 /howtos/ejabberd-auf-uberspace /hosting/Uberspace/ejabberd.html
 Redirect 301 /TS /noise/freeTS.html
 Redirect 301 /ts /noise/freeTS.html
 Redirect 301 /links /like/alot.html
-Redirect 301 /like /like/alot.html
 Redirect 301 /dontlike /like/not.html
 
 ErrorDocument 403 /about/
