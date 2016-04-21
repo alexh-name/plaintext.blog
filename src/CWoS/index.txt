@@ -9,8 +9,6 @@ Responds and corrections so far:
 *2*
 :)
 
-- - -
-
 :: insecure sources and/or binary distribution
 
 Yes, this seems to be very common, but I have to start somewhere. 
@@ -40,7 +38,6 @@ There is a repo on github [1].
 
 They now added the missing files to build it [3]. I applied the commit to a fork of v1.5: [2]
 
-- - -
 
 [0] https://twitter.com/CryptoShaming
 [1] https://github.com/hyperrealm/libconfig
