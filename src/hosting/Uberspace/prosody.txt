@@ -464,7 +464,7 @@ Sollte es Abhängigkeiten zu neueren Versionen der Lua-Bibliotheken geben, genü
 luarocks install luasocket --local
 luarocks install luaexpat --local
 luarocks install luafilesystem --local
-luarocks install luasec --local OPENSSL_DIR=~/.toast/armed/usr/local/
+luarocks install luasec 0.5.1 --local OPENSSL_DIR=~/.toast/armed/usr/local/
 ====
 
 Nun liegt im neuen Verzeichnis natürlich wieder eine Beispielconfig und nicht mehr unser SymLink zu unserer eigenen. Das stellen wir wieder her (aber legen auch wieder die neuere Standardconfig für Referenzen beiseite):
@@ -549,7 +549,7 @@ toast remove https://www.openssl.org/source/openssl-1.0.1j.tar.gz
 Jetzt installieren wir den luarock luasec noch neu, gegen das neue OpenSSL:
 
 ====
-luarocks install luasec --local OPENSSL_DIR=~/.toast/armed/usr/local/
+luarocks install luasec 0.5.1 --local OPENSSL_DIR=~/.toast/armed/usr/local/
 ====
 
 Startet nun natürlich noch prosody wieder:
