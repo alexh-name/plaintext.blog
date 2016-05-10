@@ -1,12 +1,6 @@
 : contact
 
-* mail: a at pomm.es (pgp: [1])
-* twitter: @pomm_es [2]
+* Mail: a at alexh.name
+* Anything else see: [0]
 
-or see below for
-
-* xmpp
-* mumble
-
-[1] /files/a.pomm.es.asc
-[2] https://twitter.com/pomm_es
+[0] https://keybase.io/alexh_name
