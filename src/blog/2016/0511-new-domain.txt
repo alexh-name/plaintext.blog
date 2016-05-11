@@ -1,0 +1,8 @@
+<!-- DATE: 2016-05-11 -->
+<!-- DESC: another new domain -->
+
+: another new domain
+
+Hi there (again). I'm moving from pomm.es to alexh.name.
+Everything regarding computer stuff is likely going to be
+hosted on 0101010.one.
