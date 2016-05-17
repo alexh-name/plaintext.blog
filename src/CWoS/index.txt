@@ -41,7 +41,7 @@ They now added the missing files to build it [3]. I applied the commit to a fork
 
 [0] https://twitter.com/CryptoShaming
 [1] https://github.com/hyperrealm/libconfig
-[2] https://github.com/pomm-es/libconfig
+[2] https://github.com/alexh-name/libconfig
 [3] https://github.com/hyperrealm/libconfig/commit/7acace98915ac3831f219aadef968e9e733cc9bf
 [4] http://www.hyperrealm.com/libconfig/
 [5] http://www.cmake.org/files/

@@ -31,4 +31,4 @@ like:
 * Scream and shout whatever the fuck you want _without_ disturbing everyone else
 
 [1] http://wiki.mumble.info/wiki/Main_Page
-[2] mumble://pomm.es:62877
+[2] mumble://0101010.one:62877

@@ -38,12 +38,12 @@ No JS. I don't like to use it for design and layout.
 
 I try to keep this as accessible as possible, feel free to give me a hint where it isn't.
 
-[0] https://github.com/pomm-es/pomm.es
+[0] https://github.com/alexh-name/0101010.one
 [1] https://www.openhub.net/p/wordpress
 [2] https://github.com/Ypnose/ahrf
 [3] https://github.com/Ypnose/wswsh
-[4] https://github.com/pomm-es/ahrf
-[5] https://github.com/pomm-es/wswsh
+[4] https://github.com/alexh-name/ahrf
+[5] https://github.com/alexh-name/wswsh
 [6] http://ywstd.fr
 [7] /atom.xml
 [8] /contact/

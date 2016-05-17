@@ -30,7 +30,7 @@ So gehts:
 Zunächst brauchen wir paar Abhängigkeiten:
 
 ====
-toast arm libconfig/v1.5-snscltt: https://github.com/pomm-es/libconfig/archive/v1.5-snscltt.tar.gz
+toast arm libconfig/v1.5-snscltt: https://github.com/alexh-name/libconfig/archive/v1.5-snscltt.tar.gz
 toast arm cmake/v3.3.0: https://github.com/Kitware/CMake/archive/v3.3.0.zip
 toast arm https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.bz2
 toast arm https://github.com/protobuf-c/protobuf-c/releases/download/v1.1.1/protobuf-c-1.1.1.tar.gz
@@ -139,6 +139,6 @@ Neues, schlankes und sicheres murmur!
 
 [1] https://wiki.uberspace.de/system:daemontools
 [2] https://github.com/hyperrealm/libconfig
-[3] https://github.com/pomm-es/libconfig/releases/tag/v1.5-snscltt
-[4] https://github.com/pomm-es/libconfig/commit/a394d51bd1bd9a3d731493093cdd55aaef70df09
+[3] https://github.com/alexh-name/libconfig/releases/tag/v1.5-snscltt
+[4] https://github.com/alexh-name/libconfig/commit/a394d51bd1bd9a3d731493093cdd55aaef70df09
 [5] /about/
