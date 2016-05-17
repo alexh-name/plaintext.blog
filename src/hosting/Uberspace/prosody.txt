@@ -1,35 +1,12 @@
 : prosody auf Uberspace :
 
-/This guide is security critical. See [20]/
+/This guide is security critical. See [20] // Diese Anleitung ist sicherheitskritisch. Siehe [20]/
 
-/Diese Anleitung ist sicherheitskritisch. Siehe [20]/
-
-::: latest update
+::: updates
 
 :::: 2016.03.27 [master d9bd2a1]
 
 Update zu der Liste verwendeter Ciphers. DSA und ECDSA werden nicht mehr genutzt.
-
-:::: 2016.03.26 [master d2f0818]
-
-Problem mit hohem load bei s2sout gelöst. Dank an Adoa Coturnix! [24]
-
-:::: 2016.03.17
-
-Neue luasec-Version erschienen. Diese funktioniert aber nur mit lua 5.2+ und somit nicht mit prosody 0.9 [23]
-
-:::: 2016.02.01
-
-Ich schleiche mich an die Gründe heran, wieso Clients manchmal nicht den c2s-Port finden.
-
-:::: 2016.01.29 #2
-
-Änderung der Config, sodass S2S-Authentifizierung nur noch auf Zertifikaten und nicht mehr auf DNS beruht.
-
-:::: 2016.01.29
-
-Aktualisierung der Versionen von OpenSSL, prosody und den lua-Modulen.
-Außerdem neu ist ein Abschnitt über die Verwendung von Let’s Encrypt. Dank an mcnesium! [22]
 
 Alle vorigen Änderungen am Ende der Seite.
 
@@ -559,6 +536,27 @@ svc -u ~/service/prosody
 ====
 
 ::: frühere Änderungen
+
+:::: 2016.03.26 [master d2f0818]
+
+Problem mit hohem load bei s2sout gelöst. Dank an Adoa Coturnix! [24]
+
+:::: 2016.03.17
+
+Neue luasec-Version erschienen. Diese funktioniert aber nur mit lua 5.2+ und somit nicht mit prosody 0.9 [23]
+
+:::: 2016.02.01
+
+Ich schleiche mich an die Gründe heran, wieso Clients manchmal nicht den c2s-Port finden.
+
+:::: 2016.01.29 #2
+
+Änderung der Config, sodass S2S-Authentifizierung nur noch auf Zertifikaten und nicht mehr auf DNS beruht.
+
+:::: 2016.01.29
+
+Aktualisierung der Versionen von OpenSSL, prosody und den lua-Modulen.
+Außerdem neu ist ein Abschnitt über die Verwendung von Let’s Encrypt. Dank an mcnesium! [22]
 
 :::: 2016.01.28
 
