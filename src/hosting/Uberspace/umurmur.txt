@@ -1,8 +1,8 @@
 : umurmur auf Uberspace
 
-/This guide is security critical. See [5]/
+Unkomplizierten Team-Voice-Chat selbst hosten.
 
-/Diese Anleitung ist sicherheitskritisch. Siehe [5]/
+/This guide is security critical. See [5] // Diese Anleitung ist sicherheitskritisch. Siehe [5]/
 
 ::: updates
 

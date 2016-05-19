@@ -1,5 +1,7 @@
 : prosody auf Uberspace :
 
+XMPP / Jabber schnell, einfach und sicher (haha) selbst hosten.
+
 /This guide is security critical. See [20] // Diese Anleitung ist sicherheitskritisch. Siehe [20]/
 
 ::: updates
