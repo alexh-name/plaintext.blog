@@ -24,8 +24,9 @@ I'll try to do the same so I recommend subscribing to the feed [7] or twitter [8
 My name is Alex. I'm studying philosophy and classics. 
 My cyber-fu is self-taught. 
 My main interest in technology is the conflict between simplicity, security
- and usability in software. 
+and usability in software. 
 I can relate to [9].
+There is also an 'about me': [10]
 
 :: What else?
 
@@ -50,3 +51,4 @@ I try to keep this as accessible as possible, feel free to give me a hint where 
 [7] /atom.xml
 [8] /contact/
 [9] http://suckless.org/philosophy
+[10] https://alexh.name

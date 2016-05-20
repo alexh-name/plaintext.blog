@@ -4,5 +4,7 @@ Catch me if you can.
 
 * Mail: a at alexh.name
 * Anything else see: [0]
+or: [1]
 
 [0] https://keybase.io/alexh_name
+[1] https://alexh.name
