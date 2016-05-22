@@ -1,8 +1,6 @@
-: 0101010
+: Index
 
 tech blog
-
-:: index
 
 <ul>
 <li><a href="/about/">about</a></li>
