@@ -1,0 +1,1184 @@
+: (DigitalOcean/CentOS) solid Mail Server (netqmail + dovecot + roundcube)
+
+Setting up a modern, but no BS and solid mail server step by step in less than 60min. 
+With special instructions for CentOS (on DigitalOcean).
+
+:: Some words first
+
+We will use three variables very often: $domain, $mail_domain and $address. Depending on what you want to achieve, you should make a choice now. 
+Three scenarios:
+
+* The FQDN is EXAMPLE.COM, webmail is served on EXAMPLE.COM, mails go to @EXAMPLE.COM.
+* The FQDN is EXAMPLE.COM, webmail is served on e.g. mail.EXAMPLE.COM, mails go to @EXAMPLE.COM.
+* The FQDN is e.g. mail.EXAMPLE.COM, webmail is served on the _same_ URL, mails go to @EXAMPLE.COM.
+
+Set the variables accordingly. If you need something else, you can easily customize this:
+
+====
+fqdn='FOO'
+ 
+cd $HOME
+ 
+# 1
+echo "
+domain='${fqdn}'
+address='${domain}'
+mail_domain='${domain}'" > .domain-vars.txt
+ 
+# 2
+echo "
+domain='${fqdn}'
+address='${domain}'
+mail_domain='mail.${domain}'" > .domain-vars.txt
+ 
+# 3
+echo "
+domain='${fqdn}'
+address='$(echo ${domain} | cut -d '.' -f 2-)'
+mail_domain='${domain}'" > .domain-vars.txt
+ 
+====
+
+Remember to source those variables every time you start a new shell:
+
+====
+. $HOME/.domain-vars.txt
+====
+
+:: reverse DNS
+
+For Reverse DNS to work, you have to name the Droplet like your host.
+
+:: general preparation
+
+Adapt to your time zone:
+
+====
+timezone='Europe/Berlin'
+ 
+\cp /etc/localtime /root/old.timezone
+\rm /etc/localtime
+ln -s /usr/share/zoneinfo/${timezone} /etc/localtime
+ 
+====
+
+Update and install essentials:
+
+====
+yum -y update
+yum -y install mksh bind-utils wget rsync telnet
+ 
+====
+
+====
+reboot
+====
+
+====
+. $HOME/.domain-vars.txt
+====
+
+Set your hostname:
+
+====
+file='/etc/sysconfig/network'
+sed -i -e 's/^HOSTNAME/#HOSTNAME/' $file
+echo "HOSTNAME=${domain}" >> $file
+ip="$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')"
+sed -i -e "s/^${ip}/#${ip}/" /etc/hosts
+printf "${ip}\t%s\n" "${domain}" >> /etc/hosts
+hostname ${domain}
+hostname --fqdn
+ 
+====
+
+The last line should now give you your hostname.
+
+:: get a cert from Let's Encrypt
+
+/Adapted from https://certbot.eff.org/#centosrhel6-other/
+
+====
+yum -y install epel-release
+cd $HOME
+dir='src/letsencrypt'; mkdir -p $dir ; cd $dir
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto
+ 
+====
+
+==== 
+./certbot-auto certonly --standalone -d ${domain} \
+-d imap.${address} -d smtp.${address} -d mail.${address}
+ 
+====
+
+Add cronjob for renewal:
+
+====
+cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
+#!/bin/sh
+svc -d /service/lighttpd
+sleep 2
+$HOME/src/letsencrypt/certbot-auto renew --quiet
+svc -u /service/lighttpd
+ 
+__EOF__
+ 
+(crontab -l 2>/dev/null; echo "$(expr $RANDOM % 60) */12 * * * mksh $HOME/src/letsencrypt/renew.sh") | crontab -
+ 
+====
+
+Some directories we may need:
+
+====
+mkdir -p /etc/ssl/certs/ /etc/ssl/private/
+====
+
+:: netqmail
+
+"qmail is a secure, reliable, efficient, simple message transfer agent. It is designed for typical Internet-connected UNIX hosts." [1]
+
+qmail has not been changed much since 1998 lacking reasons to do so. It has a most convincible record of 0 known security holes. 
+netqmail is a distribution of qmail from 2007, bringing small and sensible changes and new features like TLS and SMTP AUTH to adapt to the modern web.
+
+Prepare:
+
+====
+yum -y install gcc gcc-c++ make patch openssl-devel mailx
+====
+
+/Remember to take snapshots throughout the process./
+
+Get the sources:
+
+====
+cd $HOME
+dir='src/netqmail'; mkdir -p $dir ; cd $dir
+ 
+echo '
+6c591a541a2d69c2112dbad35b0f0ccab0978d85  checkpassword-0.90.tar.gz
+70a1be67e7dbe0192a887905846acc99ad5ce5b7  daemontools-0.76.tar.gz
+1c71452b8c77670b6fc2dedabb78e55aae076552  fake-smtp-1.0-1.noarch.rpm
+912b9c551dc461e838758e7672fe6f5da9e0b432  large-dns-response.patch
+9ee9a603e2ad3d8e1d34b900e19b7a5d275f538b  netqmail-1.06.tar.gz
+6aa77a4a122c03cf1120cd67818f823d6efd1ab6  netqmail-1.06-tls+auth-20151215_20160609.patch
+52d624e6a59eed9fe0c8d7bf3805cd095e4f848f  qmailctl-script
+1e4291115b2ce63aabf4798276d2c8da8b64280e  qmail-smtpd-auth-0510_tgz.bin
+e1af39f7c3c0a61571d8e39c57b33a10c3b66265  qmail-smtpd-run
+2858a679331261c705df8ec2cefc32b1869c23eb  qmail-smtpd-run-checkpassword.patch
+bedb31c543f9b335d5d2b22339d11afd5bf62b85  qmail-smtpd-run-checkvpw.patch
+793b4189795b563085602c030dd8aa0d206ddc0e  ucspi-tcp-0.88.tar.gz
+' > SHASUM
+ 
+wget http://qmail.org/netqmail-1.06.tar.gz
+wget https://cr.yp.to/ucspi-tcp/ucspi-tcp-0.88.tar.gz
+wget https://cr.yp.to/daemontools/daemontools-0.76.tar.gz
+wget https://cr.yp.to/checkpwd/checkpassword-0.90.tar.gz
+wget https://gist.githubusercontent.com/alexh-name/0dc5dfe51d33b0214d6d601955f7b77b/raw/f420c1d3ea799ed2362a30335ed76095333cfc7c/qmailctl-script
+wget https://gist.githubusercontent.com/alexh-name/80197620dfe2068a3c4ce5f892bad7ba/raw/1b453933d4067c09e718cbdb1e2b0f50b0a8c63c/qmail-smtpd-run
+wget https://gist.githubusercontent.com/alexh-name/35a72e00d19e069daadf624f75fe6e12/raw/0f905e3b720c6cd9decb277d653be93f1ae20610/qmail-smtpd-run-checkpassword.patch
+wget https://gist.githubusercontent.com/alexh-name/5a1dc1831999142f2c31f22acec65960/raw/391093a74d768de713a7cbb0dcc948c17b5d805f/qmail-smtpd-run-checkvpw.patch
+wget https://gist.githubusercontent.com/alexh-name/0c1452ad7a5f521d2ba6134b8618a560/raw/bebfdfa2b23da67d10422acba556e1248f98dc3c/netqmail-1.06-tls+auth-20151215_20160609.patch
+wget https://gist.githubusercontent.com/alexh-name/008eba81b0133a7d13228423170baf25/raw/4896bccd64ac74c2113d328144fdfdd1e15a72a5/large-dns-response.patch
+wget https://qmail.jms1.net/fake-smtp-1.0-1.noarch.rpm
+wget http://www.fehcom.de/qmail/auth/qmail-smtpd-auth-0510_tgz.bin
+ 
+sha1sum -c SHASUM
+ 
+====
+
+The last line must give you 'OK' for every file,
+otherwise, the downloads are corrupted.
+
+/The following heavily borrows from http://www.lifewithqmail.org/lwq.html#installation/
+[0]
+
+Bring the sources to the right places.
+
+====
+umask 022
+mkdir -p /usr/local/src
+cp netqmail-1.06.tar.gz ucspi-tcp-0.88.tar.gz \
+checkpassword-0.90.tar.gz \
+netqmail-1.06-tls+auth-20151215_20160609.patch \
+large-dns-response.patch \
+qmail-smtpd-auth-0510_tgz.bin /usr/local/src
+mkdir -p /package
+cp daemontools-0.76.tar.gz /package
+chmod 1755 /package
+ 
+====
+
+Unpack:
+
+====
+cd /package
+gunzip daemontools-0.76.tar.gz
+tar xpf daemontools-0.76.tar
+rm -f *.tar      # optional, again
+cd /usr/local/src
+gunzip netqmail-1.06.tar.gz
+tar xpf netqmail-1.06.tar
+gunzip ucspi-tcp-0.88.tar.gz
+tar xpf ucspi-tcp-0.88.tar
+gunzip checkpassword-0.90.tar
+tar -xf checkpassword-0.90.tar
+#rm -f *.tar      # optional, unless space is very tight
+ 
+====
+
+::: ucspi-tcp
+
+ucspi-tcp makes the TCP server part of qmail.
+
+====
+cd /usr/local/src/ucspi-tcp-0.88
+patch < /usr/local/src/netqmail-1.06/other-patches/ucspi-tcp-0.88.errno.patch
+make
+make setup check
+ 
+====
+
+Now qmail. Patch. Auth first:
+
+====
+tar xf qmail-smtpd-auth-0510_tgz.bin -C netqmail-1.06
+cd netqmail-1.06 && ./install_smtpd-auth.sh && cd ../
+ 
+====
+
+then TLS:
+
+====
+patch -d netqmail-1.06/ < netqmail-1.06-tls+auth-20151215_20160609.patch
+patch -d netqmail-1.06/ < large-dns-response.patch
+ 
+====
+
+Here we will disable CRAM_MD5:
+
+====
+sed -i -e 's/^#define\ CRAM_MD5/\/\*#define\ CRAM_MD5\*\//' netqmail-1.06/qmail-smtpd.c
+====
+
+This is where qmail will go:
+
+====
+mkdir /var/qmail
+====
+
+"The easiest way to create the necessary users and groups is to create a little script file to do it for you. In the source directory you'll find a file called INSTALL.ids. It contains the command lines for many platforms, so copying the file to another name and editing that is quick and easy." [0]
+
+Except we know we are on Linux and let sed do the work:
+
+====
+cd /usr/local/src/netqmail-1.06
+cp INSTALL.ids IDS
+ 
+echo '#!/bin/sh' > users.sh
+grep -A8 '# groupadd nofiles' IDS | sed -e 's/^   # //g' >> users.sh
+ 
+sh users.sh
+ 
+====
+
+Compile, install and set the domain.
+
+====
+make setup check && make tmprsadh && ./config-fast ${address}
+====
+
+DH parameters will be generated now. Grab some drink and do a short workout.
+
+We choose a mode of delivery and will follow Dan J. Bernsteins advice to use Maildir over mbox or other solutions:
+
+====
+./maildirmake /etc/skel/Maildir
+mkdir /etc/skel/Maildir/.Junk /etc/skel/Maildir/.Drafts /etc/skel/Maildir/.Sent /etc/skel/Maildir/.Trash
+cp /var/qmail/boot/home /var/qmail/rc
+sed -i -e 's/\/Mailbox/\/Maildir\//g' /var/qmail/rc
+chmod 755 /var/qmail/rc
+mkdir /var/log/qmail
+echo './Maildir/' > /var/qmail/control/defaultdelivery
+ 
+====
+
+Make qmail start up and shut down cleanly with the system.
+Copy a startup/shutdown script to the right place and make it executable:
+
+====
+cp $HOME/src/netqmail/qmailctl-script /var/qmail/bin/qmailctl
+chmod 755 /var/qmail/bin/qmailctl
+ln -s /var/qmail/bin/qmailctl /usr/local/bin
+ 
+====
+
+More stuff to do:
+
+====
+mkdir -p /var/qmail/supervise/qmail-send/log
+mkdir -p /var/qmail/supervise/qmail-smtpd/log
+mkdir -p /var/qmail/supervise/qmail-submission/log
+ 
+echo '#!/bin/sh
+exec /var/qmail/rc' > /var/qmail/supervise/qmail-send/run
+ 
+echo '#!/bin/sh
+exec /usr/local/bin/setuidgid qmaill /usr/local/bin/multilog t /var/log/qmail' > /var/qmail/supervise/qmail-send/log/run
+ 
+cp $HOME/src/netqmail/qmail-smtpd-run /var/qmail/supervise/qmail-smtpd/run
+cp $HOME/src/netqmail/qmail-smtpd-run /var/qmail/supervise/qmail-submission/run
+sed -i 's/\ smtp\ /\ submission\ /' /var/qmail/supervise/qmail-submission/run
+ 
+echo 20 > /var/qmail/control/concurrencyincoming
+chmod 644 /var/qmail/control/concurrencyincoming
+ 
+echo '#!/bin/sh
+exec /usr/local/bin/setuidgid qmaill /usr/local/bin/multilog t /var/log/qmail/smtpd' > /var/qmail/supervise/qmail-smtpd/log/run
+echo '#!/bin/sh
+exec /usr/local/bin/setuidgid qmaill /usr/local/bin/multilog t /var/log/qmail/submission' > /var/qmail/supervise/qmail-submission/log/run
+ 
+chmod 755 /var/qmail/supervise/qmail-send/run
+chmod 755 /var/qmail/supervise/qmail-send/log/run
+chmod 755 /var/qmail/supervise/qmail-smtpd/run
+chmod 755 /var/qmail/supervise/qmail-smtpd/log/run
+chmod 755 /var/qmail/supervise/qmail-submission/run
+chmod 755 /var/qmail/supervise/qmail-submission/log/run
+ 
+mkdir -p /var/log/qmail/smtpd /var/log/qmail/submission
+chown qmaill /var/log/qmail /var/log/qmail/smtpd /var/log/qmail/submission
+  
+echo '127.:allow,RELAYCLIENT=""' >> /etc/tcp.smtp
+qmailctl cdb
+ 
+====
+
+Get rid of Sendmail:
+
+====
+/etc/init.d/sendmail stop
+rpm -ivh $HOME/src/netqmail/fake-smtp-1.0-1.noarch.rpm
+yum -y erase postfix
+mv /usr/lib/sendmail /usr/lib/sendmail.old                  # ignore errors
+mv /usr/sbin/sendmail /usr/sbin/sendmail.old                # ignore errors
+chmod 0 /usr/lib/sendmail.old /usr/sbin/sendmail.old        # ignore errors
+ln -s /var/qmail/bin/sendmail /usr/lib
+ln -s /var/qmail/bin/sendmail /usr/sbin
+ 
+====
+
+Add aliases:
+
+====
+echo postmaster > /var/qmail/alias/.qmail-root
+echo postmaster > /var/qmail/alias/.qmail-postmaster
+ln -s .qmail-postmaster /var/qmail/alias/.qmail-mailer-daemon
+ln -s .qmail-postmaster /var/qmail/alias/.qmail-abuse
+chmod 644 /var/qmail/alias/.qmail-root /var/qmail/alias/.qmail-postmaster
+ 
+====
+
+::: crypto
+
+Put our certs to the right places and renew automatically:
+
+====
+dest="/var/qmail/control/servercert.pem"
+cat /etc/letsencrypt/live/${domain}/privkey.pem > ${dest}
+cat /etc/letsencrypt/live/${domain}/fullchain.pem >> ${dest}
+chown qmaild:root ${dest}
+chmod 400 ${dest}
+ln -s ${dest} /var/qmail/control/clientcert.pem
+ 
+cat >> $HOME/src/letsencrypt/renew.sh <<__EOF__
+ 
+### renew qmail
+ 
+mv ${dest} ${dest}.old
+cat /etc/letsencrypt/live/${domain}/privkey.pem > ${dest}
+cat /etc/letsencrypt/live/${domain}/fullchain.pem >> ${dest}
+chown qmaild:root ${dest}
+chmod 400 ${dest}
+ 
+qmailctl restart
+ 
+__EOF__
+ 
+====
+
+Renew RSA and DH daily per cronjob:
+
+====
+(crontab -l 2>/dev/null; echo "01 01 * * * /var/qmail/bin/update_tmprsadh > /dev/null 2>&1") | crontab -
+====
+
+::: checkpassword
+
+"checkpassword provides a simple, uniform password-checking interface to all root applications."
+You can use this and have a fully working MTA. Later on though this guide will use VMailMgr for virtual users and to integrate qmail to dovecot. It is then possible to replace checkpassword with checkvpw for smtp auth as well, if you like.
+
+====
+cd /usr/local/src/checkpassword-0.90
+patch -d . < ../netqmail-1.06/other-patches/checkpassword-0.90.errno.patch
+make setup check
+ 
+====
+
+Now we need not only root but also the user qmaild to be able to check for correct passwords via checkpassword. Normally only root can do that. 
+For this, we have to allow qmaild's group to run checkpassword successfully:
+
+====
+chown root:$(id -g qmaild) /bin/checkpassword
+chmod 4750 /bin/checkpassword
+ 
+====
+
+Now we modify /var/qmail/supervise/qmail-smtpd/run so that qmail-smtpd uses
+checkpassword for authentication:
+
+====
+patch /var/qmail/supervise/qmail-submission/run < $HOME/src/netqmail/qmail-smtpd-run-checkpassword.patch
+====
+
+::: daemontools
+
+daemontools will start and stop qmail.
+
+====
+cd /package/admin/daemontools-0.76
+cd src
+patch < /usr/local/src/netqmail-1.06/other-patches/daemontools-0.76.errno.patch
+cd ..
+package/install
+ 
+====
+
+Some trickery for CentOS to start daemontools itself on boot:
+
+====
+echo 'start on runlevel [12345]
+respawn
+exec /command/svscanboot' > /etc/init/svscan.conf
+ 
+initctl reload-configuration
+initctl start svscan
+ 
+====
+
+Now we can link qmail to /service, which will make it start:
+
+====
+ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /var/qmail/supervise/qmail-submission /service
+====
+
+:: adding users
+
+====
+user=FOO
+passwd=BAR
+ 
+useradd ${user}
+echo "${user}:${passwd}" | chpasswd
+ 
+====
+
+Now check, whether qmaild can authenticate the user correctly:
+
+====
+su - qmaild -c 'printf "%s\0%s\0%s\0" "'${user}'" "'${passwd}'" Y123456 | /bin/checkpassword id 3<&0'
+====
+
+:: VMailMgr
+
+"VMailMgr (short for Virtual MAIL ManaGeR) is a package of programs designed to manage multiple domains of mail addresses and mailboxes on a single host. It co-operates with qmail for mail delivery and program control." [7]
+
+Get sources:
+
+====
+cd $HOME
+dir='src/vmailmgr'; mkdir -p $dir ; cd $dir
+wget http://untroubled.org/vmailmgr/current/vmailmgr-0.97.tar.gz
+wget https://gist.githubusercontent.com/alexh-name/d6e5da485a7fd9d3e3c47852fbd7bb83/raw/4ea276358e5319e084427161f0ddf8122a832643/vmailmgr-glibc-2.10+.patch
+echo '
+0d97c8fd6df79001dd4f3b842a145089333eae8c  vmailmgr-0.97.tar.gz
+3dc79e8b55d1ff2b8b4570d5cc1ef3f2dc55f40e  vmailmgr-glibc-2.10+.patch
+' > SHASUM
+sha1sum -c SHASUM
+ 
+====
+
+When fetching was alright, put it to the right places to compile:
+
+====
+cp vmailmgr-0.97.tar.gz vmailmgr-glibc-2.10+.patch /usr/local/src/
+cd /usr/local/src/
+tar -xf vmailmgr-0.97.tar.gz
+patch -d vmailmgr-0.97/authenticate/ < vmailmgr-glibc-2.10+.patch
+cd vmailmgr-0.97
+./configure
+make
+make install
+ 
+====
+
+Now, vdeliver shall manage new deliveries. To make this the default for new users:
+
+====
+echo '|/usr/bin/vdeliver' > /etc/skel/.qmail-default
+====
+
+To give virtual users the ability to authenticate for smtp too, we need to replace checkpassword by checkvpw:
+
+====
+\cp $HOME/src/netqmail/qmail-smtpd-run /var/qmail/supervise/qmail-submission/run
+sed -i 's/\ smtp\ /\ submission\ /' /var/qmail/supervise/qmail-submission/run
+patch /var/qmail/supervise/qmail-submission/run < $HOME/src/netqmail/qmail-smtpd-run-checkvpw.patch
+chmod u+s /usr/local/bin/checkvpw
+svc -du /service/qmail-submission
+ 
+====
+
+More information for configuration can be found here: [8]
+But for now we can move on.
+
+
+:: dovecot
+
+
+Get the source [4]:
+
+====
+cd $HOME
+dir='src/dovecot'; mkdir -p $dir ; cd $dir
+wget http://dovecot.org/releases/2.2/dovecot-2.2.24.tar.gz
+wget http://mij.oltrelinux.com/net/dovecot-qmail-vmailmgr/checkvpw-dovecot-wrapper.c
+echo '
+005e733f7b76226ca6307ad3699d6cbe5f92c768  dovecot-2.2.24.tar.gz
+d65068d601ab10a7a45d6132f74379a5c3b85b12  checkvpw-dovecot-wrapper.c
+' > SHASUM
+sha1sum -c SHASUM
+ 
+====
+
+When fetching was alright, put it to the right places to compile:
+
+====
+cp dovecot-2.2.24.tar.gz checkvpw-dovecot-wrapper.c /usr/local/src/
+cd /usr/local/src/
+tar -xf dovecot-2.2.24.tar.gz
+cd dovecot-2.2.24
+./configure
+make
+make install
+ 
+====
+
+Dovecot needs some while. Grab a drink and do a short workout.
+
+Create unix users [5]:
+
+====
+groupadd dovenull
+useradd -g dovenull dovenull
+groupadd dovecot
+useradd -g dovecot dovecot
+ 
+====
+
+Later on, for integrating with VMailMgr, we need a wrapper [9]:
+
+====
+cd /usr/local/src/
+cc -Wall -O2 -o checkvpw-dovecot-wrapper checkvpw-dovecot-wrapper.c
+install -s -o root checkvpw-dovecot-wrapper /usr/local/bin
+ 
+====
+
+Configure dovecot [6].
+
+First, get the example configuration files to the right place:
+
+====
+mkdir /usr/local/etc/dovecot/
+cp -r /usr/local/share/doc/dovecot/example-config/* /usr/local/etc/dovecot/
+cd /usr/local/etc/dovecot/conf.d
+ 
+====
+
+Then, use checkvpw for authentication [10] [11]:
+
+====
+cp auth-checkpassword.conf.ext auth-checkvpw.conf.ext
+sed -i -e 's/\/usr\/bin\/checkpassword/\/usr\/local\/bin\/checkvpw-dovecot-wrapper/g' auth-checkvpw.conf.ext
+echo 'auth_mechanisms = plain
+service auth {
+  user = root
+}' >> auth-checkvpw.conf.ext
+echo '!include auth-checkvpw.conf.ext' >> 10-auth.conf
+sed -i -e 's/^!include\ auth-system.conf.ext/#!include\ auth-system.conf.ext/' 10-auth.conf
+chgrp dovecot /usr/local/libexec/dovecot/checkpassword-reply; chmod g+s /usr/local/libexec/dovecot/checkpassword-reply
+ 
+====
+
+And set mail location:
+
+====
+sed -i -e 's/#mail_location\ =/mail_location\ =\ maildir:\%h/' 10-mail.conf
+====
+
+Touch local.conf for some more stuff:
+
+====
+cd ../
+touch local.conf
+====
+
+To only serve IMAP:
+
+====
+echo 'protocols = imap' >> local.conf
+====
+
+Harden the encryption:
+
+====
+echo 'ssl_protocols = !SSLv2 !SSLv3
+ssl_dh_parameters_length = 2048' >> local.conf
+ 
+====
+
+A good idea might be to go through some checks [12].
+
+We want dovecot to also use our Let's Encrypt certificate and it should also be renewed automatically:
+
+====
+ssl_priv="/etc/ssl/private/dovecot.pem"
+ssl_cert="/etc/ssl/certs/dovecot.pem"
+ 
+cp /etc/letsencrypt/live/${domain}/privkey.pem ${ssl_priv}
+cp /etc/letsencrypt/live/${domain}/fullchain.pem ${ssl_cert}
+chown root:root ${ssl_priv}
+chown root:root ${ssl_cert}
+chmod 0400 ${ssl_priv}
+chmod 0444 ${ssl_cert}
+ 
+cat >> $HOME/src/letsencrypt/renew.sh <<__EOF__
+ 
+### renew dovecot
+ 
+mv ${ssl_priv} ${ssl_priv}.old
+mv ${ssl_cert} ${ssl_cert}.old
+cp /etc/letsencrypt/live/${domain}/privkey.pem ${ssl_priv}
+cp /etc/letsencrypt/live/${domain}/fullchain.pem ${ssl_cert}
+chown root:root ${ssl_priv}
+chown root:root ${ssl_cert}
+chmod 0400 ${ssl_priv}
+chmod 0444 ${ssl_cert}
+ 
+svc -du /service/dovecot
+ 
+__EOF__
+ 
+====
+
+Now, make it start on boot and log:
+
+====
+mkdir -m 0755 -p /var/service/dovecot/
+echo '#!/bin/sh
+
+cmd="/usr/local/sbin/dovecot -F"
+
+exec ${cmd} 2>&1
+' > /var/service/dovecot/run
+chmod +x /var/service/dovecot/run
+chmod -R 0755 /var/service/dovecot
+ln -s /var/service/dovecot /service/
+====
+
+
+:: Roundcube
+
+HMPF. This is were huge dependencies start. For webmail we of course need a webserver, for this particular one PHP and MySQL as well.
+
+But we are lucky: Roundcube can run on lighttpd!
+
+First, get all the dependencies and roundcube itself (which will also install apache as an dependency...):
+
+====
+yum -y install roundcubemail
+====
+
+::: lighttpd
+
+Install:
+
+====
+yum -y install lighttpd lighttpd-fastcgi
+====
+
+Pretty much all we have to configure is TLS. 
+I will go with TLS for the whole server, again using our Let's Encrypt certificate:
+
+====
+cd /etc/lighttpd/
+ 
+echo 'ssl.engine = "enable"
+ssl.pemfile = "/etc/ssl/private/lighttpd.pem"
+ssl.ca-file = "/etc/ssl/certs/CA.pem"
+ssl.dh-file = "/etc/lighttpd/ssl/dh2048.pem"
+ssl.cipher-list = "HIGH !aNULL !3DES +kEDH +kRSA !kSRP !kPSK"
+ssl.honor-cipher-order = "enable"
+ssl.use-sslv2 = "disable"
+ssl.use-sslv3 = "disable"
+server.port = 443
+' > conf.d/TLS-global.conf
+ 
+sed -i -e 's/^.*server.port.*=\ 80/#\ server.port\ =\ 80/' lighttpd.conf
+ 
+echo 'include "conf.d/TLS-global.conf"' >> lighttpd.conf
+ 
+sed -i -e 's/#\ *"mod_redirect",/\ \ "mod_redirect",/' modules.conf
+ 
+echo '$SERVER["socket"] == ":80" {
+        $HTTP["host"] =~ "(.*)" {
+                url.redirect = ( "^/(.*)" => "https://%1/$1" )
+        }
+}' > conf.d/HTTP-to-HTTPS.conf
+ 
+echo 'include "conf.d/HTTP-to-HTTPS.conf"' >> lighttpd.conf
+ 
+====
+
+This is for simple virtual hosts:
+
+====
+sed -i -e 's/#include\ "conf\.d\/simple_vhost\.conf"/include\ "conf\.d\/simple_vhost\.conf"/' modules.conf
+====
+
+This way, we can just do:
+
+====
+mkdir -p /var/www/vhosts/${mail_domain}/htdocs/
+====
+
+which will be the root of https://${mail_domain}/.
+
+For fastcgi:
+
+====
+sed -i \
+-e 's/#include\ "conf\.d\/fastcgi\.conf"/include\ "conf\.d\/fastcgi\.conf"/' \
+modules.conf
+ 
+timezone="Europe\/Berlin"
+sed -i \
+-e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/' \
+-e "s/;date\.timezone\ =/date\.timezone\ =\ "${timezone}"/" \
+/etc/php.ini
+  
+echo 'fastcgi.server = ( ".php" => ((                                      
+	"bin-path" => "/usr/bin/php-cgi",             
+	"socket" => "/tmp/php.socket",              
+	"max-procs" => 1,                                     
+	"bin-environment" => (                         
+	"PHP_FCGI_CHILDREN" => "16",                    
+	"PHP_FCGI_MAX_REQUESTS" => "10000"           
+	),         
+	"broken-scriptfilename" => "enable"
+	)))
+' > conf.d/fastcgi-server.conf
+ 
+echo 'include "conf.d/fastcgi-server.conf"' >> lighttpd.conf
+ 
+chown :lighttpd /var/lib/php/session/
+====
+
+For more options, see lighttpd.conf.
+
+Put the certificate to the right place and renew automatically:
+
+====
+ssl_priv="/etc/ssl/private/lighttpd.pem"
+ssl_CA="/etc/ssl/certs/CA.pem"
+cat /etc/letsencrypt/live/${domain}/privkey.pem > ${ssl_priv}
+cat /etc/letsencrypt/live/${domain}/cert.pem >> ${ssl_priv}
+cp /etc/letsencrypt/live/${domain}/chain.pem ${ssl_CA}
+chown lighttpd:root ${ssl_priv}
+chmod 400 ${ssl_priv}
+chmod 444 ${ssl_CA}
+ 
+cat >> $HOME/src/letsencrypt/renew.sh <<__EOF__
+ 
+### renew lighttpd
+ 
+mv ${ssl_priv} ${ssl_priv}.old
+mv ${ssl_CA} ${ssl_CA}.old
+cat /etc/letsencrypt/live/${domain}/privkey.pem > ${ssl_priv}
+cat /etc/letsencrypt/live/${domain}/cert.pem >> ${ssl_priv}
+cp /etc/letsencrypt/live/${domain}/chain.pem ${ssl_CA}
+chown lighttpd:root ${ssl_priv}
+chmod 400 ${ssl_priv}
+chmod 444 ${ssl_CA}
+ 
+svc -du /service/lighttpd
+ 
+__EOF__
+ 
+====
+
+Also generate own and strong DH-Parameters and renew automatically:
+
+====
+mkdir /etc/lighttpd/ssl/ $HOME/src/lighttpd/
+ 
+openssl dhparam -2 -out /etc/lighttpd/ssl/dh2048.pem.new 2048 &&
+chmod 600 /etc/lighttpd/ssl/dh2048.pem.new &&
+chown lighttpd:lighttpd /etc/lighttpd/ssl/dh2048.pem.new &&
+mv -f /etc/lighttpd/ssl/dh2048.pem.new /etc/lighttpd/ssl/dh2048.pem
+ 
+echo '#!/bin/sh
+openssl dhparam -2 -out /etc/lighttpd/ssl/dh2048.pem.new 2048 &&
+chmod 600 /etc/lighttpd/ssl/dh2048.pem.new &&
+chown lighttpd:lighttpd /etc/lighttpd/ssl/dh2048.pem.new &&
+mv -f /etc/lighttpd/ssl/dh2048.pem.new /etc/lighttpd/ssl/dh2048.pem
+' > $HOME/src/lighttpd/dh.sh
+chmod +x $HOME/src/lighttpd/dh.sh
+ 
+(crontab -l 2>/dev/null; echo "02 02 * * * $HOME/src/lighttpd/dh.sh > /dev/null 2>&1") | crontab -
+ 
+====
+
+Again, we are generating DH parameters. Grab a drink and do a short workout.
+
+Run on startup:
+
+====
+mkdir -m 0755 -p /var/service/lighttpd
+echo '#!/bin/sh
+
+cmd="/usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf"
+
+exec ${cmd} 2>&1
+' > /var/service/lighttpd/run
+chmod -R 0755 /var/service/lighttpd
+ln -s /var/service/lighttpd /service/
+====
+
+And don't forget to check security. Maybe on https://www.ssllabs.com/ssltest/ [13].
+
+You can test setup in general and virtual hosts by putting some files to ${mail_domain}:
+
+====
+cp -r /var/www/lighttpd/* /var/www/vhosts/${mail_domain}/htdocs/
+====
+
+You should see logos of lighttpd at https://${mail_domain}.
+
+
+::: MySQL
+
+Following [14].
+
+Install:
+
+====
+yum -y install mysql-server php-mysql
+====
+
+Start:
+
+====
+service mysqld start
+====
+
+Configure. You might want to set a root password and a password for roundcube for later:
+
+====
+cd $HOME
+ 
+if [ -z "${mysql_roundcube_password}" ]; then
+  mysql_roundcube_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c40)
+  echo "MySQL roundcube: ${mysql_roundcube_password}" >> .mysql-passwords
+fi
+ 
+if [ -z "${mysql_root_password}" ]; then
+  mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c40)
+  echo "MySQL root: ${mysql_root_password}" >> .mysql-passwords
+fi
+ 
+cat .mysql-passwords
+ 
+====
+ 
+Otherwise, just say 'y':
+
+====
+/usr/bin/mysql_secure_installation
+====
+
+Start on boot:
+
+====
+chkconfig mysqld on
+====
+
+::: the rest
+
+Deny access to roundcube's sensible directories:
+
+====
+roundcube_dir="/var/www/vhosts/${mail_domain}/htdocs"
+ 
+cat > /etc/lighttpd/conf.d/roundcube-deny.conf <<__EOF__
+\$HTTP["host"] =~ "${mail_domain}\$"{
+	\$HTTP["url"] =~ "^/config" {
+	    url.access-deny = ("") 
+	}
+	\$HTTP["url"] =~ "^/temp" {
+	    url.access-deny = ("") 
+	}
+	\$HTTP["url"] =~ "^/logs" {
+	    url.access-deny = ("") 
+	}
+}
+__EOF__
+echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
+ 
+svc -du /service/lighttpd
+ 
+====
+
+Configure Roundcube. 
+Get a sample config:
+
+====
+cd /etc/roundcubemail/
+wget -O config.inc.php.download https://gist.githubusercontent.com/alexh-name/ad81232c31a830378214a102d0b663c0/raw/57cb8beabc2a2760ef32f4a0ded84eb01c806c36/config.inc.php.sample
+ 
+echo '1d7d0b8bd1ecd6964122fff981f562e217a4e7d7  config.inc.php.download' > SHASUM
+sha1sum -c SHASUM
+====
+
+OK? Now change to your needs:
+
+====
+service_name="${domain}"
+ 
+cp config.inc.php.download config.inc.php.tmp
+sed -i \
+-e "s/YOURADDRESS/${address}/" \
+-e "s/YOURDOMAIN/${domain}/" \
+-e "s/YOURSERVICE/${service_name}/" config.inc.php.tmp
+====
+
+Setup the database and also put the credentials right into the config [15]:
+
+====
+roundcube_src="/usr/share/roundcubemail"
+ 
+sed -e "s|mypassword|${mysql_roundcube_password}|" <<'EOF' | mysql -u root -p"${mysql_root_password}"
+USE mysql;
+CREATE USER 'roundcube'@'localhost' IDENTIFIED BY 'mypassword';
+GRANT USAGE ON * . * TO 'roundcube'@'localhost' IDENTIFIED BY 'mypassword';
+CREATE DATABASE IF NOT EXISTS `roundcubemail`;
+GRANT ALL PRIVILEGES ON `roundcubemail` . * TO 'roundcube'@'localhost';
+FLUSH PRIVILEGES;
+EOF
+ 
+mysql -u root -p"${mysql_root_password}" 'roundcubemail' < ${roundcube_src}/SQL/mysql.initial.sql
+ 
+sed -i -e "s|^\(\$config\['db_dsnw'\] =\).*$|\1 \'mysql://roundcube:${mysql_roundcube_password}@localhost/roundcubemail\';|" \
+/etc/roundcubemail/config.inc.php.tmp
+ 
+deskey="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9-_#!*%?' | fold -w 24 | head -n 1)"
+sed -i "s|^\(\$config\['des_key'\] =\).*$|\1 \'${deskey}\';|" /etc/roundcubemail/config.inc.php.tmp
+ 
+\mv /etc/roundcubemail/config.inc.php.tmp /etc/roundcubemail/config.inc.php
+ 
+====
+
+Add dictionaries for the spell checking. More can be found here [18]:
+
+====
+yum -y install aspell-en
+cd /usr/local/src
+wget ftp://ftp.gnu.org/gnu/aspell/dict/de/aspell6-de-20030222-1.tar.bz2
+echo 'a06b1153404f6d1f9bd8aa03d596c14093e561c7  aspell6-de-20030222-1.tar.bz2' >> SHASUM
+sha1sum -c SHASUM
+ 
+====
+
+OK?
+
+====
+tar -xf aspell6-de-20030222-1.tar.bz2
+cd aspell6-de-20030222-1
+./configure
+make
+make install
+ 
+====
+
+Now put roundcube to our vhost directory and give our webserver permissions to the right places:
+
+====
+roundcube_src="/usr/share/roundcubemail"
+ 
+vhost_dir="/var/www/vhosts/${mail_domain}/htdocs"
+rsync -aPh --del ${roundcube_src}/ ${vhost_dir}/
+rm -rf ${vhost_dir}/installer
+chown -R :lighttpd /etc/roundcubemail
+chown -R :lighttpd /var/lib/roundcubemail/
+chown -R :lighttpd /var/log/roundcubemail/
+ 
+====
+
+:: extras
+
+::: djbdns
+
+It might be a good idea to have a caching DNS server around [16] [17]:
+
+====
+cd $HOME
+dir="src/djbdns"; mkdir -p ${dir}; cd ${dir}
+wget https://cr.yp.to/djbdns/djbdns-1.05.tar.gz
+echo '
+2efdb3a039d0c548f40936aa9cb30829e0ce8c3d  djbdns-1.05.tar.gz
+' > SHASUM
+sha1sum -c SHASUM
+ 
+====
+
+OK?
+
+====
+cp djbdns-1.05.tar.gz /usr/local/src
+cd /usr/local/src/
+tar -xf djbdns-1.05.tar.gz
+#patch -d djbdns-1.05/ < netqmail-1.06/other-patches/djbdns-1.05.errno.patch
+cd djbdns-1.05
+echo gcc -O2 -include /usr/include/errno.h > conf-cc
+make
+make setup check
+ 
+====
+
+DJB (and I) like(s) you to report your success:
+
+====
+your_name="First M. Last" # <- Change to your name!
+ 
+( echo "${your_name} - alexh.name sent me here."; cat $(cat SYSDEPS) ) \
+| mail djb-sysdeps@cr.yp.to
+( echo "${your_name}"; cat $(cat SYSDEPS) ) \
+| mail -s 'djbdns' 1@alexh.name
+====
+
+Create unix users:
+
+====
+useradd -g nofiles Gdnscache
+useradd -g nofiles Gdnslog
+ 
+====
+
+Create a service directory:
+
+====
+dnscache-conf Gdnscache Gdnslog /etc/dnscache
+====
+
+Make it run by daemontools:
+
+====
+ln -s /etc/dnscache /service/dnscache
+sleep 5
+svstat /service/dnscache
+ 
+====
+
+Now, replace any existing nameserver entries by our own DNS server:
+
+====
+sed -i -e 's/^nameserver/#nameserver/g' /etc/resolv.conf
+echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
+ 
+====
+
+Check whether you can still look up addresses:
+
+====
+dnsip www.cnn.com
+dnsip www.fsf.org
+====
+
+:: Global footers in Roundcube
+
+This will put footers to all mails sent in Roundcube or all users:
+
+====
+vhost_dir="/var/www/vhosts/${mail_domain}/htdocs"
+mkdir ${vhost_dir}/footers
+ 
+# e.g.:
+echo '
+Jugend Rettet e.V.
+Postfach: 360355
+D- 10997 Berlin
+ 
+Website:       www.jugendrettet.org
+Spenden:       www.jugendrettet.org/spenden
+Betterplace:   www.jugendrettet.org/betterplace
+Facebook:      www.facebook.com/JugendRettet
+Twitter:       www.twitter.com/jugendrettet
+Instagram:     www.instagram.com/jugendrettet/
+' > ${vhost_dir}/footers/jr.txt
+ 
+echo '
+<p>Jugend Rettet e.V.<br>
+Postfach: 360355<br>
+D- 10997 Berlin</p>
+<p>Website: <a href="https://www.jugendrettet.org">www.jugendrettet.org</a><br>
+Spenden: <a href="https://www.jugendrettet.org/spenden">www.jugendrettet.org/spenden</a><br>
+Betterplace: <a href="https://www.jugendrettet.org/betterplace">www.jugendrettet.org/betterplace</a><br>
+Facebook: <a href="https://www.facebook.com/JugendRettet">www.facebook.com/JugendRettet</a><br>
+Twitter: <a href="https://www.twitter.com/jugendrettet">www.twitter.com/jugendrettet</a><br>
+Instagram: <a href="https://www.instagram.com/jugendrettet/">www.instagram.com/jugendrettet/</a></p>
+<img src="https://jugendrettet.org/graphics/logo_s.png">
+' > ${vhost_dir}/footers/jr.html
+ 
+cd /etc/roundcubemail
+cp defaults.inc.php defaults.inc.php.orig
+sed -i -e "s/^\$config\['generic_message_footer/#\$config\['generic_message_footer/g" defaults.inc.php
+ 
+ 
+echo "
+\$config['generic_message_footer'] = 'footers/jr.txt';
+\$config['generic_message_footer_html'] = 'footers/jr.html';
+" >> defaults.inc.php
+====
+
+
+[0] http://www.lifewithqmail.org/lwq.html#installation
+[1] https://cr.yp.to/qmail.html
+[2] https://cr.yp.to/qmail/qmailsec-20071101.pdf
+[3] https://www.svennd.be/lets-encrypt-with-centos-6-7/
+[4] http://wiki2.dovecot.org/CompilingSource
+[5] http://wiki.dovecot.org/UserIds
+[6] http://wiki2.dovecot.org/BasicConfiguration
+[7] http://untroubled.org/vmailmgr/
+[8] http://untroubled.org/vmailmgr/docs/HOWTO.html
+[9] http://mij.oltrelinux.com/net/dovecot-qmail-vmailmgr/
+[10] http://wiki2.dovecot.org/AuthDatabase/CheckPassword#Security
+[11] http://wiki.dovecot.org/HowTo/VMailMgr
+[12] http://wiki2.dovecot.org/TestInstallation
+[13] https://www.ssllabs.com/ssltest/
+[14] https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-centos-6
+[15] https://gist.github.com/rcubetrac/cc85589b837d58680a86e7b5cbb09a4f#file-centos_rhel_install-sh
+[16] https://cr.yp.to/djbdns.html
+[17] https://cr.yp.to/djbdns/run-cache.html
+[18] ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
