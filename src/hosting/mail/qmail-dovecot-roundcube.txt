@@ -3,7 +3,9 @@
 Setting up a modern, but no BS and solid mail server step by step in less than 60min. 
 With special instructions for CentOS 6 (on DigitalOcean). 
 
-For those knowing Uberspace [19]: You'll essentially get the same setup, but without the space limit / disk quota.
+For those knowing Uberspace [19]: In it's core you'll get the same setup, but without the space limit / disk quota. (Uberspace additionally has SpamAssassin, DSPAM, automx and ezmlm-idx). 
+ 
+ezmlm-idx will follow soon.
 
 :: Some words first
 
