@@ -108,6 +108,8 @@ chmod a+x certbot-auto
  
 ====
 
+These steps require manual input.
+
 ==== 
 ./certbot-auto certonly --standalone -d ${domain} \
 -d imap.${address} -d smtp.${address} -d mail.${address}
