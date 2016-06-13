@@ -1122,7 +1122,7 @@ dnsip www.cnn.com
 dnsip www.fsf.org
 ====
 
-:: Global footers in Roundcube
+::: Global footers in Roundcube
 
 This will put footers to all mails sent in Roundcube for all users:
 
