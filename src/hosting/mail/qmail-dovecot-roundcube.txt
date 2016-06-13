@@ -5,6 +5,8 @@ With special instructions for CentOS 6 (on DigitalOcean).
 
 For those knowing Uberspace [19]: In it's core you'll get the same setup, but without the space limit / disk quota. (Uberspace additionally has SpamAssassin, DSPAM and automx).
 
+While searching for sources and patches, I stumbled upon a lot of dead links. Therefore I set up a mirror for everything I'm using in this tutorial [22].
+
 :: Some words first
 
 We will use three variables very often: $domain, $mail_domain and $address. Depending on what you want to achieve, you should make a choice now. 
@@ -1260,3 +1262,4 @@ chmod +x daemontools-monitor.sh
 [19] https://uberspace.de/
 [20] http://untroubled.org/ezmlm/manual/
 [21] https://cr.yp.to/ezmlm.html
+[22] http://mirror.alexh.name/qmail/
