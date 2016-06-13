@@ -860,9 +860,9 @@ Run on startup:
 ====
 mkdir -m 0755 -p /var/service/lighttpd
 echo '#!/bin/sh
-
+ 
 cmd="/usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf"
-
+ 
 exec ${cmd} 2>&1
 ' > /var/service/lighttpd/run
 chmod -R 0755 /var/service/lighttpd
