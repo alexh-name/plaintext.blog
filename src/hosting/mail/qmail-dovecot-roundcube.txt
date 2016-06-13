@@ -70,7 +70,7 @@ Update and install essentials:
 
 ====
 yum -y update
-yum -y install mksh bind-utils wget rsync telnet
+yum -y install mksh bind-utils wget rsync telnet man
  
 ====
 
