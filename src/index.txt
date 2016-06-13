@@ -20,7 +20,7 @@ tech blog
 </li>
 <li><a href="/contact/">contact</a></li>
 <li><a href="/CWoS/">CWoS</a></li>
-<li><a href="/hosting/mail/">hosting/mail</a>
+<li>/hosting/mail/
 	<ul>
 		<li><a href="/hosting/mail/qmail-dovecot-roundcube.html">qmail-dovecot-roundcube.txt</a></li>
 	</ul>
