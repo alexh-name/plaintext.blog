@@ -1,11 +1,9 @@
-: (DigitalOcean/CentOS) solid Mail Server (netqmail + dovecot + roundcube)
+: (DigitalOcean/CentOS) solid Mail Server (netqmail + dovecot + roundcube + ezmlm-idx)
 
 Setting up a modern, but no BS and solid mail server step by step in less than 60min. 
 With special instructions for CentOS 6 (on DigitalOcean). 
 
-For those knowing Uberspace [19]: In it's core you'll get the same setup, but without the space limit / disk quota. (Uberspace additionally has SpamAssassin, DSPAM, automx and ezmlm-idx). 
- 
-ezmlm-idx will follow soon.
+For those knowing Uberspace [19]: In it's core you'll get the same setup, but without the space limit / disk quota. (Uberspace additionally has SpamAssassin, DSPAM and automx).
 
 :: Some words first
 
@@ -1168,6 +1166,42 @@ echo "
 " >> defaults.inc.php
 ====
 
+::: ezmlm-idx
+
+ezmlm-idx [20] adds more features to ezmlm [21], a mailing list manager by DJB.
+
+====
+cd $HOME
+dir="src/ezmlm-idx"; mkdir -p ${dir}; cd ${dir}
+wget http://untroubled.org/ezmlm/archive/7.2.2/ezmlm-idx-7.2.2.tar.gz
+echo '
+f24248551b20388cfc23d8474cd2114d0cefbf90  ezmlm-idx-7.2.2.tar.gz
+' > SHASUM
+shasum -c SHASUM
+====
+
+OK?
+
+====
+cp ezmlm-idx-7.2.2.tar.gz /usr/local/src/
+cd /usr/local/src/
+tar -xf ezmlm-idx-7.2.2.tar.gz
+cd ezmlm-idx-7.2.2
+make clean
+make
+make man
+cd lang && ln -s en_US default && cd -
+./ezmlm-test
+====
+
+OK?
+
+====
+make install
+sed -i -e 's/PATH:/PATH:\/usr\/local\/bin\/ezmlm:/' $HOME/.bash_profile
+. $HOME/.bash_profile
+export PATH
+====
 
 [0] http://www.lifewithqmail.org/lwq.html#installation
 [1] https://cr.yp.to/qmail.html
@@ -1189,3 +1223,5 @@ echo "
 [17] https://cr.yp.to/djbdns/run-cache.html
 [18] ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
 [19] https://uberspace.de/
+[20] http://untroubled.org/ezmlm/manual/
+[21] https://cr.yp.to/ezmlm.html
