@@ -1,7 +1,9 @@
 : (DigitalOcean/CentOS) solid Mail Server (netqmail + dovecot + roundcube)
 
 Setting up a modern, but no BS and solid mail server step by step in less than 60min. 
-With special instructions for CentOS (on DigitalOcean).
+With special instructions for CentOS (on DigitalOcean). 
+
+For those knowing Uberspace [19]: You'll essentially get the same setup, but without the space limit / disk quota.
 
 :: Some words first
 
@@ -1184,3 +1186,4 @@ echo "
 [16] https://cr.yp.to/djbdns.html
 [17] https://cr.yp.to/djbdns/run-cache.html
 [18] ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
+[19] https://uberspace.de/
