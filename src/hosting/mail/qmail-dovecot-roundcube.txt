@@ -155,7 +155,7 @@ mkdir -p /etc/ssl/certs/ /etc/ssl/private/
 "qmail is a secure, reliable, efficient, simple message transfer agent. It is designed for typical Internet-connected UNIX hosts." [1]
 
 qmail has not been changed much since 1998 lacking reasons to do so. It has a most convincible record of 0 known security holes. 
-netqmail is a distribution of qmail from 2007, bringing small and sensible changes and new features like TLS and SMTP AUTH to adapt to the modern web.
+netqmail is a distribution of qmail from 2007, bringing small and sensible changes for contemporary systems. New features like TLS and SMTP AUTH to adapt to the modern web are provided through patches.
 
 Prepare:
 
