@@ -66,6 +66,14 @@ ln -s /usr/share/zoneinfo/${timezone} /etc/localtime
  
 ====
 
+You might want to restrict SSH login to public key authentication:
+
+====
+echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
+/etc/init.d/sshd restart
+ 
+====
+
 Update and install essentials:
 
 ====
@@ -901,7 +909,7 @@ Start:
 service mysqld start
 ====
 
-Configure. You might want to set a root password and a password for roundcube for later:
+You might want to generate a root password and a password for roundcube for later:
 
 ====
 cd $HOME
@@ -920,7 +928,7 @@ cat .mysql-passwords
  
 ====
  
-Otherwise, just say 'y':
+Configure. This requires manual input. Put in the root password, otherwise, just say 'y':
 
 ====
 /usr/bin/mysql_secure_installation
