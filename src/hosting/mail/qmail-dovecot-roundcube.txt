@@ -1227,7 +1227,7 @@ sed -i -e 's/PATH:/PATH:\/usr\/local\/bin\/ezmlm:/' $HOME/.bash_profile
 export PATH
 ====
 
-::: very simple moitoring
+::: very simple monitoring
 
 This will only cover the services under daemontools and simply check whether every service is running longer than n seconds. Otherwise someone gets a mail:
 
