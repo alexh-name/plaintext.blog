@@ -1177,6 +1177,19 @@ echo "
 " >> defaults.inc.php
 ====
 
+::: Open the preview pane by default
+
+====
+cd /etc/roundcubemail
+ 
+sed -i -e "s/^\$config\['preview_pane/#\$config\['preview_pane/g" defaults.inc.php
+ 
+echo "
+\$config['preview_pane'] = true;
+" >> defaults.inc.php
+ 
+====
+
 ::: ezmlm-idx
 
 ezmlm-idx [20] adds more features to ezmlm [21], a mailing list manager by DJB.
