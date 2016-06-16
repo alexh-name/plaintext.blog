@@ -541,7 +541,7 @@ svc -u ~/service/prosody
 
 :::: 2016.03.26 [master d2f0818]
 
-Problem mit hohem load bei s2sout gelöst. Dank an Adoa Coturnix! [24]
+Problem mit hohem load bei s2sout gelöst. Dank an Adoa Coturnix und Frank! [24] [27]
 
 :::: 2016.03.17
 
@@ -623,3 +623,4 @@ Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürc
 [24] https://prosody.im/issues/issue/649
 [25] http://prosody.im/doc/advanced_ssl_config
 [26] http://prosody.im/doc/advanced_ssl_config#ciphers
+[27] https://www.intux.de/das-bin-ich/
