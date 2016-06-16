@@ -18,6 +18,11 @@ Also has an enterprise level section. [2]
 Collection of guides to get into programming and other stuff. 
 The tutorials for AWK and KSH helped me a lot. [3]
 
+:: intux.de
+
+Frank helped me debugging my suggested installation of Prosody on Uberspace. 
+He blogs about Linux and OSS on Desktops, Servers and RPis and also other stuff.
+
 
 [1] http://ywstd.fr/
 [2] http://decentsecurity.com/
