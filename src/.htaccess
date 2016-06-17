@@ -31,7 +31,7 @@ deny from all
 #Prevent directory listings
 Options SymLinksIfOwnerMatch -Indexes
 
-AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css image/svg+xml
 
 <IfModule mod_expires.c>
 ExpiresActive on
