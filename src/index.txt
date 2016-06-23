@@ -4,7 +4,7 @@ tech blog
 
 <ul>
 <li><a href="/about/">about</a></li>
-<li>blog
+<!--<li>blog
 	<ul>
 		<li>2015
 			<ul>
@@ -17,7 +17,7 @@ tech blog
 			</ul>
 		</li>
 	</ul>
-</li>
+</li>-->
 <li><a href="/contact/">contact</a></li>
 <li><a href="/CWoS/">CWoS</a></li>
 <li>hosting/mail
@@ -36,7 +36,6 @@ tech blog
 <li>like
 	<ul>
 		<li><a href="/like/alot.html">alot.txt</a></li>
-		<li><a href="/like/not.html">not.txt</a></li>
 	</ul>
 </li>
 <li>noise
