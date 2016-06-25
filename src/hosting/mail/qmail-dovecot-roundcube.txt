@@ -142,10 +142,10 @@ chmod a+x certbot-auto
 
 ====
 ./certbot-auto -n --email admin@${address} certonly --standalone -d ${domain} \
--d imap.${address} -d smtp.${address} -d mail.${address}
+-d ${address} -d imap.${address} -d smtp.${address}
  
 # ./certbot-auto -n --email admin@${address} --agree-tos certonly --standalone \
--d ${domain} -d imap.${address} -d smtp.${address} -d mail.${address}
+-d ${domain} -d ${address} -d imap.${address} -d smtp.${address}
 ====
 
 This may fail occasionally (e.g. with '[Errno 111] Connection refused'. It's fine to just try again.
@@ -1310,12 +1310,14 @@ hostname --fqdn
 /Use the second line to agree to their TOS without user input./
 
 ====
+svc -d /service/lighttpd/
+ 
 cd $HOME/src/letsencrypt/
 ./certbot-auto -n --email admin@${address} certonly --standalone -d ${domain} \
--d imap.${address} -d smtp.${address} -d mail.${address}
+-d ${address} -d imap.${address} -d smtp.${address}
  
 # ./certbot-auto -n --email admin@${address} --agree-tos certonly --standalone \
--d ${domain} -d imap.${address} -d smtp.${address} -d mail.${address}
+-d ${domain} -d ${address} -d imap.${address} -d smtp.${address}
  
 mksh $HOME/src/letsencrypt/renew.sh
 ====
@@ -1324,7 +1326,7 @@ mksh $HOME/src/letsencrypt/renew.sh
 
 ====
 cd /usr/local/src/netqmail-1.06
-
+ 
 # Do these, if the old domain shouldn't be supported at all from now on:
 # > /var/qmail/control/locals; > /var/qmail/control/rcpthosts
  
@@ -1363,7 +1365,7 @@ mv "${old_domain}" "${domain}"
 
 ::: Deny access to Roundcube's sensible directories
 
-This is not necessary in context of this guide, as we don't put these directories in any web readable place anyway. But these line already exist and maybe they come in handy for someone:
+This is not necessary in context of this guide, as we don't put these directories in any web readable place anyway. But these lines already exist and maybe they come in handy for someone:
 
 ====
 roundcube_dir="/var/www/vhosts/${mail_domain}/htdocs"
@@ -1385,6 +1387,35 @@ echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
  
 svc -du /service/lighttpd
  
+====
+
+::: Migrate from other mail servers
+
+Add configuration:
+
+====
+imapc_host = FOO.BAR
+
+# Authenticate as masteruser / masteruser-secret, but use a separate login user.
+# If you don't have a master user, remove the imapc_master_user setting.
+imapc_user = %u
+#imapc_master_user = masteruser
+#imapc_password = masteruser-secret
+
+imapc_features = rfc822.size
+# If you have Dovecot v2.2.8+ you may get a significant performance improvement with fetch-headers:
+imapc_features = $imapc_features fetch-headers
+# Read multiple mails in parallel, improves performance
+mail_prefetch_count = 20
+
+# If the old IMAP server uses INBOX. namespace prefix, set:
+#imapc_list_prefix = INBOX
+====
+
+====
+remote_imap_user=alex
+remote_imap_passwd=I2Sfg6QGrWBq0WsKlN9D
+doveadm -o imapc_user=${remote_imap_user} -o imapc_password=${remote_imap_passwd} backup -R -u ${remote_imap_user}@${address} imapc:
 ====
 
 [0] http://www.lifewithqmail.org/lwq.html#installation
