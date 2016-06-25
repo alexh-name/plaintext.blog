@@ -1270,7 +1270,7 @@ chmod +x daemontools-monitor.sh
 Check list:
 
 * On DO: Change name of Droplet for reverse DNS.
-* Prepareration
+* Preparation
 * Change domain for OS itself.
 * Get new certificates.
 * Configure qmail for it.
