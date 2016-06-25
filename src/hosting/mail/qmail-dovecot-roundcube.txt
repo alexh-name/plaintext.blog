@@ -130,24 +130,34 @@ yum -y install epel-release
 cd $HOME
 dir='src/letsencrypt'; mkdir -p $dir ; cd $dir
 wget https://dl.eff.org/certbot-auto
+wget -N https://dl.eff.org/certbot-auto.asc
+gpg2 -k
+gpg2 --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+gpg2 --trusted-key 4D17C995CD9775F2 --verify certbot-auto.asc certbot-auto
 chmod a+x certbot-auto
-./certbot-auto
  
 ====
 
-These steps require manual input.
+/Use the second line to agree to their TOS without user input./
 
-==== 
-./certbot-auto certonly --standalone -d ${domain} \
+====
+./certbot-auto -n --email admin@${address} certonly --standalone -d ${domain} \
 -d imap.${address} -d smtp.${address} -d mail.${address}
  
+# ./certbot-auto -n --email admin@${address} --agree-tos certonly --standalone \
+-d ${domain} -d imap.${address} -d smtp.${address} -d mail.${address}
 ====
+
+This may fail occasionally (e.g. with '[Errno 111] Connection refused'. It's fine to just try again.
 
 Add cronjob for renewal:
 
 ====
 cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
 #!/bin/sh
+ 
+. $HOME/.domain-vars.txt
+ 
 svc -d /service/lighttpd
 sleep 2
 $HOME/src/letsencrypt/certbot-auto renew --quiet
@@ -415,7 +425,7 @@ useradd postmaster
 Put our certs to the right places and renew automatically:
 
 ====
-dest="/var/qmail/control/servercert.pem"
+dest='/var/qmail/control/servercert.pem'
 cat /etc/letsencrypt/live/${domain}/privkey.pem > ${dest}
 cat /etc/letsencrypt/live/${domain}/fullchain.pem >> ${dest}
 chown qmaild:root ${dest}
@@ -427,8 +437,8 @@ cat >> $HOME/src/letsencrypt/renew.sh <<__EOF__
 ### renew qmail
  
 mv ${dest} ${dest}.old
-cat /etc/letsencrypt/live/${domain}/privkey.pem > ${dest}
-cat /etc/letsencrypt/live/${domain}/fullchain.pem >> ${dest}
+cat /etc/letsencrypt/live/\${domain}/privkey.pem > ${dest}
+cat /etc/letsencrypt/live/\${domain}/fullchain.pem >> ${dest}
 chown qmaild:root ${dest}
 chmod 400 ${dest}
  
@@ -684,8 +694,8 @@ A good idea might be to go through some checks [12].
 We want dovecot to also use our Let's Encrypt certificate and it should also be renewed automatically:
 
 ====
-ssl_priv="/etc/ssl/private/dovecot.pem"
-ssl_cert="/etc/ssl/certs/dovecot.pem"
+ssl_priv='/etc/ssl/private/dovecot.pem'
+ssl_cert='/etc/ssl/certs/dovecot.pem'
  
 cp /etc/letsencrypt/live/${domain}/privkey.pem ${ssl_priv}
 cp /etc/letsencrypt/live/${domain}/fullchain.pem ${ssl_cert}
@@ -700,8 +710,8 @@ cat >> $HOME/src/letsencrypt/renew.sh <<__EOF__
  
 mv ${ssl_priv} ${ssl_priv}.old
 mv ${ssl_cert} ${ssl_cert}.old
-cp /etc/letsencrypt/live/${domain}/privkey.pem ${ssl_priv}
-cp /etc/letsencrypt/live/${domain}/fullchain.pem ${ssl_cert}
+cp /etc/letsencrypt/live/\${domain}/privkey.pem ${ssl_priv}
+cp /etc/letsencrypt/live/\${domain}/fullchain.pem ${ssl_cert}
 chown root:root ${ssl_priv}
 chown root:root ${ssl_cert}
 chmod 0400 ${ssl_priv}
@@ -754,6 +764,10 @@ I will go with TLS for the whole server, again using our Let's Encrypt certifica
 
 ====
 cd /etc/lighttpd/
+ 
+sed -i \
+-e 's/^#server\.max-fds/server.max-fds/' \
+-e 's/^server\.use-ipv6/#server.use-ipv6/' lighttpd.conf
  
 echo 'ssl.engine = "enable"
 ssl.pemfile = "/etc/ssl/private/lighttpd.pem"
@@ -831,8 +845,8 @@ For more options, see lighttpd.conf.
 Put the certificate to the right place and renew automatically:
 
 ====
-ssl_priv="/etc/ssl/private/lighttpd.pem"
-ssl_CA="/etc/ssl/certs/CA.pem"
+ssl_priv='/etc/ssl/private/lighttpd.pem'
+ssl_CA='/etc/ssl/certs/CA.pem'
 cat /etc/letsencrypt/live/${domain}/privkey.pem > ${ssl_priv}
 cat /etc/letsencrypt/live/${domain}/cert.pem >> ${ssl_priv}
 cp /etc/letsencrypt/live/${domain}/chain.pem ${ssl_CA}
@@ -846,9 +860,9 @@ cat >> $HOME/src/letsencrypt/renew.sh <<__EOF__
  
 mv ${ssl_priv} ${ssl_priv}.old
 mv ${ssl_CA} ${ssl_CA}.old
-cat /etc/letsencrypt/live/${domain}/privkey.pem > ${ssl_priv}
-cat /etc/letsencrypt/live/${domain}/cert.pem >> ${ssl_priv}
-cp /etc/letsencrypt/live/${domain}/chain.pem ${ssl_CA}
+cat /etc/letsencrypt/live/\${domain}/privkey.pem > ${ssl_priv}
+cat /etc/letsencrypt/live/\${domain}/cert.pem >> ${ssl_priv}
+cp /etc/letsencrypt/live/\${domain}/chain.pem ${ssl_CA}
 chown lighttpd:root ${ssl_priv}
 chmod 400 ${ssl_priv}
 chmod 444 ${ssl_CA}
@@ -931,12 +945,12 @@ cd $HOME
  
 if [ -z "${mysql_roundcube_password}" ]; then
   mysql_roundcube_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c40)
-  echo "MySQL roundcube: ${mysql_roundcube_password}" >> .mysql-passwords
+  echo "mysql_roundcube_password=${mysql_roundcube_password}" >> .mysql-passwords
 fi
  
 if [ -z "${mysql_root_password}" ]; then
   mysql_root_password=$(</dev/urandom tr -dc A-Za-z0-9 | head -c40)
-  echo "MySQL root: ${mysql_root_password}" >> .mysql-passwords
+  echo "mysql_root_password=${mysql_root_password}" >> .mysql-passwords
 fi
  
 cat .mysql-passwords
@@ -955,31 +969,7 @@ Start on boot:
 chkconfig mysqld on
 ====
 
-::: the rest
-
-Deny access to roundcube's sensible directories:
-
-====
-roundcube_dir="/var/www/vhosts/${mail_domain}/htdocs"
- 
-cat > /etc/lighttpd/conf.d/roundcube-deny.conf <<__EOF__
-\$HTTP["host"] =~ "${mail_domain}\$"{
-	\$HTTP["url"] =~ "^/config" {
-	    url.access-deny = ("") 
-	}
-	\$HTTP["url"] =~ "^/temp" {
-	    url.access-deny = ("") 
-	}
-	\$HTTP["url"] =~ "^/logs" {
-	    url.access-deny = ("") 
-	}
-}
-__EOF__
-echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
- 
-svc -du /service/lighttpd
- 
-====
+::: The rest
 
 Configure Roundcube. 
 Get a sample config:
@@ -1275,6 +1265,127 @@ chmod +x daemontools-monitor.sh
  
 ====
 
+::: Change domain name
+
+Check list:
+
+* On DO: Change name of Droplet for reverse DNS.
+* Prepareration
+* Change domain for OS itself.
+* Get new certificates.
+* Configure qmail for it.
+* Configure Roundcube for it.
+* Change virtual hosts for the web server.
+
+:::: Preparation
+
+We assume that only the main part changes, e.g. EXAMPLE.URL.
+
+====
+new_address='FOO'
+ 
+. $HOME/.domain-vars.txt
+old_address="${address}"
+old_domain="${domain}"
+sed -i -e "s/${old_address}/${new_address}/g" $HOME/.domain-vars.txt
+. $HOME/.domain-vars.txt
+====
+
+:::: Change domain for OS itself
+
+====
+file='/etc/sysconfig/network'
+sed -i -e 's/^HOSTNAME/#HOSTNAME/' $file
+echo "HOSTNAME=${domain}" >> $file
+ip="$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')"
+sed -i -e "s/^${ip}/#${ip}/" /etc/hosts
+printf "${ip}\t%s\n" "${domain}" >> /etc/hosts
+hostname ${domain}
+hostname --fqdn
+ 
+====
+
+:::: Get new certificates.
+
+/Use the second line to agree to their TOS without user input./
+
+====
+cd $HOME/src/letsencrypt/
+./certbot-auto -n --email admin@${address} certonly --standalone -d ${domain} \
+-d imap.${address} -d smtp.${address} -d mail.${address}
+ 
+# ./certbot-auto -n --email admin@${address} --agree-tos certonly --standalone \
+-d ${domain} -d imap.${address} -d smtp.${address} -d mail.${address}
+ 
+mksh $HOME/src/letsencrypt/renew.sh
+====
+
+:::: Configure qmail for it
+
+====
+cd /usr/local/src/netqmail-1.06
+
+# Do these, if the old domain shouldn't be supported at all from now on:
+# > /var/qmail/control/locals; > /var/qmail/control/rcpthosts
+ 
+./config-fast ${address}
+ 
+qmailctl restart
+ 
+====
+
+:::: Configure Roundcube for it
+
+====
+sed -i -e "s/${old_address}/${address}/g" /etc/roundcubemail/config.inc.php
+svc -du /service/lighttpd
+ 
+====
+
+Also change the identities for existing users:
+
+====
+echo "USE roundcubemail
+UPDATE identities
+SET email = REPLACE(email, '${old_address}', '${address}')
+WHERE email LIKE '%@${old_address}%'
+" | mysql -u root -p"${mysql_root_password}" roundcubemail
+ 
+====
+
+
+:::: Change virtual hosts for the web server
+
+====
+cd /var/www/vhosts/
+mv "${old_domain}" "${domain}"
+====
+
+::: Deny access to Roundcube's sensible directories
+
+This is not necessary in context of this guide, as we don't put these directories in any web readable place anyway. But these line already exist and maybe they come in handy for someone:
+
+====
+roundcube_dir="/var/www/vhosts/${mail_domain}/htdocs"
+ 
+cat > /etc/lighttpd/conf.d/roundcube-deny.conf <<__EOF__
+\$HTTP["host"] =~ "${mail_domain}\$"{
+	\$HTTP["url"] =~ "^/config" {
+	    url.access-deny = ("") 
+	}
+	\$HTTP["url"] =~ "^/temp" {
+	    url.access-deny = ("") 
+	}
+	\$HTTP["url"] =~ "^/logs" {
+	    url.access-deny = ("") 
+	}
+}
+__EOF__
+echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
+ 
+svc -du /service/lighttpd
+ 
+====
 
 [0] http://www.lifewithqmail.org/lwq.html#installation
 [1] https://cr.yp.to/qmail.html
