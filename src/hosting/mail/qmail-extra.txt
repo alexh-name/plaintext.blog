@@ -1,4 +1,4 @@
-: extras
+: qmail extras
 
 A collection of additional useful things for running netqmail + dovecot + roundcube + ezmlm-idx. Main guide here: [0]
 
