@@ -19,7 +19,7 @@ While searching for sources and patches, I stumbled upon a lot of dead links. Th
 <li><a href="#vmailmgr">VMailMgr</a></li>
 <li><a href="#dovecot">dovecot</a></li>
 <li><a href="#roundcube">Roundcube</a></li>
-<li><a href="#ezmlm-idx>ezmlm-idx</a></li>
+<li><a href="#ezmlm-idx">ezmlm-idx</a></li>
 <li><a href="#extras">extras</a></li>
 </ul>
 
