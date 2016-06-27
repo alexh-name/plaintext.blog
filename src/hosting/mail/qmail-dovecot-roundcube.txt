@@ -643,7 +643,7 @@ First, get the example configuration files to the right place:
 ====
 mkdir /usr/local/etc/dovecot/
 cp -r /usr/local/share/doc/dovecot/example-config/* /usr/local/etc/dovecot/
-cd /usr/local/etc/dovecot/conf.d
+cd /usr/local/etc/dovecot/conf.d/
  
 ====
 
@@ -1388,6 +1388,175 @@ echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
 svc -du /service/lighttpd
  
 ====
+
+::: passwd as fallback userdb for dovecot
+
+With checkpassword / checkvpw we are getting all the information dovecot needs for everyday operation in one action when doing the passdb lookup. 
+For some things, e.g. migration with dsync (see below), dovecot needs more information. We can use the backend passwd, because our users are actual unix users. We put the configuration for it below the one for checkkpassword / checkvpw, so that dovecot will use this method when lookup with checkkpassword / checkvpw fails.
+
+====
+echo '
+userdb {
+  driver = passwd
+  override_fields = mail=maildir:/home/%u/Maildir
+}' >> /usr/local/etc/dovecot/conf.d/auth-checkvpw.conf.ext
+svc -du /service/dovecot
+====
+
+::: Migrate from other mail servers
+
+Add configuration:
+
+====
+remote_imap_host='FOO.BAR'
+ 
+cd /usr/local/etc/dovecot/
+ 
+echo "
+imapc_host = ${remote_imap_host}
+ 
+# Authenticate as masteruser / masteruser-secret, but use a separate login user.
+# If you don't have a master user, remove the imapc_master_user setting.
+# imapc_user = %u
+# imapc_master_user = masteruser
+# imapc_password = masteruser-secret
+ 
+imapc_features = rfc822.size
+# If you have Dovecot v2.2.8+ you may get a significant performance improvement with fetch-headers:
+imapc_features = $imapc_features fetch-headers
+# Read multiple mails in parallel, improves performance
+mail_prefetch_count = 20
+ 
+# If the old IMAP server uses INBOX. namespace prefix, set:
+imapc_list_prefix = INBOX
+ 
+# for SSL:
+imapc_port = 993
+imapc_ssl = imaps
+# Next line applies to at least CentOS 6:
+ssl_client_ca_file = /etc/ssl/certs/ca-bundle.trust.crt
+imapc_ssl_verify = yes
+" > conf.d/migrate-dsync.conf.ext
+echo '!include conf.d/migrate-dsync.conf.ext' >> local.conf
+ 
+====
+
+This would be the command for syncing one user:
+
+====
+local_user='FOO'
+remote_imap_user="${local_user}@BAR"
+remote_imap_passwd='XYZ'
+ 
+doveadm -o imapc_user=${remote_imap_user} -o imapc_password=${remote_imap_passwd} backup -R -u ${local_user} imapc:
+ 
+====
+
+But here we will use a script that reads a file with pairs of users and passwords of the remote host we are migrating from. Then it will:
+
+* create the user with the password on our machine
+* (optionally it will create new passwords for each user, dumping a new file with new pairs of users and their passwords to pass them to them)
+* execute the above command for each user until everyone is synced
+* if a user already existed locally, it tries to one-way sync from remote
+
+==== 
+cd $HOME/src/
+ 
+cat > dsync-migrate.sh <<__EOF__
+#!/bin/sh
+ 
+# The address is read from \$1.
+# The list of user-password pairs is read from ./upw-lists/\${address}/remote.txt
+# If the directory doesn't exist, it will be created at first run.
+ 
+set -eu
+ 
+create_new_pairs="1"
+address="\$1"
+ 
+user_pw_list_dir="./upw-lists/\${address}"
+remote_user_pw_list_file="\${user_pw_list_dir}/remote.txt"
+ 
+date_unix_time="\$(date +%Y%m%d-%s)"
+new_user_pw_list_file="\${user_pw_list_dir}/new_\${date_unix_time}.txt"
+ 
+function checkcontent() {
+  awk -v FS=' ' 'NR=="'\$line'"{print \$"'\$field'";}' \${remote_user_pw_list_file}
+}
+ 
+function get_pairs() {
+  field="1"
+  local_user="\$(checkcontent)"
+  remote_imap_user="\${local_user}@\${address}"
+  field="2"
+  remote_imap_passwd="\$(checkcontent)"
+  passwd="\${remote_imap_passwd}"
+}
+ 
+function check_existence() {
+  if id "\${local_user}" >/dev/null 2>&1; then
+    user_exists="1"
+  else
+    user_exists="0"
+  fi
+}
+ 
+function create_new_pairs() {
+  printf '%s' "\${local_user}" >> \${new_user_pw_list_file}
+  if [[ "\${user_exists}" -eq "0" ]]; then
+    passwd="\$(</dev/urandom tr -dc A-Za-z0-9 | head -c20)"
+  else
+    passwd='USER_EXISTED'
+  fi
+  printf ' %s\n' "\${passwd}" >> \${new_user_pw_list_file}
+}
+ 
+function create_user() {
+  new_user="\${local_user}"
+  new_passwd="\${passwd}"
+ 
+  useradd \${new_user}
+  echo "\${new_user}:\${new_passwd}" | chpasswd
+}
+ 
+function sync() {
+  if [[ "\${user_exists}" -eq "0" ]]; then
+    mv -f /home/\${local_user}/Maildir \\
+     /home/\${local_user}/Maildir.dsyncb-\${date_unix_time}
+    su - \${local_user} -c "doveadm -o mail_fsync=never \\
+     -o imapc_user=\${remote_imap_user} \\
+     -o imapc_password=\${remote_imap_passwd} backup -R -u \${local_user} imapc:"
+  else
+    su - \${local_user} -c "doveadm -o mail_fsync=never \\
+     -o imapc_user=\${remote_imap_user} \\
+     -o imapc_password=\${remote_imap_passwd} sync -1 -R -u \${local_user} imapc:"
+  fi
+
+}
+ 
+if [ ! -d "\${user_pw_list_dir}" ]; then
+  mkdir -pv "\${user_pw_list_dir}"
+  echo "Now put the remote user-password list to \${user_pw_list_dir}/remote.txt".
+  exit 1
+fi
+line="1"
+line_count="\$(wc -l \${remote_user_pw_list_file} | cut -d ' ' -f 1)"
+until [[ "\${line}" -gt "\${line_count}" ]]; do
+  get_pairs
+  check_existence
+  if [[ "\${create_new_pairs}" -eq "1" ]]; then
+    create_new_pairs
+  fi
+  if [[ "\${user_exists}" -eq "0" ]]; then
+    create_user
+  fi
+  sync
+  line=\$(( \${line} + 1 ))
+done
+__EOF__
+====
+
+
 
 [0] http://www.lifewithqmail.org/lwq.html#installation
 [1] https://cr.yp.to/qmail.html
