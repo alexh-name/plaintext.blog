@@ -358,6 +358,7 @@ ssl_client_ca_file = /etc/ssl/certs/ca-bundle.trust.crt
 imapc_ssl_verify = yes
 " > conf.d/migrate-dsync.conf.ext
 echo '!include conf.d/migrate-dsync.conf.ext' >> local.conf
+svc -du /service/dovecot
  
 ====
 
@@ -473,6 +474,17 @@ until [[ "\${line}" -gt "\${line_count}" ]]; do
   line=\$(( \${line} + 1 ))
 done
 __EOF__
+ 
+====
+
+When done, you can remove the necessary config part:
+
+====
+sed -i \
+-e 's/!include\ conf\.d\/migrate-dsync\.conf\.ext/#!include\ conf\.d\/migrate-dsync\.conf\.ext/' \
+/usr/local/etc/dovecot/local.conf
+svc -du /service/dovecot
+ 
 ====
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
