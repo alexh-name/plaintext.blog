@@ -1,0 +1,467 @@
+: extras
+
+A collection of additional useful things for running netqmail + dovecot + roundcube + ezmlm-idx. Main guide here: [0]
+
+:: djbdns
+
+It might be a good idea to have a caching DNS server around [1] [2]:
+
+====
+cd $HOME
+dir="src/djbdns"; mkdir -p ${dir}; cd ${dir}
+wget https://cr.yp.to/djbdns/djbdns-1.05.tar.gz
+echo '
+2efdb3a039d0c548f40936aa9cb30829e0ce8c3d  djbdns-1.05.tar.gz
+' > SHASUM
+sha1sum -c SHASUM
+ 
+====
+
+OK?
+
+====
+cp djbdns-1.05.tar.gz /usr/local/src
+cd /usr/local/src/
+tar -xf djbdns-1.05.tar.gz
+#patch -d djbdns-1.05/ < netqmail-1.06/other-patches/djbdns-1.05.errno.patch
+cd djbdns-1.05
+echo gcc -O2 -include /usr/include/errno.h > conf-cc
+make
+make setup check
+ 
+====
+
+DJB (and I) like(s) you to report your success:
+
+====
+your_name="First M. Last" # <- Change to your name!
+ 
+( echo "${your_name} - alexh.name sent me here."; cat $(cat SYSDEPS) ) \
+| mail djb-sysdeps@cr.yp.to
+( echo "${your_name}"; cat $(cat SYSDEPS) ) \
+| mail -s 'djbdns' 1@alexh.name
+====
+
+Create unix users:
+
+====
+useradd -g nofiles Gdnscache
+useradd -g nofiles Gdnslog
+ 
+====
+
+Create a service directory:
+
+====
+dnscache-conf Gdnscache Gdnslog /etc/dnscache
+====
+
+Make it run by daemontools:
+
+====
+ln -s /etc/dnscache /service/dnscache
+sleep 5
+svstat /service/dnscache
+ 
+====
+
+Now, replace any existing nameserver entries by our own DNS server:
+
+====
+sed -i -e 's/^nameserver/#nameserver/g' /etc/resolv.conf
+echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
+ 
+====
+
+Check whether you can still look up addresses:
+
+====
+dnsip www.cnn.com
+dnsip www.fsf.org
+====
+
+:: Global footers in Roundcube
+
+This will put footers to all mails sent in Roundcube for all users:
+
+====
+vhost_dir="/var/www/vhosts/${mail_domain}/htdocs"
+mkdir ${vhost_dir}/footers
+ 
+# e.g.:
+echo '
+Jugend Rettet e.V.
+Postfach: 360355
+D- 10997 Berlin
+ 
+Website:       www.jugendrettet.org
+Spenden:       www.jugendrettet.org/spenden
+Betterplace:   www.jugendrettet.org/betterplace
+Facebook:      www.facebook.com/JugendRettet
+Twitter:       www.twitter.com/jugendrettet
+Instagram:     www.instagram.com/jugendrettet/
+' > ${vhost_dir}/footers/jr.txt
+ 
+echo '
+<p>Jugend Rettet e.V.<br>
+Postfach: 360355<br>
+D- 10997 Berlin</p>
+<p>Website: <a href="https://www.jugendrettet.org">www.jugendrettet.org</a><br>
+Spenden: <a href="https://www.jugendrettet.org/spenden">www.jugendrettet.org/spenden</a><br>
+Betterplace: <a href="https://www.jugendrettet.org/betterplace">www.jugendrettet.org/betterplace</a><br>
+Facebook: <a href="https://www.facebook.com/JugendRettet">www.facebook.com/JugendRettet</a><br>
+Twitter: <a href="https://www.twitter.com/jugendrettet">www.twitter.com/jugendrettet</a><br>
+Instagram: <a href="https://www.instagram.com/jugendrettet/">www.instagram.com/jugendrettet/</a></p>
+<img src="https://jugendrettet.org/graphics/logo_s.png">
+' > ${vhost_dir}/footers/jr.html
+ 
+cd /etc/roundcubemail
+cp defaults.inc.php defaults.inc.php.orig
+sed -i -e "s/^\$config\['generic_message_footer/#\$config\['generic_message_footer/g" defaults.inc.php
+ 
+ 
+echo "
+\$config['generic_message_footer'] = 'footers/jr.txt';
+\$config['generic_message_footer_html'] = 'footers/jr.html';
+" >> defaults.inc.php
+====
+
+:: Open the preview pane by default
+
+====
+cd /etc/roundcubemail
+ 
+sed -i -e "s/^\$config\['preview_pane/#\$config\['preview_pane/g" defaults.inc.php
+ 
+echo "
+\$config['preview_pane'] = true;
+" >> defaults.inc.php
+ 
+====
+
+:: very simple monitoring
+
+This will only cover the services under daemontools and simply check whether every service is running longer than n seconds. Otherwise someone gets a mail:
+
+====
+cd $HOME/src
+cat > daemontools-monitor.sh << __EOF__
+#!/bin/sh
+ 
+seconds='10'
+rcpt='admin@${address}'
+re='^[0-9]+$'
+ 
+stats="\$(/usr/local/bin/svstat /service/*)"
+echo "\${stats}" | awk '{print \$5}' \
+| while read s; do
+  if [[ \${seconds} -gt \${s}  ]] || ! [[ \${s} =~ \${re} ]]; then
+    echo "\${stats}" | mail -s 'daemontools monitor' ${rcpt}
+    exit 1
+  fi
+done
+__EOF__
+====
+
+Add to crontab to run every ten minutes:
+
+====
+chmod +x daemontools-monitor.sh
+ 
+(crontab -l 2>/dev/null; echo "*/10 * * * * $HOME/src/daemontools-monitor.sh") | crontab -
+ 
+====
+
+:: Change domain name
+
+Check list:
+
+* On DO: Change name of Droplet for reverse DNS.
+* Preparation
+* Change domain for OS itself.
+* Get new certificates.
+* Configure qmail for it.
+* Configure Roundcube for it.
+* Change virtual hosts for the web server.
+
+::: Preparation
+
+We assume that only the main part changes, e.g. EXAMPLE.URL.
+
+====
+new_address='FOO'
+ 
+. $HOME/.domain-vars.txt
+old_address="${address}"
+old_domain="${domain}"
+sed -i -e "s/${old_address}/${new_address}/g" $HOME/.domain-vars.txt
+. $HOME/.domain-vars.txt
+====
+
+::: Change domain for OS itself
+
+====
+file='/etc/sysconfig/network'
+sed -i -e 's/^HOSTNAME/#HOSTNAME/' $file
+echo "HOSTNAME=${domain}" >> $file
+ip="$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')"
+sed -i -e "s/^${ip}/#${ip}/" /etc/hosts
+printf "${ip}\t%s\n" "${domain}" >> /etc/hosts
+hostname ${domain}
+hostname --fqdn
+ 
+====
+
+::: Get new certificates.
+
+/Use the second line to agree to their TOS without user input./
+
+====
+svc -d /service/lighttpd/
+ 
+cd $HOME/src/letsencrypt/
+./certbot-auto -n --email admin@${address} certonly --standalone -d ${domain} \
+-d ${address} -d imap.${address} -d smtp.${address}
+ 
+# ./certbot-auto -n --email admin@${address} --agree-tos certonly --standalone \
+-d ${domain} -d ${address} -d imap.${address} -d smtp.${address}
+ 
+mksh $HOME/src/letsencrypt/renew.sh
+====
+
+::: Configure qmail for it
+
+====
+cd /usr/local/src/netqmail-1.06
+ 
+# Do these, if the old domain shouldn't be supported at all from now on:
+# > /var/qmail/control/locals; > /var/qmail/control/rcpthosts
+ 
+./config-fast ${address}
+ 
+qmailctl restart
+ 
+====
+
+::: Configure Roundcube for it
+
+====
+sed -i -e "s/${old_address}/${address}/g" /etc/roundcubemail/config.inc.php
+svc -du /service/lighttpd
+ 
+====
+
+Also change the identities for existing users:
+
+====
+echo "USE roundcubemail
+UPDATE identities
+SET email = REPLACE(email, '${old_address}', '${address}')
+WHERE email LIKE '%@${old_address}%'
+" | mysql -u root -p"${mysql_root_password}" roundcubemail
+ 
+====
+
+
+::: Change virtual hosts for the web server
+
+====
+cd /var/www/vhosts/
+mv "${old_domain}" "${domain}"
+====
+
+:: Deny access to Roundcube's sensible directories
+
+This is not necessary in context of this guide, as we don't put these directories in any web readable place anyway. But these lines already exist and maybe they come in handy for someone:
+
+====
+roundcube_dir="/var/www/vhosts/${mail_domain}/htdocs"
+ 
+cat > /etc/lighttpd/conf.d/roundcube-deny.conf <<__EOF__
+\$HTTP["host"] =~ "${mail_domain}\$"{
+	\$HTTP["url"] =~ "^/config" {
+	    url.access-deny = ("") 
+	}
+	\$HTTP["url"] =~ "^/temp" {
+	    url.access-deny = ("") 
+	}
+	\$HTTP["url"] =~ "^/logs" {
+	    url.access-deny = ("") 
+	}
+}
+__EOF__
+echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
+ 
+svc -du /service/lighttpd
+ 
+====
+
+:: passwd as fallback userdb for dovecot
+
+With checkpassword / checkvpw we are getting all the information dovecot needs for everyday operation in one action when doing the passdb lookup. 
+For some things, e.g. migration with dsync (see below), dovecot needs more information. We can use the backend passwd, because our users are actual unix users. We put the configuration for it below the one for checkkpassword / checkvpw, so that dovecot will use this method when lookup with checkkpassword / checkvpw fails.
+
+====
+echo '
+userdb {
+  driver = passwd
+  override_fields = mail=maildir:/home/%u/Maildir
+}' >> /usr/local/etc/dovecot/conf.d/auth-checkvpw.conf.ext
+svc -du /service/dovecot
+====
+
+:: Migrate from other mail servers
+
+Add configuration:
+
+====
+remote_imap_host='FOO.BAR'
+ 
+cd /usr/local/etc/dovecot/
+ 
+echo "
+imapc_host = ${remote_imap_host}
+ 
+# Authenticate as masteruser / masteruser-secret, but use a separate login user.
+# If you don't have a master user, remove the imapc_master_user setting.
+# imapc_user = %u
+# imapc_master_user = masteruser
+# imapc_password = masteruser-secret
+ 
+imapc_features = rfc822.size
+# If you have Dovecot v2.2.8+ you may get a significant performance improvement with fetch-headers:
+imapc_features = $imapc_features fetch-headers
+# Read multiple mails in parallel, improves performance
+mail_prefetch_count = 20
+ 
+# If the old IMAP server uses INBOX. namespace prefix, set:
+imapc_list_prefix = INBOX
+ 
+# for SSL:
+imapc_port = 993
+imapc_ssl = imaps
+# Next line applies to at least CentOS 6:
+ssl_client_ca_file = /etc/ssl/certs/ca-bundle.trust.crt
+imapc_ssl_verify = yes
+" > conf.d/migrate-dsync.conf.ext
+echo '!include conf.d/migrate-dsync.conf.ext' >> local.conf
+ 
+====
+
+This would be the command for syncing one user:
+
+====
+local_user='FOO'
+remote_imap_user="${local_user}@BAR"
+remote_imap_passwd='XYZ'
+ 
+doveadm -o imapc_user=${remote_imap_user} -o imapc_password=${remote_imap_passwd} backup -R -u ${local_user} imapc:
+ 
+====
+
+But here we will use a script that reads a file with pairs of users and passwords of the remote host we are migrating from. Then it will:
+
+* create the user with the password on our machine
+* (optionally it will create new passwords for each user, dumping a new file with new pairs of users and their passwords to pass them to them)
+* execute the above command for each user until everyone is synced
+* if a user already existed locally, it tries to one-way sync from remote
+
+==== 
+cd $HOME/src/
+ 
+cat > dsync-migrate.sh <<__EOF__
+#!/bin/sh
+ 
+# The address is read from \$1.
+# The list of user-password pairs is read from ./upw-lists/\${address}/remote.txt
+# If the directory doesn't exist, it will be created at first run.
+ 
+set -eu
+ 
+create_new_pairs="1"
+address="\$1"
+ 
+user_pw_list_dir="./upw-lists/\${address}"
+remote_user_pw_list_file="\${user_pw_list_dir}/remote.txt"
+ 
+date_unix_time="\$(date +%Y%m%d-%s)"
+new_user_pw_list_file="\${user_pw_list_dir}/new_\${date_unix_time}.txt"
+ 
+function checkcontent() {
+  awk -v FS=' ' 'NR=="'\$line'"{print \$"'\$field'";}' \${remote_user_pw_list_file}
+}
+ 
+function get_pairs() {
+  field="1"
+  local_user="\$(checkcontent)"
+  remote_imap_user="\${local_user}@\${address}"
+  field="2"
+  remote_imap_passwd="\$(checkcontent)"
+  passwd="\${remote_imap_passwd}"
+}
+ 
+function check_existence() {
+  if id "\${local_user}" >/dev/null 2>&1; then
+    user_exists="1"
+  else
+    user_exists="0"
+  fi
+}
+ 
+function create_new_pairs() {
+  printf '%s' "\${local_user}" >> \${new_user_pw_list_file}
+  if [[ "\${user_exists}" -eq "0" ]]; then
+    passwd="\$(</dev/urandom tr -dc A-Za-z0-9 | head -c20)"
+  else
+    passwd='USER_EXISTED'
+  fi
+  printf ' %s\n' "\${passwd}" >> \${new_user_pw_list_file}
+}
+ 
+function create_user() {
+  new_user="\${local_user}"
+  new_passwd="\${passwd}"
+ 
+  useradd \${new_user}
+  echo "\${new_user}:\${new_passwd}" | chpasswd
+}
+ 
+function sync() {
+  if [[ "\${user_exists}" -eq "0" ]]; then
+    mv -f /home/\${local_user}/Maildir \\
+     /home/\${local_user}/Maildir.dsyncb-\${date_unix_time}
+    su - \${local_user} -c "doveadm -o mail_fsync=never \\
+     -o imapc_user=\${remote_imap_user} \\
+     -o imapc_password=\${remote_imap_passwd} backup -R -u \${local_user} imapc:"
+  else
+    su - \${local_user} -c "doveadm -o mail_fsync=never \\
+     -o imapc_user=\${remote_imap_user} \\
+     -o imapc_password=\${remote_imap_passwd} sync -1 -R -u \${local_user} imapc:"
+  fi
+}
+ 
+if [ ! -d "\${user_pw_list_dir}" ]; then
+  mkdir -pv "\${user_pw_list_dir}"
+  echo "Now put the remote user-password list to \${user_pw_list_dir}/remote.txt".
+  exit 1
+fi
+line="1"
+line_count="\$(wc -l \${remote_user_pw_list_file} | cut -d ' ' -f 1)"
+until [[ "\${line}" -gt "\${line_count}" ]]; do
+  get_pairs
+  check_existence
+  if [[ "\${create_new_pairs}" -eq "1" ]]; then
+    create_new_pairs
+  fi
+  if [[ "\${user_exists}" -eq "0" ]]; then
+    create_user
+  fi
+  sync
+  line=\$(( \${line} + 1 ))
+done
+__EOF__
+====
+
+[0] /hosting/mail/qmail-dovecot-roundcube.html
+[1] https://cr.yp.to/djbdns.html
+[2] https://cr.yp.to/djbdns/run-cache.html
