@@ -1531,7 +1531,6 @@ function sync() {
      -o imapc_user=\${remote_imap_user} \\
      -o imapc_password=\${remote_imap_passwd} sync -1 -R -u \${local_user} imapc:"
   fi
-
 }
  
 if [ ! -d "\${user_pw_list_dir}" ]; then
