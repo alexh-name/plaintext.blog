@@ -159,10 +159,10 @@ cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
  
 . $HOME/.domain-vars.txt
  
-svc -d /service/lighttpd
+/usr/local/bin/svc -d /service/lighttpd
 sleep 2
 $HOME/src/letsencrypt/certbot-auto renew --quiet
-svc -u /service/lighttpd
+/usr/local/bin/svc -u /service/lighttpd
  
 __EOF__
  
@@ -443,7 +443,7 @@ cat /etc/letsencrypt/live/\${domain}/fullchain.pem >> ${dest}
 chown qmaild:root ${dest}
 chmod 400 ${dest}
  
-qmailctl restart
+/usr/local/bin/qmailctl restart
  
 __EOF__
  
@@ -718,7 +718,7 @@ chown root:root ${ssl_cert}
 chmod 0400 ${ssl_priv}
 chmod 0444 ${ssl_cert}
  
-svc -du /service/dovecot
+/usr/local/bin/svc -du /service/dovecot
  
 __EOF__
  
@@ -868,7 +868,7 @@ chown lighttpd:root ${ssl_priv}
 chmod 400 ${ssl_priv}
 chmod 444 ${ssl_CA}
  
-svc -du /service/lighttpd
+/usr/local/bin/svc -du /service/lighttpd
  
 __EOF__
  
