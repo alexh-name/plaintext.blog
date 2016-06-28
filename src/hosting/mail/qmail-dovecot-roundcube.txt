@@ -564,10 +564,10 @@ make install
  
 ====
 
-Now, vdeliver shall manage new deliveries. To make this the default for new users:
+Now, vdeliver shall manage new deliveries:
 
 ====
-echo '|/usr/bin/vdeliver' > /etc/skel/.qmail-default
+echo '|/usr/local/bin/vdeliver' > /var/qmail/control/defaultdelivery
 ====
 
 To give virtual users the ability to authenticate for smtp too, we need to replace checkpassword by checkvpw:
