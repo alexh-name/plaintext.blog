@@ -622,9 +622,9 @@ Create unix users [5]:
 
 ====
 groupadd dovenull
-useradd -g dovenull dovenull
+useradd -r -g dovenull dovenull
 groupadd dovecot
-useradd -g dovecot dovecot
+useradd -r -g dovecot dovecot
  
 ====
 

@@ -58,8 +58,8 @@ your_name="First M. Last" # <- Change to your name!
 Create unix users:
 
 ====
-useradd -g nofiles Gdnscache
-useradd -g nofiles Gdnslog
+useradd -r -g nofiles Gdnscache
+useradd -r -g nofiles Gdnslog
  
 ====
 
