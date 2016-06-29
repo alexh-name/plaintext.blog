@@ -5,14 +5,14 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 :: TOC
 
 <ul>
-<li><a href="#djbdns">djbdns</li>
-<li><a href="#global-footers-in-roundcube">Global footers in Roundcube</li>
-<li><a href="#open-the-preview-pane-by-default">Open the preview pane by default</li>
-<li><a href="#very-simple-monitoring">very simple monitoring</li>
-<li><a href="#change-domain-name">Change domain name</li>
-<li><a href="#deny-access-to-roundcube's-sensible-directories">Deny access to Roundcube's sensible directories</li>
-<li><a href="#passwd-as-fallback-userdb-for-dovecot">passwd as fallback userdb for dovecot</li>
-<li><a href="#migrate-from-other-mail-servers">Migrate from other mail servers</li>
+<li><a href="#djbdns">djbdns</a></li>
+<li><a href="#global-footers-in-roundcube">Global footers in Roundcube</a></li>
+<li><a href="#open-the-preview-pane-by-default">Open the preview pane by default</a></li>
+<li><a href="#very-simple-monitoring">very simple monitoring</a></li>
+<li><a href="#change-domain-name">Change domain name</a></li>
+<li><a href="#deny-access-to-roundcube's-sensible-directories">Deny access to Roundcube's sensible directories</a></li>
+<li><a href="#passwd-as-fallback-userdb-for-dovecot">passwd as fallback userdb for dovecot</a></li>
+<li><a href="#migrate-from-other-mail-servers">Migrate from other mail servers</a></li>
 </ul>
 
 :: djbdns
