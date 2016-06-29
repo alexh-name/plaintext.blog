@@ -161,7 +161,7 @@ cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
  
 /usr/local/bin/svc -d /service/lighttpd
 sleep 2
-$HOME/src/letsencrypt/certbot-auto renew --quiet
+$HOME/src/letsencrypt/certbot-auto renew
 /usr/local/bin/svc -u /service/lighttpd
  
 __EOF__
