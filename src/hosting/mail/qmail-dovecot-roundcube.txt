@@ -995,7 +995,7 @@ sed -i \
 -e "s/YOURSERVICE/${service_name}/" config.inc.php.tmp
 ====
 
-Setup the database and also put the credentials right into the config [15]:
+Setup the database and also put the credentials right into the config (borrowed from [15]):
 
 ====
 roundcube_src="/usr/share/roundcubemail"
@@ -1113,7 +1113,7 @@ More perhaps useful things are covered here: [23]
 [12] http://wiki2.dovecot.org/TestInstallation
 [13] https://www.ssllabs.com/ssltest/
 [14] https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-centos-6
-[15] https://gist.github.com/rcubetrac/cc85589b837d58680a86e7b5cbb09a4f#file-centos_rhel_install-sh
+[15] https://gist.github.com/alexh-name/1e91039d09292112ac7090f61766b4e4
 [18] ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
 [19] https://uberspace.de/
 [20] http://untroubled.org/ezmlm/manual/
