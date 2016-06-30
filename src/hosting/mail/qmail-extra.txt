@@ -162,7 +162,7 @@ cat > daemontools-monitor.sh << __EOF__
 #!/bin/sh
  
 seconds='10'
-rcpt='admin@${address}'
+rcpt='admin'
 re='^[0-9]+$'
  
 stats="\$(/usr/local/bin/svstat /service/*)"
