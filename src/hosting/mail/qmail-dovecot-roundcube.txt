@@ -797,9 +797,9 @@ echo 'include "conf.d/TLS-global.conf"' >> lighttpd.conf
 sed -i -e 's/#\ *"mod_redirect",/\ \ "mod_redirect",/' modules.conf
  
 echo '$SERVER["socket"] == ":80" {
-        $HTTP["host"] =~ "(.*)" {
-                url.redirect = ( "^/(.*)" => "https://%1/$1" )
-        }
+  $HTTP["host"] =~ "(.*)" {
+    url.redirect = ( "^/(.*)" => "https://%1/$1" )
+  }
 }' > conf.d/HTTP-to-HTTPS.conf
  
 echo 'include "conf.d/HTTP-to-HTTPS.conf"' >> lighttpd.conf
@@ -833,16 +833,17 @@ sed -i \
 -e "s/;date\.timezone\ =/date\.timezone\ =\ "${timezone}"/" \
 /etc/php.ini
   
-echo 'fastcgi.server = ( ".php" => ((                                      
-	"bin-path" => "/usr/bin/php-cgi",             
-	"socket" => "/tmp/php.socket",              
-	"max-procs" => 1,                                     
-	"bin-environment" => (                         
-	"PHP_FCGI_CHILDREN" => "16",                    
-	"PHP_FCGI_MAX_REQUESTS" => "10000"           
-	),         
-	"broken-scriptfilename" => "enable"
-	)))
+echo 'fastcgi.server = ( ".php" => ((
+  "bin-path" => "/usr/bin/php-cgi",
+  "socket" => "/tmp/php.socket",
+  "max-procs" => 1,
+  "bin-environment" => (
+    "PHP_FCGI_CHILDREN" => "16",
+    "PHP_FCGI_MAX_REQUESTS" => "10000"
+  ),
+  "broken-scriptfilename" => "enable"
+  ))
+)
 ' > conf.d/fastcgi-server.conf
  
 echo 'include "conf.d/fastcgi-server.conf"' >> lighttpd.conf
