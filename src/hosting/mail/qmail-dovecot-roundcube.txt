@@ -458,10 +458,10 @@ __EOF__
  
 ====
 
-Renew RSA and DH daily per cronjob:
+Renew RSA and DH daily per cronjob (and be nice while doing so):
 
 ====
-(crontab -l 2>/dev/null; echo "01 01 * * * /var/qmail/bin/update_tmprsadh > /dev/null 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "01 01 * * * nice -n 19 /var/qmail/bin/update_tmprsadh > /dev/null 2>&1") | crontab -
 ====
 
 ::: checkpassword
@@ -901,7 +901,7 @@ mv -f /etc/lighttpd/ssl/dh2048.pem.new /etc/lighttpd/ssl/dh2048.pem
 ' > $HOME/src/lighttpd/dh.sh
 chmod +x $HOME/src/lighttpd/dh.sh
  
-(crontab -l 2>/dev/null; echo "02 02 * * * $HOME/src/lighttpd/dh.sh > /dev/null 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "02 02 * * * nice -n 19 $HOME/src/lighttpd/dh.sh > /dev/null 2>&1") | crontab -
  
 ====
 
