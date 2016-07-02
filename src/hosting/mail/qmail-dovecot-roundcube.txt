@@ -158,7 +158,7 @@ cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
 #!/bin/sh
  
 . $HOME/.domain-vars.txt
-
+ 
 sha1sum /etc/letsencrypt/live/\${domain}/fullchain.pem \
 > $HOME/src/letsencrypt/fullchain_shasum.txt
  
