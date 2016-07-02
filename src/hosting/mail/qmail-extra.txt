@@ -292,15 +292,15 @@ roundcube_dir="/var/www/vhosts/${mail_domain}/htdocs"
  
 cat > /etc/lighttpd/conf.d/roundcube-deny.conf <<__EOF__
 \$HTTP["host"] =~ "${mail_domain}\$"{
-	\$HTTP["url"] =~ "^/config" {
-	    url.access-deny = ("") 
-	}
-	\$HTTP["url"] =~ "^/temp" {
-	    url.access-deny = ("") 
-	}
-	\$HTTP["url"] =~ "^/logs" {
-	    url.access-deny = ("") 
-	}
+  \$HTTP["url"] =~ "^/config" {
+    url.access-deny = ("")
+  }
+  \$HTTP["url"] =~ "^/temp" {
+    url.access-deny = ("")
+  }
+  \$HTTP["url"] =~ "^/logs" {
+    url.access-deny = ("")
+  }
 }
 __EOF__
 echo 'include "conf.d/roundcube-deny.conf"' >> /etc/lighttpd/lighttpd.conf
