@@ -158,11 +158,20 @@ cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
 #!/bin/sh
  
 . $HOME/.domain-vars.txt
+
+sha1sum /etc/letsencrypt/live/\${domain}/fullchain.pem \
+> $HOME/src/letsencrypt/fullchain_shasum.txt
  
 /usr/local/bin/svc -d /service/lighttpd
 sleep 2
 $HOME/src/letsencrypt/certbot-auto renew
 /usr/local/bin/svc -u /service/lighttpd
+ 
+sha1sum -c $HOME/src/letsencrypt/fullchain_shasum.txt > /dev/null 2>&1
+ 
+if [[ \$? -eq 0 ]]; then
+  exit 1
+fi
  
 __EOF__
  
