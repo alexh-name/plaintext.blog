@@ -124,7 +124,8 @@ The last line should now give you your hostname.
 
 :: get a cert from Let's Encrypt
 
-/Adapted from https://certbot.eff.org/#centosrhel6-other/ [16]
+/Adapted from https://certbot.eff.org/#centosrhel6-other/
+[16]
 
 ====
 yum -y install epel-release
