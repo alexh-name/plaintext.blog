@@ -124,7 +124,7 @@ The last line should now give you your hostname.
 
 :: get a cert from Let's Encrypt
 
-/Adapted from https://certbot.eff.org/#centosrhel6-other/
+/Adapted from https://certbot.eff.org/#centosrhel6-other/ [16]
 
 ====
 yum -y install epel-release
@@ -738,9 +738,9 @@ Now, make it start on boot and log:
 ====
 mkdir -m 0755 -p /var/service/dovecot/
 echo '#!/bin/sh
-
+ 
 cmd="/usr/local/sbin/dovecot -F"
-
+ 
 exec ${cmd} 2>&1
 ' > /var/service/dovecot/run
 chmod +x /var/service/dovecot/run
@@ -1124,6 +1124,7 @@ More perhaps useful things are covered here: [23]
 [13] https://www.ssllabs.com/ssltest/
 [14] https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-centos-6
 [15] https://gist.github.com/alexh-name/1e91039d09292112ac7090f61766b4e4
+[16] https://certbot.eff.org/#centosrhel6-other
 [18] ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
 [19] https://uberspace.de/
 [20] http://untroubled.org/ezmlm/manual/
