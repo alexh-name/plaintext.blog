@@ -13,6 +13,7 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 <li><a href="#deny-access-to-roundcube's-sensible-directories">Deny access to Roundcube's sensible directories</a></li>
 <li><a href="#passwd-as-fallback-userdb-for-dovecot">passwd as fallback userdb for dovecot</a></li>
 <li><a href="#migrate-from-other-mail-servers">Migrate from other mail servers</a></li>
+<li><a href="#roundcube-reply-to-list-if-ml-is-detected">Roundcube: reply to list if ML is detected</a></li>
 </ul>
 
 :: djbdns
@@ -485,6 +486,19 @@ sed -i \
 /usr/local/etc/dovecot/local.conf
 svc -du /service/dovecot
  
+====
+
+
+:: Roundcube: reply to list if ML is detected
+
+====
+cat >> /etc/roundcubemail/config.inc.php << __EOF__
+// Default behavior of Reply-All button:
+// 0 - Reply-All always
+// 1 - Reply-List if mailing list is detected
+\$config['reply_all_mode'] = 1;
+ 
+__EOF__
 ====
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
