@@ -303,6 +303,7 @@ make setup check
 Now qmail. Patch. Auth first:
 
 ====
+cd /usr/local/src/
 tar xf qmail-smtpd-auth-0510_tgz.bin -C netqmail-1.06
 cd netqmail-1.06 && ./install_smtpd-auth.sh && cd ../
  
@@ -1034,7 +1035,7 @@ mysql -u root -p"${mysql_root_password}" 'roundcubemail' < ${roundcube_src}/SQL/
 sed -i -e "s|^\(\$config\['db_dsnw'\] =\).*$|\1 \'mysql://roundcube:${mysql_roundcube_password}@localhost/roundcubemail\';|" \
 /etc/roundcubemail/config.inc.php.tmp
  
-deskey="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9-_#!*%?' | fold -w 24 | head -n 1)"
+deskey="$(</dev/urandom tr -dc 'a-zA-Z0-9-_#\!*%?' | head -c24)"
 sed -i "s|^\(\$config\['des_key'\] =\).*$|\1 \'${deskey}\';|" /etc/roundcubemail/config.inc.php.tmp
  
 \mv /etc/roundcubemail/config.inc.php.tmp /etc/roundcubemail/config.inc.php
@@ -1074,6 +1075,7 @@ rm -rf ${vhost_dir}/installer
 chown -R :lighttpd /etc/roundcubemail
 chown -R :lighttpd /var/lib/roundcubemail/
 chown -R :lighttpd /var/log/roundcubemail/
+svc -du /service/lighttpd
  
 ====
 
