@@ -5,7 +5,6 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 :: TOC
 
 <ul>
-<li><a href="#djbdns">djbdns</a></li>
 <li><a href="#global-footers-in-roundcube">Global footers in Roundcube</a></li>
 <li><a href="#open-the-preview-pane-by-default">Open the preview pane by default</a></li>
 <li><a href="#very-simple-monitoring">very simple monitoring</a></li>
@@ -16,83 +15,6 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 <li><a href="#roundcube:-reply-to-list-if-ml-is-detected">Roundcube: reply to list if ML is detected</a></li>
 </ul>
 
-:: djbdns
-
-It might be a good idea to have a caching DNS server around [1] [2]:
-
-====
-cd $HOME
-dir="src/djbdns"; mkdir -p ${dir}; cd ${dir}
-wget https://cr.yp.to/djbdns/djbdns-1.05.tar.gz
-echo '
-2efdb3a039d0c548f40936aa9cb30829e0ce8c3d  djbdns-1.05.tar.gz
-' > SHASUM
-sha1sum -c SHASUM
- 
-====
-
-OK?
-
-====
-cp djbdns-1.05.tar.gz /usr/local/src
-cd /usr/local/src/
-tar -xf djbdns-1.05.tar.gz
-#patch -d djbdns-1.05/ < netqmail-1.06/other-patches/djbdns-1.05.errno.patch
-cd djbdns-1.05
-echo gcc -O2 -include /usr/include/errno.h > conf-cc
-make
-make setup check
- 
-====
-
-DJB (and I) like(s) you to report your success:
-
-====
-your_name="First M. Last" # <- Change to your name!
- 
-( echo "${your_name} - alexh.name sent me here."; cat $(cat SYSDEPS) ) \
-| mail djb-sysdeps@cr.yp.to
-( echo "${your_name}"; cat $(cat SYSDEPS) ) \
-| mail -s 'djbdns' 1@alexh.name
-====
-
-Create unix users:
-
-====
-useradd -r -g nofiles Gdnscache
-useradd -r -g nofiles Gdnslog
- 
-====
-
-Create a service directory:
-
-====
-dnscache-conf Gdnscache Gdnslog /etc/dnscache
-====
-
-Make it run by daemontools:
-
-====
-ln -s /etc/dnscache /service/dnscache
-sleep 5
-svstat /service/dnscache
- 
-====
-
-Now, replace any existing nameserver entries by our own DNS server:
-
-====
-sed -i -e 's/^nameserver/#nameserver/g' /etc/resolv.conf
-echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
- 
-====
-
-Check whether you can still look up addresses:
-
-====
-dnsip www.cnn.com
-dnsip www.fsf.org
-====
 
 :: Global footers in Roundcube
 
