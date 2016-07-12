@@ -54,8 +54,8 @@ mail_domain='mail.${domain}'" > .domain-vars.txt
 # 3
 echo "
 domain='${fqdn}'
-address='$(echo ${domain} | cut -d '.' -f 2-)'
-mail_domain='${domain}'" > .domain-vars.txt
+address='$(echo ${fqdn} | cut -d '.' -f 2-)'
+mail_domain='${fqdn}'" > .domain-vars.txt
  
 ====
 
@@ -65,9 +65,15 @@ Remember to source those variables every time you start a new shell:
 . $HOME/.domain-vars.txt
 ====
 
-:: reverse DNS
+:: (reverse) DNS
 
 For Reverse DNS to work, you have to name the Droplet like your host.
+Don't forget to set the DNS records soon enough. E.g.:
+
+* mail.DOMAIN
+* imap.DOMAIN
+* smtp.DOMAIN
+* send.DOMAIN
 
 :: general preparation
 
@@ -143,13 +149,14 @@ chmod a+x certbot-auto
 ====
 
 /Use the second line to agree to their TOS without user input./
+You might need to adapt the domains to your needs.
 
 ====
-./certbot-auto -n --email admin@${address} certonly --standalone -d ${domain} \
--d ${address} -d imap.${address} -d smtp.${address}
+./certbot-auto -n --email admin@${address} certonly --standalone \
+-d ${domain} -d imap.${address} -d smtp.${address} -d send.${address}
  
-# ./certbot-auto -n --email admin@${address} --agree-tos certonly --standalone \
--d ${domain} -d ${address} -d imap.${address} -d smtp.${address}
+# ./certbot-auto --agree-tos --email admin@${address} -n certonly --standalone \
+-d ${domain} -d imap.${address} -d smtp.${address} -d send.${address}
 ====
 
 This may fail occasionally (e.g. with '[Errno 111] Connection refused'. It's fine to just try again.
