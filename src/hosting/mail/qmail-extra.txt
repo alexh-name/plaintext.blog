@@ -446,5 +446,4 @@ service fail2ban restart
 
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
-[1] https://cr.yp.to/djbdns.html
-[2] https://cr.yp.to/djbdns/run-cache.html
+

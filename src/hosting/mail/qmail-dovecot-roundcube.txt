@@ -1082,7 +1082,7 @@ svc -du /service/lighttpd
 
 :: djbdns
 
-It might be a good idea to have a caching DNS server around [1] [2]:
+It might be a good idea to have a caching DNS server around [24] [25]:
 
 ====
 cd $HOME
@@ -1223,3 +1223,5 @@ More perhaps useful things are covered here: [23]
 [21] https://cr.yp.to/ezmlm.html
 [22] http://mirror.alexh.name/qmail/
 [23] /hosting/mail/qmail-extra.html
+[24] https://cr.yp.to/djbdns.html
+[25] https://cr.yp.to/djbdns/run-cache.html
