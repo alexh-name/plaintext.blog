@@ -14,6 +14,7 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 <li><a href="#migrate-from-other-mail-servers">Migrate from other mail servers</a></li>
 <li><a href="#roundcube:-reply-to-list-if-ml-is-detected">Roundcube: reply to list if ML is detected</a></li>
 <li><a href="#fail2ban">fail2ban</a></li>
+<li><a href="#iptables">iptables</a></li>
 </ul>
 
 
@@ -443,7 +444,18 @@ enabled = true' > /etc/fail2ban/jail.d/sshd.conf
 service fail2ban restart
 ====
 
+:: iptables
 
+This will be very basic.
+
+After you set up your tables, store them:
+
+====
+iptables-save | sudo tee /etc/sysconfig/iptables
+====
+
+A script for setting up very basic rules can be found here [1].
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
+[1] https://gist.github.com/alexh-name/d99f665bfc7dd6b35998523d63caa873
 
