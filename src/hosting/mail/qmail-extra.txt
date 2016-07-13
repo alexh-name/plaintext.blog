@@ -13,6 +13,7 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 <li><a href="#passwd-as-fallback-userdb-for-dovecot">passwd as fallback userdb for dovecot</a></li>
 <li><a href="#migrate-from-other-mail-servers">Migrate from other mail servers</a></li>
 <li><a href="#roundcube:-reply-to-list-if-ml-is-detected">Roundcube: reply to list if ML is detected</a></li>
+<li><a href="#fail2ban">fail2ban</a></li>
 </ul>
 
 
@@ -422,6 +423,27 @@ cat >> /etc/roundcubemail/config.inc.php << __EOF__
  
 __EOF__
 ====
+
+:: fail2ban
+
+====
+yum -y install fail2ban
+chkconfig fail2ban on
+service fail2ban start
+====
+
+::: SSHD
+
+====
+echo '[sshd]
+enabled = true
+ 
+[sshd-ddos]
+enabled = true' > /etc/fail2ban/jail.d/sshd.conf
+service fail2ban restart
+====
+
+
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
 [1] https://cr.yp.to/djbdns.html
