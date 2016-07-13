@@ -121,9 +121,9 @@ Set your hostname:
 file='/etc/sysconfig/network'
 sed -i -e 's/^HOSTNAME/#HOSTNAME/' $file
 echo "HOSTNAME=${domain}" >> $file
-ip="$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')"
-sed -i -e "s/^${ip}/#${ip}/" /etc/hosts
-printf "${ip}\t%s\n" "${domain}" >> /etc/hosts
+#ip="$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')"
+#sed -i -e "s/^${ip}/#${ip}/" /etc/hosts
+#printf "${ip}\t%s\n" "${domain}" >> /etc/hosts
 hostname ${domain}
 hostname --fqdn
  
