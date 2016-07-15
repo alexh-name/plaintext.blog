@@ -1065,6 +1065,15 @@ make install
  
 ====
 
+::: increase the maximum size for attachements
+
+====
+sed -i -e '/upload_max_filesize/s/2M/34M/' \
+-e '/post_max_size/s/8M/34M/' /etc/php.ini
+====
+
+::: last steps
+
 Now put roundcube to our vhost directory and give our webserver permissions to the right places:
 
 ====
