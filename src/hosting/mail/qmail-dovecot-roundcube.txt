@@ -89,12 +89,13 @@ ln -s /usr/share/zoneinfo/${timezone} /etc/localtime
  
 ====
 
-You might want to restrict SSH login to public key authentication:
+You might want to restrict SSH login to public key authentication. Only do this, if you can sign in via public key:
 
 ====
 echo '
 PasswordAuthentication no
 ' >> /etc/ssh/sshd_config
+sed -i -e '/^PasswordAuthentication [yY][eE][sS]/s/^/#/g' /etc/ssh/sshd_config
 /etc/init.d/sshd restart
  
 ====
