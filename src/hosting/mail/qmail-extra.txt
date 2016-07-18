@@ -455,6 +455,43 @@ iptables-save | sudo tee /etc/sysconfig/iptables
 
 A script for setting up very basic rules can be found here [1].
 
+:: tlsdate
+
+To sync the system clock.
+
+====
+yum -y install git automake libevent2 libevent2-devel
+====
+
+====
+cd $HOME/src
+git clone https://github.com/ioerror/tlsdate.git
+cd tlsdate
+useradd -r -g nofiles tlsdate
+./autogen.sh
+./configure --with-unpriv-group=nofiles --with-unpriv-user=tlsdate
+make && make install
+====
+
+====
+mkdir -m 0755 -p /var/service/tlsdated/log
+mkdir -m 0750 /var/log/tlsdated
+chown tlsdate /var/log/tlsdated
+echo '#!/bin/sh
+cmd="/usr/local/sbin/tlsdated"
+exec ${cmd} 2>&1
+' > /var/service/tlsdated/run
+ 
+echo '#!/bin/sh
+exec /usr/local/bin/setuidgid tlsdate /usr/local/bin/multilog t /var/log/tlsdated
+' > /var/service/tlsdated/log/run
+ 
+chmod -R 0755 /var/service/tlsdated
+chmod +x /var/service/tlsdated/run /var/service/tlsdated/log/run
+ln -s /var/service/tlsdated /service/
+====
+
+
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
 [1] https://gist.github.com/alexh-name/d99f665bfc7dd6b35998523d63caa873
