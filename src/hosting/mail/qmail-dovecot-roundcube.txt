@@ -358,7 +358,6 @@ We choose a mode of delivery and will follow Dan J. Bernsteins advice to use Mai
 
 ====
 ./maildirmake /etc/skel/Maildir
-mkdir /etc/skel/Maildir/.Junk /etc/skel/Maildir/.Drafts /etc/skel/Maildir/.Sent /etc/skel/Maildir/.Trash
 cp /var/qmail/boot/home /var/qmail/rc
 sed -i -e 's/\/Mailbox/\/Maildir\//g' /var/qmail/rc
 chmod 755 /var/qmail/rc
