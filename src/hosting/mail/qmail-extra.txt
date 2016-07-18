@@ -82,8 +82,7 @@ echo "
 This will only cover the services under daemontools and simply check whether every service is running longer than n seconds. Otherwise someone gets a mail:
 
 ====
-cd $HOME/src
-cat > daemontools-monitor.sh << __EOF__
+cat > $HOME/src/daemontools-monitor.sh << __EOF__
 #!/bin/sh
  
 seconds='10'
@@ -94,7 +93,7 @@ stats="\$(/usr/local/bin/svstat /service/*)"
 echo "\${stats}" | awk '{print \$5}' \
 | while read s; do
   if [[ \${seconds} -gt \${s}  ]] || ! [[ \${s} =~ \${re} ]]; then
-    echo "\${stats}" | mail -s 'daemontools monitor' ${rcpt}
+    echo "\${stats}" | mail -s 'daemontools monitor' \${rcpt}
     exit 1
   fi
 done
@@ -455,6 +454,7 @@ iptables-save | sudo tee /etc/sysconfig/iptables
 ====
 
 A script for setting up very basic rules can be found here [1].
+
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
 [1] https://gist.github.com/alexh-name/d99f665bfc7dd6b35998523d63caa873
