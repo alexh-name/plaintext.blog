@@ -111,6 +111,21 @@ chmod +x daemontools-monitor.sh
  
 ====
 
+This will send a mail when root logs in:
+
+====
+cat >> /root/.bashrc << _EOF_
+login_info="\$(who | head -n1 | cut -d'(' -f2 | cut -d')' -f1)"
+message="\$(
+printf "ALERT - Root Shell Access (%s) on:\n" "\$(hostname)"
+date
+echo
+who
+)"
+mail -s "Alert: Root Access from \${login_info}" admin <<< "\${message}"
+_EOF_
+====
+
 :: Change domain name
 
 Check list:
