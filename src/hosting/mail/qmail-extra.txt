@@ -492,7 +492,44 @@ chmod +x /var/service/tlsdated/run /var/service/tlsdated/log/run
 ln -s /var/service/tlsdated /service/
 ====
 
+:: Python2.7
 
+====
+yum groupinstall -y development
+yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel
+dir="$HOME/src/python27"
+mkdir ${dir}
+cd ${dir}
+ 
+gpg2 --recv-key 18ADD4FF
+gpg2 --verify Python-2.7.*.asc Python-2.7.*.tar.xz
+ 
+wget https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz
+tar -xf Python-2.7.*.tar.xz
+cd Python-2.7.*
+./configure --prefix=/usr/local
+make && make altinstall
+cd ..
+ 
+echo '81e9117c3f1ff0c9092abe8795c3e487  setuptools-24.0.3.tar.gz
+' >> MD5SUM
+echo 'a7fae97a32e4f4bc7900b3fe2464b7f4836fa913  setuptools-24.0.3.tar.gz
+' >> SHA1SUM
+wget https://pypi.python.org/packages/84/24/610d8bb87219ed6d0928018b7b35ac6f6f6ef27a71ed6a2d0cfb68200f65/setuptools-24.0.3.tar.gz#md5=81e9117c3f1ff0c9092abe8795c3e487
+md5sum -c MD5SUM
+sha1sum -c SHA1SUM
+tar -xf setuptools-*.tar.gz
+cd setuptools-*
+python2.7 setup.py install
+cd ..
+ 
+echo '20da892e83c4f3ae8b523c8a3f8f4e29e935aef7  get-pip.py
+' >> SHA1SUM
+sha1sum -c SHA1SUM
+wget https://bootstrap.pypa.io/get-pip.py
+python2.7 get-pip.py
+pip install virtualenv
+====
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
 [1] https://gist.github.com/alexh-name/d99f665bfc7dd6b35998523d63caa873
