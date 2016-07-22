@@ -457,6 +457,18 @@ enabled = true
  
 [sshd-ddos]
 enabled = true' > /etc/fail2ban/jail.d/sshd.conf
+====
+
+::: fail2ban
+
+====
+echo '[dovecot]
+enabled = true' > /etc/fail2ban/jail.d/dovecot.conf
+====
+
+Restart.
+
+====
 service fail2ban restart
 ====
 
