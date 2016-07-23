@@ -441,6 +441,21 @@ cat >> /etc/roundcubemail/config.inc.php << __EOF__
 __EOF__
 ====
 
+:: additional ports for SSHD
+
+This might be necessary when outgoing port 22 is blocked.
+Sometimes besides 80 and 443 ports for mail related tasks are open too.
+Out of them we are not using 110 and 995 anyway:
+
+====
+echo '
+Port 22
+Port 110
+Port 995
+' >> /etc/ssh/sshd_config
+service sshd restart
+====
+
 :: fail2ban
 
 ====
