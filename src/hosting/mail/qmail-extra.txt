@@ -638,11 +638,11 @@ make install
 user='john'
 message="From: ${user}@${address}
 Subject: Autoresponse: I'm away
-
+ 
 Hi,
-
+ 
 some body text.
-
+ 
 Best regards.
 "
  
