@@ -18,6 +18,7 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 <li><a href="#iptables">iptables</a></li>
 <li><a href="#tlsdate">tlsdate</a></li>
 <li><a href="#python2.7">Python2.7</a></li>
+<li><a href="#autoresponder">autoresponder</a></li>
 </ul>
 
 
@@ -574,6 +575,90 @@ wget https://bootstrap.pypa.io/get-pip.py
 python2.7 get-pip.py
 pip install virtualenv
 ====
+
+:: autoresponder
+
+We will use qmail-autoresponder by Bruce Guenter (untroubled.org).
+
+First we it's his bglibs as a dependency (and glibc-static for itself).
+
+Unfortunately, will also need MySQL headers even if we won't be using qmail-autoresponder-mysql. The Makefile just isn't working as described.
+
+We won't use the newest versions of qmail-autoresponder bglibs because they are not compatible with GCC 4.4.
+
+====
+yum -y install glibc-static
+cd $HOME/src/
+wget http://untroubled.org/bglibs/archive/bglibs-1.106.tar.gz \
+http://untroubled.org/bglibs/archive/bglibs-1.106.tar.gz.sig
+gpg2 --recv-key C14D3C67
+gpg2 --verify bglibs-1.106.tar.gz.sig bglibs-1.106.tar.gz
+====
+
+OK?
+
+====
+tar -xf bglibs-1.106.tar.gz
+cd bglibs-1.106
+make
+make install
+====
+
+Now qmail-autoresponder:
+
+====
+yum -y install mysql-devel
+cd $HOME/src/
+wget http://untroubled.org/qmail-autoresponder/archive/qmail-autoresponder-0.97.tar.gz \
+http://untroubled.org/qmail-autoresponder/archive/qmail-autoresponder-0.97.tar.gz.sig
+gpg2 --verify gpg2 --verify qmail-autoresponder-0.97.tar.gz.sig \
+qmail-autoresponder-0.97.tar.gz
+====
+
+OK?
+
+====
+tar -xf qmail-autoresponder-0.97.tar.gz
+cd qmail-autoresponder-0.97
+make
+make install
+====
+
+::: creating an autorespond
+
+* create a directory for the corresponding user
+* put the message including headers inside 'message.txt' in the directory
+* make the directory 0700 and the user the owner
+* create a .qmail piping mails and place of the directory to qmail-autorespond
+* make the user the owner
+
+====
+. $HOME/.domain-vars.txt
+ 
+user='john'
+message="From: ${user}@${address}
+Subject: Autoresponse: I'm away
+
+Hi,
+
+some body text.
+
+Best regards.
+"
+ 
+cd $(su - ${user} -c 'echo $HOME')
+mkdir autoresponse
+echo "${message}" > autoresponse/message.txt
+chown -R ${user}:${user} autoresponse
+chmod -R 0700 autoresponse
+touch .qmail
+cp .qmail dotqmail.b
+chown -R ${user}:${user} .qmail
+chmod 0640 .qmail
+echo '|qmail-autoresponder ~/autoresponse/
+./Maildir/' > .qmail
+====
+
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
 [1] https://gist.github.com/alexh-name/d99f665bfc7dd6b35998523d63caa873
