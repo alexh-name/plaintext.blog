@@ -1205,6 +1205,16 @@ sed -i -e 's/PATH:/PATH:\/usr\/local\/bin\/ezmlm:/' $HOME/.bash_profile
 export PATH
 ====
 
+:: aftermaths
+
+Check and update your system regularly of course.
+Something to watch after are the permissions, especially for lighttpd. Keep in might that in this example apache is on the system as well and it might happen that by updating apache it might overwrite permissions.
+To find files and directories owned by apache:
+
+====
+find / -type f \( -group apache -o -user apache \) -not -path "/proc/*"
+====
+
 :: extras
 
 More perhaps useful things are covered here: [23]
