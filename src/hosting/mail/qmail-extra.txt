@@ -580,7 +580,7 @@ pip install virtualenv
 
 We will use qmail-autoresponder by Bruce Guenter (untroubled.org).
 
-First we it's his bglibs as a dependency (and glibc-static for itself).
+First we need his bglibs as a dependency (and glibc-static for itself).
 
 Unfortunately, will also need MySQL headers even if we won't be using qmail-autoresponder-mysql. The Makefile just isn't working as described.
 
