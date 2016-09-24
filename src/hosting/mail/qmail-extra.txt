@@ -659,6 +659,31 @@ echo '|qmail-autoresponder ~/autoresponse/
 ./Maildir/' > .qmail
 ====
 
+:: Logging last logins in dovecot
+
+====
+mkdir /var/dovecot
+touch /var/dovecot/lib.txt
+chown -R dovenull:dovenull /var/dovecot/
+chmod 770 /var/dovecot/
+chmod 660 /var/dovecot/lib.txt
+ 
+echo '
+#### last login dict
+mail_access_groups = dovenull
+ 
+protocol imap {
+  mail_plugins = $mail_plugins last_login
+}
+ 
+plugin {
+  last_login_dict = file:/var/dovecot/lib.txt
+  #last_login_key = last-login/%u # default
+}
+' >> /usr/local/etc/dovecot/local.conf
+ 
+svc -du /service/dovecot/
+====
 
 [0] /hosting/mail/qmail-dovecot-roundcube.html
 [1] https://gist.github.com/alexh-name/d99f665bfc7dd6b35998523d63caa873
