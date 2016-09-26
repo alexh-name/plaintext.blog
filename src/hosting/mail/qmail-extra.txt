@@ -652,12 +652,12 @@ mkdir autoresponse
 echo "${message}" > autoresponse/message.txt
 chown -R ${user}:${user} autoresponse
 chmod -R 0700 autoresponse
-touch .qmail
 cp .qmail dotqmail.b
-chown -R ${user}:${user} .qmail
-chmod 0640 .qmail
 echo '|qmail-autoresponder ~/autoresponse/
-./Maildir/' > .qmail
+./Maildir/' > dotqmail
+chown -R ${user}:${user} dotqmail
+chmod 0640 dotqmail
+mv dotqmail .qmail
 ====
 
 :: Logging last logins in dovecot
