@@ -676,6 +676,9 @@ mail_access_groups = dovenull
 protocol imap {
   mail_plugins = $mail_plugins last_login
 }
+protocol pop3 {
+  mail_plugins = $mail_plugins last_login
+}
  
 plugin {
   last_login_dict = file:/var/dovecot/lib.txt

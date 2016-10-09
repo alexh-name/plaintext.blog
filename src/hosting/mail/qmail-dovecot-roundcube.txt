@@ -704,10 +704,23 @@ To only serve IMAP:
 echo 'protocols = imap' >> local.conf
 ====
 
+For POP also do instead:
+
+====
+echo 'protocols = imap pop3
+# to disable non-ssl pop3
+service pop3-login {
+  inet_listener pop3 {
+    port = 0
+  }
+}' >> local.conf
+====
+
 Harden the encryption:
 
 ====
-echo 'ssl_protocols = !SSLv2 !SSLv3
+echo 'ssl = required
+ssl_protocols = !SSLv2 !SSLv3
 ssl_dh_parameters_length = 2048' >> local.conf
  
 ====
