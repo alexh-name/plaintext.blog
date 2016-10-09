@@ -477,7 +477,7 @@ enabled = true
 enabled = true' > /etc/fail2ban/jail.d/sshd.conf
 ====
 
-::: fail2ban
+::: dovecot
 
 ====
 echo '[dovecot]
