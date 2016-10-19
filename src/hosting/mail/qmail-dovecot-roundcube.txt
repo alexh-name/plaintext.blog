@@ -1181,6 +1181,18 @@ dnsip www.cnn.com
 dnsip www.fsf.org
 ====
 
+To use the most recent DNS root servers, run this
+
+====
+wget -O $HOME/src/dns_get-roots.sh https://raw.githubusercontent.com/alexh-name/admin_duct_tape/master/dns_get-roots.sh
+====
+
+regularly:
+
+====
+(crontab -l 2>/dev/null; echo "* */1 * * * mksh $HOME/src/dns_get-roots.sh") | crontab -
+====
+
 
 :: ezmlm-idx
 
