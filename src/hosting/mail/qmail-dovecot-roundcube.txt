@@ -1190,7 +1190,7 @@ wget -O $HOME/src/dns_get-roots.sh https://raw.githubusercontent.com/alexh-name/
 regularly:
 
 ====
-(crontab -l 2>/dev/null; echo "* */1 * * * mksh $HOME/src/dns_get-roots.sh") | crontab -
+(crontab -l 2>/dev/null; echo "*/59 * * * * mksh $HOME/src/dns_get-roots.sh") | crontab -
 ====
 
 
