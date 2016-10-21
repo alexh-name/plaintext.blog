@@ -2,6 +2,14 @@
 
 A hackish and simple approach to save bandwidth sending mails over expensive connections.
 
+:: ToC
+
+<ul>
+<li><a href="#the-problem">The Problem</a></li>
+<li><a href="#split-multimail">Split multimail</a></li>
+<li><a href="#ezmlm-idx-+-ezmlm_dyn-allow">ezmlm-idx + ezmlm_dyn-allow</a></li>
+</ul>
+
 :: The Problem
 
 When out on the sea or anywhere else where your only chance getting internet connectivity is using satellite providers, communication with the rest of the world is either difficult or expensive. Some providers offer plans for mail delivery to and from the internet where you not only pay for the raw amount of data delivered, but also per received and sent mails.
