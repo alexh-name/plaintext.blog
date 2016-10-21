@@ -1,0 +1,162 @@
+: Multimail
+
+A hackish and simple approach to save bandwidth sending mails over expensive connections.
+
+:: The Problem
+
+When out on the sea or anywhere else where your only chance getting internet connectivity is using satellite providers, communication with the rest of the world is either difficult or expensive. Some providers offer plans for mail delivery to and from the internet where you not only pay for the raw amount of data delivered, but also per received and sent mails.
+If you are a group of people you soon will come to the conclusion that you can collect all your single messages and put them into one mail. That'll come with some major disadvantages though:
+
+* You need someone connected to the internet who will separate and forward those messages to the real recipients
+* You lose privacy to the rest of the group and the person who separates and forwards the messages
+* You need someone connected to the internet who will collect, merge and forward the answers back to you
+
+Maybe you already noticed that all these tasks are actually something machines are good in. So I wrote a collection of tools under the name "multimail" to fulfil those tasks.
+
+:: Compose multimail
+
+compose_multimail [1] is a form written in HTML and JS so that the only thing needed is a browser and so that it also can work offline.
+
+It collects single messages together with:
+
+* Sender name
+* Recipient
+* Subject
+
+and the time of writing, which is collected by the form itself. When ready, the author hits "save", so that following happens:
+
+* It forges a compliant mail with headers
+* It saves the mail into an array
+* It puts a form feed character right to the beginning of the header
+* It encodes the array to base64 and displays it in a second textarea
+* It clears the fields for "Sender name", "Recipient", "Subject" and "Message"
+* It puts another form feed character to the end of the last message in the array
+
+Another member of the group can now type in her_his own message without accidentally reading messages from the other members.
+When all messages are collected, the whole encoded array of messages as displayed can be copy-pasted into the mail client to be sent to a special address featuring the next component.
+
+:: Split multimail
+
+split_multimail [2] is a tool that reads multimails from standard input. It then separates and forwards the single messages contained to their actual recipients.
+It can easily be integrated e.g. into qmail.
+It comes with a companion: filter_untrusted-origin [2] makes sure that only multimails from trusted origins are being processed, because otherwise we would emulate an open relay.
+
+The separation is based on awk. It takes the form feed character as record separator and only takes the second and penultimate record as messages in case some pre- or suffix was added by a mail client.
+It can expect either plain multimails or base64 encoded ones.
+
+To not emulate an open relay I suggest to only use it in combination of a tool that can allow or block messages based on their origin.
+I chose ezmlm(-idx), as it is common around qmail setups. The following assumes that everything is run on the same machine.
+I set up a private mailing list with ezmlm and allowed only the satellite mail address to post. The address which is multimail enabled is the only subscriber to that list.
+To make sure that only mails from a trusted mailing list arrive to the multimail enabled address, all mails to that address are filtered by "filter_untrusted-origin". The corresponding rule only allows mails from the local user "alias", who runs all mailing lists: "qmail [0-9]+ invoked by alias".
+
+Another feature which will help regulating incoming answers for the satellite collected group is built into split_multimail. It can log every address it forwarded a message to, so that the last component knows which mails should be accepted as an answer.
+
+:: ezmlm-idx + ezmlm_dyn-allow 
+
+ezmlm is not a tool I had to write. It's a mailing list software by Daniel J. Bernstein and comes with almost everything we need. ezmlm-idx is an extension of the original ezmlm with features we need.
+
+We can easily set up another private mailing list with only one subscriber, which will be the address of the satellite connected group. We won't subscribe it to the regular list, but to the digest. This has several advantages:
+
+* We can manage the cost by regulating how many mails are sent in a given time frame
+* We can reduce the costs by filtering accepted mime types
+* We can manage the cost by allowing a maximum size of messages
+* The digest mail will sum up the authors and subjects of the answers. The actual messages are saved into text-only attachments. This is good for the privacy, as no one needs to accidentally read answers to someone else.
+
+We now need to regulate who is allowed to post to this list. That's the job of ezmlm_dyn-allow [2]. It will be invoked every time a mail arrives to the answers-list. For this, just put it on top of the list's qmail file.
+It will check another file for a list of addresses which should be allowed and subscribes them to the list's allow group. That file of allowed addresses is being filled by split_multimail each time it forwards a message to an address.
+
+:: example setup
+
+Mail address of the satellite connected group shall be group@outwoods.tld.
+
+::: compose_multimail
+
+Just download and set the "reply-to" address in index.js to the address that will handle the answers. In this example "answers@example.com"
+Multimail is being sent to "mm@example.com".
+
+::: split_multimail
+
+File /var/qmail/alias/.qmail-mm_receive contains:
+
+====
+postmaster-mm
+| /usr/local/bin/filter_untrusted-origin /var/qmail/control/trusted-origin_example
+| /usr/local/bin/split_multimail -d -t /var/qmail/alias/lists/allow/answers -m /var/qmail/alias/lists/appendix/example
+====
+
+Explanation:
+
+1. The mails are also duplicated to the mailbox "postmaster-mm" just in case the postmaster wants to check if all is ok.
+2. filter_untrusted-origin checks the last (the first in the mail's header) origin if it matches the regex in "/var/qmail/control/trusted-origin_example".
+3. split_multimail is expecting the multimail to be base64 encoded ("-d").
+It writes every address it forwarded to into "/var/qmail/alias/lists/allow/answers". Make sure it is writable by the user receiving the mail. Here it would be alias.
+It appends a text to each forwarded message with a notice and instruction how to correctly answer. The text is contained in "/var/qmail/alias/lists/appendix/example".
+
+Create a private ezmlm mailing list, e.g. "mm@example.com":
+
+====
+address=example.com
+list=mm
+ezmlm-make -s -T -u -5 postmaster@${address} ~alias/${list} ~alias/.qmail-${list} ${list} ${address}
+====
+
+Subscribe "mm_receive@example.com" to the list:
+
+====
+ezmlm-sub ~alias/${list} mm_receive@example.com
+====
+
+Allow "group@outwoods.tld" to post to it:
+
+====
+ezmlm-sub ~alias/${list} allow group@outwoods.tld
+====
+
+::: ezmlm-idx + ezmlm_dyn-allow
+
+Create a private ezmlm mailing list for answers, e.g. "answers@example.com". Also enable digests and mime filtering:
+
+====
+address=example.com
+list=answers
+ezmlm-make -d -x -s -T -u -5 postmaster@${address} ~alias/${list} ~alias/.qmail-${list} ${list} ${address}
+====
+
+Remove text about administration from the digest mail, which would raise the cost of the mail:
+
+====
+echo - > /var/qmail/alias/${list}/text/digest
+====
+
+Only allow plaintext mails in bodies and attachments:
+
+====
+echo 'text/plain
+message/rfc822' > /var/qmail/alias/${list}/mimekeep
+====
+
+Subscribe "group@outwoods.tld" to the list's digests:
+
+====
+ezmlm-sub ~alias/${list} digest group@outwoods.tld
+====
+
+Add one or more cronjobs to alias' crontab invoking ezmlm-get for the list, delivering the digest:
+
+====
+(crontab -l 2>/dev/null; echo "0 6 * * * /usr/local/bin/ezmlm/ezmlm-get ~/${list}/") | crontab -
+====
+
+Make sure that addresses we forwarded to with split_multimail are allowed to post by using ezmlm_dyn-allow.
+Add to the top of /var/qmail/alias/.qmail-${list}:
+
+====
+|/usr/local/bin/ezmlm_dyn-allow ${list}
+====
+
+It will now add addresses in /var/qmail/alias/lists/allow/${list} to the allow group of the mailing list "answers".
+
+Done!
+
+[1] https://github.com/alexh-name/multimail
+[2] https://github.com/alexh-name/admin_duct_tape/tree/master/mail-stuff
