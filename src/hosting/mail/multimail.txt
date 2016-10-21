@@ -124,7 +124,7 @@ ezmlm-sub ~alias/${list} allow group@outwoods.tld
 If you tend to forget writing subjects or you just don't want to bother in this case, because subjects to mm@example.com won't be read ever anyway, make sure that mm@example.com accepts mails even without subject. Just add the switches "-S -C" to ezmlm-reject in /var/qmail/alias/.qmail-mm so that the corresponding line looks like this:
 
 ====
-|if test ! -f '/var/qmail/alias/landpost/sublist'; then /usr/local/bin/ezmlm/ezmlm-reject -S -C '/var/qmail/alias/landpost'; fi
+|if test ! -f '/var/qmail/alias/mm/sublist'; then /usr/local/bin/ezmlm/ezmlm-reject -S -C '/var/qmail/alias/mm'; fi
 ====
 
 ::: ezmlm-idx + ezmlm_dyn-allow
