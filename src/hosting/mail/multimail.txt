@@ -56,7 +56,7 @@ It can expect either plain multimails or base64 encoded ones.
 To not emulate an open relay I suggest to only use it in combination of a tool that can allow or block messages based on their origin. 
 I chose ezmlm(-idx), as it is common around qmail setups. The following assumes that everything is run on the same machine. 
 I set up a private mailing list with ezmlm and allowed only the satellite mail address to post. The address which is multimail enabled is the only subscriber to that list. 
-To make sure that only mails from a trusted mailing list arrive to the multimail enabled address, all mails to that address are filtered by "filter_untrusted-origin". The corresponding rule only allows mails from the local user "alias", who runs all mailing lists.
+To make sure that only mails from a trusted mailing list arrive to the multimail enabled address, all mails to that address are filtered by filter_untrusted-origin. The corresponding rule only allows mails from the local user "alias", who runs all mailing lists.
 
 Another feature which will help regulating incoming answers for the satellite collected group is built into split_multimail. It can log every address it forwarded a message to, so that the last component knows which mails should be accepted as an answer.
 
@@ -119,6 +119,12 @@ Allow "group@outwoods.tld" to post to it:
 
 ====
 ezmlm-sub ~alias/${list} allow group@outwoods.tld
+====
+
+If you tend to forget writing subjects or you just don't want to bother in this case, because subjects to mm@example.com won't be read ever anyway, make sure that mm@example.com accepts mails even without subject. Just add the switches "-S -C" to ezmlm-reject in /var/qmail/alias/.qmail-mm so that the corresponding line looks like this:
+
+====
+|if test ! -f '/var/qmail/alias/landpost/sublist'; then /usr/local/bin/ezmlm/ezmlm-reject -S -C '/var/qmail/alias/landpost'; fi
 ====
 
 ::: ezmlm-idx + ezmlm_dyn-allow
