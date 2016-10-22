@@ -101,13 +101,15 @@ Explanation:
 It writes every address it forwarded to into "/var/qmail/alias/lists/allow/answers". Make sure it is writable by the user receiving the mail. Here it would be alias. 
 It appends a text to each forwarded message with a notice and instruction how to correctly answer. The text is contained in "/var/qmail/alias/lists/appendix/example". 
 
-Create a private ezmlm mailing list, e.g. "mm@example.com":
+Create a private ezmlm mailing list with mime stripping, e.g. "mm@example.com":
 
 ====
 address=example.com
 list=mm
-ezmlm-make -s -T -u -5 postmaster@${address} ~alias/${list} ~alias/.qmail-${list} ${list} ${address}
+ezmlm-make -x -s -T -u -5 postmaster@${address} ~alias/${list} ~alias/.qmail-${list} ${list} ${address}
 ====
+
+We only want plaintext messages, because split_multimail is expecting that. The mime stripping takes care of that.
 
 Subscribe "mm_receive@example.com" to the list:
 
