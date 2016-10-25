@@ -443,6 +443,12 @@ chmod 644 /var/qmail/alias/.qmail-root /var/qmail/alias/.qmail-postmaster
 useradd postmaster
 ====
 
+Set a maximum size for mails in bytes. This would be 100MB:
+
+====
+echo 104857600 > /var/qmail/control/databytes
+====
+
 ::: crypto
 
 Put our certs to the right places and renew automatically:
