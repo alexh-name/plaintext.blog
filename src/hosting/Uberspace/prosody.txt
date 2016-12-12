@@ -381,12 +381,12 @@ With new versions of all components coming out you'll want to update your existi
 Check the prosody's website or release feed for new versions.
 You can install it via toast like in the initial installation.
 
-1. build new version
-2. stop the service
-3. arm new version
-4. update luarocks modules
-5. Now our config is not linked to the right place anymore. Change it back and while you are at it save the new stock config fore reference
-6. restart the service
+* build new version
+* stop the service
+* arm new version
+* update luarocks modules
+* Now our config is not linked to the right place anymore. Change it back and while you are at it save the new stock config fore reference
+* restart the service
 
 ====
 NEW_URL='https://prosody.im/downloads/source/prosody-0.9.11.tar.gz'
@@ -414,12 +414,12 @@ toast remove ${OLD_URL}
 
 Simple:
 
-1. build new version
-2. stop prosody
-3. disarm current version
-4. arm new version
-5. reinstall luasec
-6. restart prosody
+* build new version
+* stop prosody
+* disarm current version
+* arm new version
+* reinstall luasec
+* restart prosody
 
 ====
 NEW_URL='https://www.openssl.org/source/openssl-1.0.2j.tar.gz'
