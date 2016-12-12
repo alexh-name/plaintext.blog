@@ -1,6 +1,6 @@
 : prosody (on Uberspace)
 
-Host your own instance of XMPP/ / Jabber. Fast, easy and decently secure.
+Host your own instance of XMPP / Jabber. Fast, easy and decently secure.
 
 /This guide is security critical. See [20]/
 
@@ -378,7 +378,7 @@ With new versions of all components coming out you'll want to update your existi
 
 ::: Prosody itself
 
-Check the prosody's website or release feed for new versions.
+Check prosody's website or release feed for new versions.
 You can install it via toast like in the initial installation.
 
 * build new version
