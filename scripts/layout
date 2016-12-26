@@ -1,0 +1,469 @@
+# Page content
+function page_head {
+	print '<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="snscltt" />
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="/icon.png">'
+	(( CSSV == 1 )) && print "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/${CSSF}\" />"
+	if [[ -n $WTIT ]]; then
+		print "\t<title>${WTIT}${FILETIT:+ | }${FILETIT}</title>"
+	else
+		print "\t<title>${FILETIT}</title>"
+	fi
+	print '<style type="text/css">
+/* Thanks to Ypnose for sharing. */
+/* Check out his website: http://ywstd.fr/ */
+@font-face {
+	font-family:"quicksand";
+	src:url("/files/fontfiles/Quicksand-Bold-webfont.eot");
+	src:url("/files/fontfiles/Quicksand-Bold-webfont.eot?#iefix") format("embedded-opentype"),
+	url("/files/fontfiles/Quicksand-Bold-webfont.woff2") format("woff2"),
+	url("/files/fontfiles/Quicksand-Bold-webfont.woff") format("woff"),
+	url("/files/fontfiles/Quicksand-Bold-webfont.ttf") format("truetype"),
+	url("/files/fontfiles/Quicksand-Bold-webfont.svg#quicksandbold") format("svg");
+	font-weight:bold;
+}
+@font-face {
+	font-family:"quicksand";
+	src:url("/files/fontfiles/Quicksand-BoldItalic-webfont.eot");
+	src:url("/files/fontfiles/Quicksand-BoldItalic-webfont.eot?#iefix") format("embedded-opentype"),
+	url("/files/fontfiles/Quicksand-BoldItalic-webfont.woff2") format("woff2"),
+	url("/files/fontfiles/Quicksand-BoldItalic-webfont.woff") format("woff"),
+	url("/files/fontfiles/Quicksand-BoldItalic-webfont.ttf") format("truetype"),
+	url("/files/fontfiles/Quicksand-BoldItalic-webfont.svg#quicksandbold_italic") format("svg");
+	font-weight:bold;
+	font-style:italic;
+}
+@font-face {
+	font-family:"quicksand";
+	src:url("/files/fontfiles/Quicksand-Italic-webfont.eot");
+	src:url("/files/fontfiles/Quicksand-Italic-webfont.eot?#iefix") format("embedded-opentype"),
+	url("/files/fontfiles/Quicksand-Italic-webfont.woff2") format("woff2"),
+	url("/files/fontfiles/Quicksand-Italic-webfont.woff") format("woff"),
+	url("/files/fontfiles/Quicksand-Italic-webfont.ttf") format("truetype"),
+	url("/files/fontfiles/Quicksand-Italic-webfont.svg#quicksanditalic") format("svg");
+	font-style:italic;
+}
+@font-face {
+	font-family:"quicksand";
+	src:url("/files/fontfiles/Quicksand-Regular-webfont.eot");
+	src:url("/files/fontfiles/Quicksand-Regular-webfont.eot?#iefix") format("embedded-opentype"),
+	url("/files/fontfiles/Quicksand-Regular-webfont.woff2") format("woff2"),
+	url("/files/fontfiles/Quicksand-Regular-webfont.woff") format("woff"),
+	url("/files/fontfiles/Quicksand-Regular-webfont.ttf") format("truetype"),
+	url("/files/fontfiles/Quicksand-Regular-webfont.svg#quicksandregular") format("svg");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"inconsolata";
+	src:url("/files/fontfiles/inconsolata-webfont.eot");
+	src:url("/files/fontfiles/inconsolata-webfont.eot?#iefix") format("embedded-opentype"),
+	url("/files/fontfiles/inconsolata-webfont.woff") format("woff"),
+	url("/files/fontfiles/inconsolata-webfont.ttf") format("truetype"),
+	url("/files/fontfiles/inconsolata-webfont.svg#webfont") format("svg");
+}
+html {
+	background:#F9EAEF;
+	min-width:320px;
+}
+body {
+	font-family:inconsolata,monospace;
+	font-style:normal;
+	font-weight:normal;
+	margin:0;
+}
+img {
+	max-width:100%;
+}
+a {
+	word-break:break-all;
+	color:inherit;
+}
+p {
+	text-align:justify;
+}
+hr {
+	border-style:solid;
+}
+h1 {
+	font-size:1.7em;
+	text-align:center;
+}
+h2 {
+	font-size:1.5em;
+	border-left:solid;
+	margin-top:2em;
+}
+h3 {
+	font-size:1.3em;
+	padding-left:2em;
+}
+h5 {
+	font-style:italic;
+}
+nav {
+	padding:0.5em;
+	margin-top:0.5em;
+}
+nav,nav a,nav a:visited {
+	color:inherit;
+	font-family:inconsolata,monospace;
+	font-style:normal;
+	text-decoration:none;
+	word-break:break-all;
+}
+nav ul {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+nav ul li,nav ul li a {
+	margin-top:0.6em;
+	margin-bottom:0.6em;
+}
+nav ul li ul li,nav ul li ul li a {
+	font-size:90%;
+	margin-top:0.7em;
+	margin-left:0.5em;
+	margin-bottom:0;
+}
+article {
+	line-height:140%;
+	max-width:40em;
+	margin-top:1.4em;
+	word-wrap:break-word;
+}
+article ul li {
+	margin-bottom:0.3em;
+}
+pre {
+	color:white;
+	background-color:black;
+	overflow-x:auto;
+	word-wrap:normal;
+	max-width:95%;
+	margin:auto;
+	padding:0.75em;
+}
+.centered {
+	text-align:center;
+}
+.boldy {
+	font-weight:bold;
+}
+footer {
+	padding:1em;
+	border-top:solid thin;
+	text-align:center;
+}
+footer a {
+	text-decoration:none;
+	display:inline-block;
+	margin:0.2em;
+}
+/* special elements */
+#test {
+	position:absolute;
+	left:0;
+	top:0;
+	color:red;
+}
+#banner {
+	font-family:quicksand,sans-serif;
+	font-size:100px;
+	padding-bottom:0.5em;
+	clear:both;
+	overflow:hidden;
+	transform-style:preserve-3d;
+}
+#banner a {
+	color:inherit;
+	text-decoration:none;
+	white-space:pre;
+}
+#h0 {
+	float:left;
+	text-align:left;
+}
+#git {
+	float:right;
+	text-align:right;
+	font-size:70%;
+}
+#h0,#git {
+	line-height:90%;
+}
+#backlink {
+	text-decoration:none;
+	font-size:x-large;
+}
+#gitlink {
+	font-size:0.8em;
+	font-family:inconsolata,monospace;
+	line-height:125%;
+	}
+/*
+#gitlink::before {
+	content:"/*"
+}
+#gitlink::after {
+	content:"*/"
+}
+*/
+#gitlink a {
+	color:inherit;
+	word-break:break-all;
+	text-decoration:none;
+}
+code,.quote {
+	line-height:normal;
+}
+.quote {
+	padding-left:0.7em;
+	margin:0.7em;
+	border-left:1px dotted #808080;
+}
+#page {
+	background:transparent;
+	margin:2vw auto;
+	padding:4vw;
+}
+#con {
+	padding:2.1em 0;
+}
+div#endlinks {
+	margin-top: 3em;
+	border-top: solid thin;
+}
+div#endlinks ul {
+	padding-left:0;
+}
+div#endlinks ul li {
+	list-style:none;
+}
+.blink {
+	-webkit-animation:1s blink step-end infinite;
+	-moz-animation:1s blink step-end infinite;
+	-ms-animation:1s blink step-end infinite;
+	-o-animation:1s blink step-end infinite;
+	animation:1s blink step-end infinite;
+}
+@keyframes "blink" {
+	from,to {
+		color:transparent;
+	}
+	50% {
+		color:inherit;
+	}
+}
+@-moz-keyframes blink {
+	from,to {
+		color:transparent;
+	}
+	50% {
+		color:inherit;
+	}
+}
+@-webkit-keyframes "blink" {
+	from,to {
+		color:transparent;
+	}
+	50% {
+		color:inherit;
+	}
+}
+@-ms-keyframes "blink" {
+	from,to {
+		color:transparent;
+	}
+	50% {
+		color:inherit;
+  }
+}
+@-o-keyframes "blink" {
+	from,to {
+		color:transparent;
+	}
+	50% {
+		color:inherit;
+	}
+}
+/* entangled elements */
+a {
+	padding:0.1em;
+	text-decoration:none;
+	background:white;
+}
+a:hover, nav a.thisPage {
+	box-shadow:2px 2px black;
+}
+code,.quote,#endlinks {
+	font-family:inconsolata,monospace;
+}
+nav ul li ul li:first-child:before,nav ul li ul li:last-child:after {
+	font-weight:bold;
+}
+h2,blockquote {
+	padding-left:1em;
+}
+/* leftovers */
+/* structure */
+body {
+	min-width:20em;
+}
+#page {
+	max-width:1000px;
+}
+#con {
+	clear:both;
+	overflow:hidden;
+	min-width:17.6em;
+}
+nav {
+	max-width:250px;
+	text-align:initial;
+}
+#nav {
+	float:left;
+	text-align:center;
+}
+#paper {
+	max-width:600px;
+	margin-left:300px;
+}
+/* responsiveness */
+@media screen and (max-width:1136px) {
+	#page {
+	  max-width:88%;
+	}
+}
+@media screen and (max-width:850px) {
+	#banner {
+	  font-size:90px;
+	}
+}
+@media screen and (max-width:800px) {
+	#banner {
+	  font-size:85px;
+	}
+}
+@media screen and (max-width:750px) {
+	#banner {
+	  font-size:80px;
+	}
+}
+@media screen and (max-width:700px) {
+	#nav {
+		float:none;
+		margin-top:0.6em;
+	}
+	nav {
+		max-width:none;
+		position:static;
+		height:auto;
+	}
+	nav ul li {
+		display:inline-table;
+		min-width:49%;
+	}
+	nav ul li ul li {
+		display:block;
+	}
+	#con {
+		padding:0;
+	}
+	#paper {
+		margin-left:0;
+	}
+	#banner {
+	  font-size:75px;
+	}
+}
+@media screen and (max-width:650px) {
+	#banner {
+	  font-size:65px;
+	}
+}
+@media screen and (max-width:600px) {
+	#banner {
+	  font-size:60px;
+	}
+}
+@media screen and (max-width:550px) {
+	#banner {
+	  font-size:55px;
+	}
+}
+@media screen and (max-width:500px) {
+	#banner {
+	  font-size:45px;
+	}
+}
+@media screen and (max-width:400px) {
+	#banner {
+		font-size:40px;
+	}
+}
+@media screen and (max-width:350px) {
+	#banner {
+		font-size:35px;
+	}
+}
+</style>
+</head>
+<body>'
+
+print '<div id=page>
+<div id=con>
+<div>FOO</div>
+'
+}
+
+function page_foot {
+	print '</article>
+<footer>
+<a href="/atom.xml" target="_blank">atom.xml</a>
+<a href="mumble://'${WURL}':62877" target="_blank">mumble</a>
+<a href="xmpp:one@'${WURL}'?message" target="_blank">xmpp</a>
+<a href="https://github.com/'${owner}'" target="_blank">github</a>
+<a href="https://uberspace.de/" target="_blank">Uberspace</a>
+<a href="http://en.jugendrettet.org/spenden" target="_blank">donate</a>
+</footer>
+</div>
+</div>
+</div>
+\t<!-- Page generated by wswsh 1.2 / '"$(print ${SHELL##*/})"' - '"$(LC_ALL=C date)"' -->
+</body>
+</html>'
+}
+
+function gen_site_xml {
+	print '<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+	<title>'"${WTIT}"'</title>
+	<subtitle>unquestioned answers</subtitle>
+	<link href="http://'${WURL}'/"/>
+	<link type="application/atom+xml" rel="self" href="http://'${WURL}'/'${RSSDIR}'atom.xml"/>
+	<updated>'"${RDAT}"'</updated>
+	<author>
+		<name>Alex H.</name>
+	</author>
+	<id>http://'"${WURL}"'/</id>
+'
+}
+
+function xml_content {
+	print '\t<entry>
+		<title>'"${FILETIT}"'</title>
+		<link href="http://'${WURL}'/'${RSSTNOEXT}'.html"/>
+		<id>http://'"${WURL}"'/'"${RSSTNOEXT}"'.html</id>
+		<updated>'"${RDADAT}"'</updated>
+		<summary>'"${RSSDES}"'</summary>
+	</entry>
+'
+}
