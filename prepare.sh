@@ -15,3 +15,10 @@ if [ ! -f ahrf.awk ]; then
 else
   echo 'ahrf.awk already there.'
 fi
+
+if [ ! -f src/css/style.css ]; then
+  mkdir -p src/css
+  wget -O src/css/style.css https://github.com/alexh-name/css/raw/clouds_topbox/style.css
+else
+  echo 'style.css already there.'
+fi
