@@ -3,4 +3,4 @@ wswsh
 dest/
 .DS_Store
 .!*!*
-src/extra/
+extra/
