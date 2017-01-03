@@ -34,7 +34,7 @@ openssl version
 If you get something different, go ahead:
 
 ====
-toast arm https://www.openssl.org/source/openssl-1.0.2j.tar.gz && . ${HOME}/.bash_profile && openssl version
+toast arm https://www.openssl.org/source/openssl-1.0.2j.tar.gz && . "${HOME}"/.bash_profile && openssl version
 ====
 
 Now you should get 'OpenSSL 1.0.2j  26 Sep 2016'.
@@ -62,8 +62,8 @@ export LUA_CPATH='/home/UUSER/.luarocks/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?.so;/
 Replace 'UUSER', of course, and update env: 
 
 ====
-sed "s/UUSER/$USER/g" -i ${HOME}/.bash_profile
-. ${HOME}/.bash_profile
+sed "s/UUSER/${USER}/g" -i "${HOME}"/.bash_profile
+. "${HOME}"/.bash_profile
 ====
 
 Now we can install the needed modules [5]. If OpenSSL was updated using toast we need to set 'OPENSSL_DIR' for luasec accordingly:
@@ -72,7 +72,7 @@ Now we can install the needed modules [5]. If OpenSSL was updated using toast we
 luarocks install luasocket --local
 luarocks install luaexpat --local
 luarocks install luafilesystem --local
-luarocks install luasec 0.5.1 --local OPENSSL_DIR=${HOME}/.toast/armed/usr/local/
+luarocks install luasec 0.5.1 --local OPENSSL_DIR="${HOME}/.toast/armed/usr/local/"
 ====
 
 The modules should look like this now:
@@ -103,14 +103,14 @@ Now we can finally install Prosody. Sources are here [6].
 ====
 toast arm https://prosody.im/downloads/source/prosody-0.9.11.tar.gz
  
-mkdir -p ${HOME}/var/prosody/data
-mkdir -p ${HOME}/var/prosody/ssl
+mkdir -p "${HOME}"/var/prosody/data
+mkdir -p "${HOME}"/var/prosody/ssl
 ====
 
 Now generate Diffie-Hellman parameters for PFS (which will take a lot of time):
 
 ====
-cd ${HOME}/var/prosody/ssl/
+cd "${HOME}"/var/prosody/ssl/
 openssl dhparam -out dh-4096.pem 4096
 ====
 
@@ -120,7 +120,7 @@ I recommend using Let's Encrypt. For instructions on Uberspace look here [21].
 Make symlinks to the current certificate and key:
 
 ====
-cd ${HOME}/var/prosody/ssl/
+cd "${HOME}"/var/prosody/ssl/
 ln -s /home/UUSER/.config/letsencrypt/live/DOMAIN/fullchain.pem .
 ln -s /home/UUSER/.config/letsencrypt/live/DOMAIN/privkey.pem .
 ====
@@ -130,19 +130,19 @@ More information on using certificates in prosody here [14].
 PID file:
 
 ====
-touch ${HOME}/var/prosody/prosody.pid
+touch "${HOME}"/var/prosody/prosody.pid
 ====
 
-Now on to configure prosody. You can find a commented config at ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua .
+Now on to configure prosody. You can find a commented config at "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua .
 We copy the original for later reference and also to the right place for use and editing:
 
 ====
-mkdir -p ${HOME}/etc/prosody
-cp ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua ${HOME}/etc/prosody/prosody.cfg.lua.stock
-cp ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua ${HOME}/etc/prosody/prosody.cfg.lua
+mkdir -p "${HOME}"/etc/prosody
+cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/prosody.cfg.lua.stock
+cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/prosody.cfg.lua
 ====
 
-We put the config to ${HOME}/etc/prosody/prosody.cfg.lua to avoid later overrides by updates. The following provided config will be almost ready for use. Make sure to edit your users path, your domain, the interfaces IPs and the ports.
+We put the config to "${HOME}"/etc/prosody/prosody.cfg.lua to avoid later overrides by updates. The following provided config will be almost ready for use. Make sure to edit your users path, your domain, the interfaces IPs and the ports.
 
 ====
 pidfile = "/home/UUSER/var/prosody/prosody.pid";
@@ -203,7 +203,7 @@ VirtualHost "domain.tld" -- EDIT!
 For replacing 'UUSER' just use this again:
 
 ====
-sed "s/UUSER/$USER/g" -i ${HOME}/etc/prosody/prosody.cfg.lua
+sed "s/UUSER/${USER}/g" -i "${HOME}"/etc/prosody/prosody.cfg.lua
 ====
 
 *Attention*
@@ -234,8 +234,8 @@ More information here [16].
 Link the config to where Prosody expects it:
 
 ====
-rm ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua
-ln -s ${HOME}/etc/prosody/prosody.cfg.lua ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua
+rm "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua
+ln -s "${HOME}"/etc/prosody/prosody.cfg.lua "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua
 ====
 
 Now create a daemontools service and start it.
@@ -244,7 +244,7 @@ For Uberspace:
 
 ====
 uberspace-setup-svscan
-uberspace-setup-service prosody ${HOME}/.toast/armed/bin/prosody
+uberspace-setup-service prosody "${HOME}"/.toast/armed/bin/prosody
 ====
 
 Now test whether it's ok:
@@ -341,7 +341,7 @@ toast arm https://github.com/libevent/libevent/releases/download/release-2.0.22-
 and install with luarocks:
 
 ====
-luarocks install luaevent --local EVENT_LIBDIR=/home/$USER/.toast/armed/lib
+luarocks install luaevent --local EVENT_LIBDIR=/home/"${USER}"/.toast/armed/lib
 ====
 
 Activate in the config's global section:
@@ -392,22 +392,22 @@ You can install it via toast like in the initial installation.
 NEW_URL='https://prosody.im/downloads/source/prosody-0.9.11.tar.gz'
 OLD_URL='https://prosody.im/downloads/source/prosody-0.9.10.tar.gz'
  
-toast build ${NEW_URL} \
-&& svc -d ${HOME}/service/prosody \
-&& toast arm ${NEW_URL} \
+toast build "${NEW_URL}" \
+&& svc -d "${HOME}"/service/prosody \
+&& toast arm "${NEW_URL}" \
 && luarocks install luasocket --local \
 && luarocks install luaexpat --local \
 && luarocks install luafilesystem --local \
-&& cp ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua ${HOME}/etc/prosody/prosody.cfg.lua.stock \
-&& rm ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua \
-&& ln -s ${HOME}/etc/prosody/prosody.cfg.lua ${HOME}/.toast/armed/etc/prosody/prosody.cfg.lua \
-&& svc -u ${HOME}/service/prosody
+&& cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/prosody.cfg.lua.stock \
+&& rm "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua \
+&& ln -s "${HOME}"/etc/prosody/prosody.cfg.lua "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua \
+&& svc -u "${HOME}"/service/prosody
 ====
 
 Remove the old version:
 
 ====
-toast remove ${OLD_URL}
+toast remove "${OLD_URL}"
 ====
 
 ::: OpenSSL
@@ -425,18 +425,18 @@ Simple:
 NEW_URL='https://www.openssl.org/source/openssl-1.0.2j.tar.gz'
 OLD_URL='https://www.openssl.org/source/openssl-1.0.2f.tar.gz'
  
-toast build ${NEW_URL} \
-&& svc -d ${HOME}/service/prosody \
-&& toast disarm ${OLD_URL} \
-&& toast arm ${NEW_URL} \
-&& luarocks install luasec 0.5.1 --local OPENSSL_DIR=${HOME}/.toast/armed/usr/local/ \
-&& svc -u ${HOME}/service/prosody
+toast build "${NEW_URL}" \
+&& svc -d "${HOME}"/service/prosody \
+&& toast disarm "${OLD_URL}" \
+&& toast arm "${NEW_URL}" \
+&& luarocks install luasec 0.5.1 --local OPENSSL_DIR="${HOME}/.toast/armed/usr/local/" \
+&& svc -u "${HOME}"/service/prosody
 ====
 
 Remove old version:
 
 ====
-toast remove ${OLD_URL}
+toast remove "${OLD_URL}"
 ====
 
 
