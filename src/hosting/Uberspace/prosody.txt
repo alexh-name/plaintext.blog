@@ -72,7 +72,7 @@ Now we can install the needed modules [5]. If OpenSSL was updated using toast we
 luarocks install luasocket --local
 luarocks install luaexpat --local
 luarocks install luafilesystem --local
-luarocks install luasec 0.5.1 --local OPENSSL_DIR=~/.toast/armed/usr/local/
+luarocks install luasec 0.5.1 --local OPENSSL_DIR=$HOME/.toast/armed/usr/local/
 ====
 
 The modules should look like this now:
