@@ -3,7 +3,7 @@
 set -eu
 
 if [ ! -f wswsh ]; then
-  wget https://github.com/alexh-name/wswsh/raw/master/wswsh
+  wget https://github.com/alexh-name/wswsh/raw/prod_zckr/wswsh
   chmod +x wswsh
 else
   echo 'wswsh already there.'
