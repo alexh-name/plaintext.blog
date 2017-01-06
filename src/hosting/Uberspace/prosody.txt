@@ -142,7 +142,7 @@ cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/pros
 cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/prosody.cfg.lua
 ====
 
-We put the config to "${HOME}"/etc/prosody/prosody.cfg.lua to avoid later overrides by updates. The following provided config will be almost ready for use. Make sure to edit your users path, your domain, the interfaces IPs and the ports.
+We put the config to "${HOME}"/etc/prosody/prosody.cfg.lua to avoid later overrides by updates. The following provided config will be almost ready for use. Make sure to edit your users path, your domain, the interfaces IPs and the ports. Get two open TCP ports first [33].
 
 ====
 pidfile = "/home/UUSER/var/prosody/prosody.pid";
@@ -538,3 +538,4 @@ Ohnehin solltet ihr OTR nutzen, wenn ihr Angriffe auf euren Schriftverkehr fürc
 [30] https://prosody.im/downloads/source/
 [31] http://hg.prosody.im/0.9/atom-log
 [32] https://www.openssl.org/source/
+[33] https://wiki.uberspace.de/system:ports#firewall
