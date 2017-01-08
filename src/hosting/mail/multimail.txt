@@ -2,14 +2,7 @@
 
 A hackish and simple approach to save bandwidth sending mails over expensive connections.
 
-:: ToC
-
-<ul>
-<li><a href="#the-problem">The Problem</a></li>
-<li><a href="#split-multimail">Split multimail</a></li>
-<li><a href="#ezmlm-idx-+-ezmlm_dyn-allow">ezmlm-idx + ezmlm_dyn-allow</a></li>
-<li><a href="#example-setup">example setup</a></li>
-</ul>
+<!--TOC-->
 
 :: The Problem
 

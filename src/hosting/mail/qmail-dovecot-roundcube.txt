@@ -7,23 +7,7 @@ For those knowing Uberspace [19]: In it's core you'll get the same setup, but wi
 
 While searching for sources and patches, I stumbled upon a lot of dead links. Therefore I set up a mirror for everything I'm using in this tutorial [22].
 
-:: ToC
-
-<ul>
-<li><a href="#some-words-first">Some words first</a></li>
-<li><a href="#reverse-dns">reverse DNS</a></li>
-<li><a href="#general-preparation">general preparation</a></li>
-<li><a href="#get-a-cert-from-let's-encrypt">get a cert from Let's Encrypt</a></li>
-<li><a href="#netqmail">netqmail</a></li>
-<li><a href="#adding-users">adding users</a></li>
-<li><a href="#vmailmgr">VMailMgr</a></li>
-<li><a href="#dovecot">dovecot</a></li>
-<li><a href="#roundcube">Roundcube</a></li>
-<li><a href="#djbdns">djbdns</a></li>
-<li><a href="#ezmlm-idx">ezmlm-idx</a></li>
-<li><a href="#aftermaths">aftermaths</a></li>
-<li><a href="#extras">extras</a></li>
-</ul>
+<!--TOC-->
 
 :: Some words first
 

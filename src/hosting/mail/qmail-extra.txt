@@ -4,25 +4,7 @@ A collection of additional useful things for running netqmail + dovecot + roundc
 
 Main guide here: [0]
 
-:: TOC
-
-<ul>
-<li><a href="#global-footers-in-roundcube">Global footers in Roundcube</a></li>
-<li><a href="#open-the-preview-pane-by-default">Open the preview pane by default</a></li>
-<li><a href="#very-simple-monitoring">very simple monitoring</a></li>
-<li><a href="#change-domain-name">Change domain name</a></li>
-<li><a href="#deny-access-to-roundcube's-sensible-directories">Deny access to Roundcube's sensible directories</a></li>
-<li><a href="#passwd-as-fallback-userdb-for-dovecot">passwd as fallback userdb for dovecot</a></li>
-<li><a href="#migrate-from-other-mail-servers">Migrate from other mail servers</a></li>
-<li><a href="#roundcube:-reply-to-list-if-ml-is-detected">Roundcube: reply to list if ML is detected</a></li>
-<li><a href="#additional-ports-for-sshd">additional ports for SSHD</a></li>
-<li><a href="#fail2ban">fail2ban</a></li>
-<li><a href="#iptables">iptables</a></li>
-<li><a href="#tlsdate">tlsdate</a></li>
-<li><a href="#python2.7">Python2.7</a></li>
-<li><a href="#autoresponder">autoresponder</a></li>
-<li><a href="#logging-last-logins-in-dovecot">Logging last logins in dovecot</a></li>
-</ul>
+<!--TOC-->
 
 
 :: Global footers in Roundcube
