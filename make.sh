@@ -8,3 +8,4 @@ SHELL="${SHELLPATH}/ksh" make
 # ./scripts/gen-thispage.sh
 ./scripts/gen-gitlink.sh
 # ./scripts/gen-css.sh
+./scripts/tree.sh

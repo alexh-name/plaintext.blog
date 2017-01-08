@@ -2,47 +2,4 @@
 
 tech blog
 
-<ul>
-<li><a href="/about/">about</a></li>
-<!--<li>blog
-	<ul>
-		<li>2015
-			<ul>
-				<li><a href="/blog/2015/1228-new-domain.html">1228-new-domain.txt</a></li>
-			</ul>
-		</li>
-		<li>2016
-			<ul>
-				<li><a href="/blog/2016/0511-new-domain.html">0511-new-domain.txt</a></li>
-			</ul>
-		</li>
-	</ul>
-</li>-->
-<li><a href="/contact/">contact</a></li>
-<li><a href="/CWoS/">CWoS</a></li>
-<li>hosting/mail
-	<ul>
-		<li><a href="/hosting/mail/qmail-dovecot-roundcube.html">qmail-dovecot-roundcube.txt</a></li>
-		<li><a href="/hosting/mail/qmail-extra.html">qmail-extra.txt</a></li>
-		<li><a href="/hosting/mail/multimail.html">multimail.txt</a></li>
-	</ul>
-<li><a href="/hosting/Uberspace/">hosting/Uberspace</a>
-	<ul>
-		<li><a href="/hosting/Uberspace/ejabberd.html">ejabberd.txt</a></li>
-		<li><a href="/hosting/Uberspace/mksh.html">mksh.txt</a></li>
-		<li><a href="/hosting/Uberspace/prosody.html" class="thisPage">prosody.txt</a></li>
-		<li><a href="/hosting/Uberspace/radicale-haerten.html">radicale-haerten.txt</a></li>
-		<li><a href="/hosting/Uberspace/umurmur.html">umurmur.txt</a></li>
-	</ul>
-</li>
-<li>like
-	<ul>
-		<li><a href="/like/alot.html">alot.txt</a></li>
-	</ul>
-</li>
-<li>noise
-	<ul>
-		<li><a href="/noise/freeTS.html">freeTS.txt</a></li>
-	</ul>
-</li>
-</ul>
+TREE
