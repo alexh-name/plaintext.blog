@@ -1,7 +1,7 @@
 #!/bin/sh
 
 TREE="$(
-  printf "%s\n" '<p class="monospace tree">'
+  printf "%s\n" '<p class="tree">'
   tree -I 'google73ff9617eecd7684.html|*.css' -H . dest/ \
   | awk 'f;/<h1>Directory Tree/{f=1};/<br><br>/{exit}' \
   | sed 's/\&/\\\\\&/g'
