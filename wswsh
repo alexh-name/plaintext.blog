@@ -89,6 +89,7 @@ function gen_page {
 	find "src" -type f -iname "*.${WSH_EXT:-txt}" | while IFS=$'\n' read -r WSH_GENF; do
 		gen_names "$WSH_GENF"
 		WSH_GENF_FINAL="dest/${WSH_GENF_HTML}"
+		export WSH_GENF_FINAL
 		run_hook "pre_genpage"
 		page_header >"$WSH_GENF_FINAL"
 		if ! "${WSH_INTERP:-cat}" "$WSH_GENF" >>"$WSH_GENF_FINAL"; then

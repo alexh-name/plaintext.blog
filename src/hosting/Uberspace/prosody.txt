@@ -22,6 +22,8 @@ IM Observatory [0] will rate it with an 'A'.
 
 Parts of thus guide are inspired by [1].
 
+<!--TOC-->
+
 :: newer OpenSSL
 
 For newer methods of encryption we need a recent version of OpenSSL.

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export WSH_GENF_FINAL
+./scripts/toc.sh

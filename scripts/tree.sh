@@ -9,6 +9,6 @@ TREE="$(
   printf "%s\n" '</p>'
 )"
 
-awk -v tree="${TREE}" '/<p>TREE<\/p>/{sub(/<p>TREE<\/p>/,tree)};{print}' \
+awk -v tree="${TREE}" '/<!--TREE-->/{sub(/<!--TREE-->/,tree)};{print}' \
   dest/index.html > dest/index.html.tmp
 mv dest/index.html.tmp dest/index.html
