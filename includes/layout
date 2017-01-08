@@ -33,6 +33,7 @@ function page_header {
 </nav>
 <div id="margin-box">
 	<div id="topbox" class="center">
+		<img src="/files/logo_w.svg" alt="logo"></img>
 	</div>
 	<div id="paper" class="center">
 		<article>'

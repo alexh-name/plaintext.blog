@@ -378,10 +378,10 @@ div#topbox p {
 /* end structure */
 /* styling */
 body {
+  background: gold; /* fallback for old browsers */
 	/* found here: http://uigradients.com/, named 'clouds' */
-	background: #ECE9E6; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF); /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to left, #ECE9E6 , #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/* background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF); */ /* Chrome 10-25, Safari 5.1-6 */
+	/* background: linear-gradient(to left, #ECE9E6 , #FFFFFF); */ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	font-family: Source Sans Pro, sans-serif;
 }
 header, footer {
