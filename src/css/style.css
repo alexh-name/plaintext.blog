@@ -465,6 +465,9 @@ div#topbox a {
 	border-bottom: thin solid;
 	padding: initial;
 }
+.tree {
+  font-size: initial;
+}
 /* end styling */
 /* merged */
 .monospace, nav, header, footer {
