@@ -2,7 +2,7 @@
 
 TREE="$(
   printf "%s\n" '<p class="tree">'
-  tree -I 'google73ff9617eecd7684.html|*.css' -H . dest/ \
+  /home/zckr/.linuxbrew/bin/tree -I 'google73ff9617eecd7684.html|*.css' -H . dest/ \
   | awk 'f;/<h1>Directory Tree/{f=1};/<br><br>/{exit}' \
   | sed 's/\&/\\\\\&/g'
   printf "%s\n" '</p>'
