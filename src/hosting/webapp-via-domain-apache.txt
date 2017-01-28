@@ -5,7 +5,7 @@ Using HTTPS by default.
 
 :: DNS
 
-Prepare DNS entries for your domain first.
+Prepare DNS entries for your domain first. 
 Also make sure /etc/hosts is sane or Apache will behave unexpected on virtual domains.
 
 :: prepare Apache
@@ -52,7 +52,7 @@ Replace example.com by your domain.
 
 ::: Optional in case you didn't use letsencrypt to configure Apache:
 
-Make a copy of the domain's config. It will handle the domain for HTTPS.
+Make a copy of the domain's config. It will handle the domain for HTTPS. 
 Replace the first line by:
 
 ====
