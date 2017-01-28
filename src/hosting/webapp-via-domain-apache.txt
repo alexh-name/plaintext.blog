@@ -1,0 +1,132 @@
+: Provide web app on domain using Apache
+
+Set up a proxy to access a web app via a chosen domain.
+Using HTTPS by default.
+
+:: DNS
+
+Prepare DNS entries for your domain first.
+
+:: prepare Apache
+
+We'll need following modules:
+
+====
+a2enmod proxy_wstunnel
+a2enmod headers
+a2enmod rewrite
+a2enmod proxy_http
+a2enmod proxy
+====
+
+Set up a virtual domain if wanted [1].
+
+:: TLS cert
+
+Get your certificate.
+
+Using letsencrypt you can also make it configure Apache to use the acquired cert for you:
+
+====
+letsencrypt --apache
+====
+
+If you want to configure manually, do this:
+
+====
+letsencrypt --apache certonly
+====
+
+:: configure Apache
+
+Edit the config for your desired domain to use HTTPS by default:
+
+====
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =example.com
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+====
+
+Replace example.com by your domain.
+
+::: Optional in case you didn't use letsencrypt to configure Apache:
+
+Make a copy of the domain's config. It will handle the domain for HTTPS.
+Replace the first line by:
+
+====
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+====
+
+and also add location of your cert:
+
+====
+SSLCertificateFile /etc/letsencrypt/live/example.com/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+====
+
+::: Continue here for proxy config
+
+To the domain's config handling HTTPS, add:
+
+====
+ProxyRequests off
+ 
+<Proxy *>
+    Order deny,allow
+    Allow from all
+</Proxy>
+ 
+RequestHeader set X-Forwarded-Proto "https"
+ 
+RewriteEngine On
+ 
+RewriteCond %{HTTP:Upgrade} =websocket [NC]
+RewriteRule /(.*)           ws://localhost:4567/$1 [P,L]
+RewriteCond %{HTTP:Upgrade} !=websocket [NC]
+RewriteRule /(.*)           http://localhost:4567/$1 [P,L]
+ 
+ProxyPassReverse / http://localhost:4567/
+====
+
+Adjust the ports to target your web app.
+
+Enable the config handling HTTPS:
+
+====
+a2ensite example.com-HTTPS.conf
+====
+
+Reload Apache (or restart if new modules needed to be enabled).
+
+:: Debugging
+
+::: Syntax check
+
+====
+# Fedora, RHEL, CentOS, OSX
+httpd -t
+ 
+# Debian, Ubuntu
+apache2ctl -t
+ 
+# MacOS
+apachectl -t
+====
+
+::: List virtual hosts
+
+====
+# Fedora, RHEL, CentOS, OSX
+httpd -S
+ 
+# Debian, Ubuntu
+apache2ctl -S
+ 
+# MacOS
+apachectl -S
+====
+
+[1] https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts
