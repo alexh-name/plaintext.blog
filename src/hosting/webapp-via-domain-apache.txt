@@ -6,6 +6,7 @@ Using HTTPS by default.
 :: DNS
 
 Prepare DNS entries for your domain first.
+Also make sure /etc/hosts is sane or Apache will behave unexpected on virtual domains.
 
 :: prepare Apache
 
