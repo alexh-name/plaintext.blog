@@ -4,7 +4,8 @@ SRCDIR='src'
 
 first_lvl_dirs="$(
   find "${SRCDIR}" -maxdepth 1 -type d \
-  | tail -n +2 | sed -e "s/^"${SRCDIR}"//g" -e 's/$/\//g'
+  | tail -n +2 | sed -e "s/^"${SRCDIR}"//g" -e 's/$/\//g' \
+  | sort
 )"
 
 function descent {
