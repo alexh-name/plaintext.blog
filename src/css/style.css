@@ -475,6 +475,9 @@ div#tree ul {
 div#tree a:before {
   content: "• ";
 }
+div#tree a {
+  display: inline-block;
+}
 /* end styling */
 /* merged */
 div#tree, .monospace, nav, header, footer {
@@ -482,5 +485,8 @@ div#tree, .monospace, nav, header, footer {
 }
 .monospace, nav, header, footer {
   font-size: 0.6em;
+}
+div#tree a, details {
+  margin-bottom: 0.3em;
 }
 /* end merged */
