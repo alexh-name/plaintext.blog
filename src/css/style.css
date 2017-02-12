@@ -465,14 +465,22 @@ div#topbox a {
 	border-bottom: thin solid;
 	padding: initial;
 }
-.tree {
+div#tree {
   font-size: initial;
-  font-family: Source Code Pro, monospace;
+}
+div#tree ul {
+  list-style-type: none;
+  padding-left: 2em;
+}
+div#tree a:before {
+  content: "• ";
 }
 /* end styling */
 /* merged */
+div#tree, .monospace, nav, header, footer {
+  font-family: Source Code Pro, monospace;
+}
 .monospace, nav, header, footer {
-	font-family: Source Code Pro, monospace;
-	font-size: 0.6em;
+  font-size: 0.6em;
 }
 /* end merged */
