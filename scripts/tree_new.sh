@@ -30,16 +30,24 @@ function make_links {
 
 TREE=$(
   while read dir; do
-    printf "%s\n" '<details>'
-    printf "%s" '<summary>'
-    printf "%s" "${dir}"
-    printf "%s\n" '</summary>'
     descent "${dir}"
-    pages="$( make_links "${dir}" )"
-    printf "%s\n" '<ul>'
-    printf "%s\n" "${pages}" | sort
-    printf "%s\n" '</ul>'
-    printf "%s\n" '</details>'
+    if [ -z "${FILES}" ]; then
+      printf "%s" '<a href="'
+      printf "%s" "${dir}"
+      printf "%s" '">'
+      printf "%s" "${dir}"
+      printf "%s\n" '</a>'
+    else
+      printf "%s\n" '<details>'
+      printf "%s" '<summary>'
+      printf "%s" "${dir}"
+      printf "%s\n" '</summary>'
+      pages="$( make_links "${dir}" )"
+      printf "%s\n" '<ul>'
+      printf "%s\n" "${pages}" | sort
+      printf "%s\n" '</ul>'
+      printf "%s\n" '</details>'
+    fi
   done <<< "${first_lvl_dirs}"
 )
 
