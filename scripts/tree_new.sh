@@ -29,6 +29,7 @@ function make_links {
 }
 
 TREE=$(
+  printf "%s\n" '<div id="tree">'
   while read dir; do
     descent "${dir}"
     if [ -z "${FILES}" ]; then
@@ -49,6 +50,7 @@ TREE=$(
       printf "%s\n" '</details>'
     fi
   done <<< "${first_lvl_dirs}"
+  printf "%s\n" '</div>'
 )
 
 awk -v tree="${TREE}" '/<!--TREE-->/{sub(/<!--TREE-->/,tree)};{print}' \
