@@ -37,7 +37,7 @@ TREE=$(
       printf "%s" "${dir}"
       printf "%s" '">'
       printf "%s" "${dir}"
-      printf "%s\n" '</a>'
+      printf "%s\n" '</a><br>'
     else
       printf "%s\n" '<details>'
       printf "%s" '<summary>'
