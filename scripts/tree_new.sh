@@ -19,7 +19,8 @@ function make_links {
   dir="$1"
   while read file; do
     printf "%s" '<li><a href="'
-    printf "%s" "${dir}${file}"
+    printf "%s" "${dir}"
+    print "%s" "${file}" | sed 's/\.txt$/.html/g'
     printf "%s" '">'
     printf "%s" "${file}"
     printf "%s\n" '</a></li>'
