@@ -479,9 +479,10 @@ div#tree a {
   display: inline-block;
   border-bottom: none;
 }
-h1 ~ p {
+h1 + p {
   text-align: center;
   font-size: larger;
+  margin-bottom: 2em;
 }
 details {
     cursor: context-menu;
