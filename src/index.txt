@@ -1,5 +1,5 @@
-: Index
+: akropolis.xyz
 
-tech blog
+Information age survival blog.
 
 <!--TREE-->
