@@ -32,9 +32,9 @@ function page_header {
 	<a href="#endlinks">[n]</a>
 </nav>
 <div id="margin-box">
-	<div id="topbox" class="center">
+	<!--<div id="topbox" class="center">
 		<img src="/files/logo_w.png" alt="logo"></img>
-	</div>
+	</div>-->
 	<div id="paper" class="center">
 		<article>'
 }

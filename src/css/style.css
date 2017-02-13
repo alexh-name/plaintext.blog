@@ -318,7 +318,7 @@
 /* end classes */
 /* structure */
 body {
-	min-width: 30ch;
+	min-width: 400px;
 }
 nav {
 	margin-top: 1ch;
@@ -477,6 +477,14 @@ div#tree a:before {
 }
 div#tree a {
   display: inline-block;
+  border-bottom: none;
+}
+h1 ~ p {
+  text-align: center;
+  font-size: larger;
+}
+details {
+    cursor: context-menu;
 }
 /* end styling */
 /* merged */
