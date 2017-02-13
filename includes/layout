@@ -27,7 +27,7 @@ function page_header {
 	print '</head>
 <body>
 <nav>
-	<a id="backlink" href="/">↩</a>
+	<a id="backlink" href="/">⇤</a>
 	<a href="#">↑</a>
 	<a href="#endlinks">[n]</a>
 </nav>
