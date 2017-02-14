@@ -484,8 +484,8 @@ h1 + p {
   font-size: larger;
   margin-bottom: 2em;
 }
-details {
-    cursor: context-menu;
+summary {
+  cursor: context-menu;
 }
 /* end styling */
 /* merged */
