@@ -436,8 +436,8 @@ h2 {
 	padding-left:2ch;
 	margin-top: 4ch;
 }
-h1, h2, h3, h4, h5, h6 {
-	font-family: Source Serif Pro, serif;
+h1, h2, h3, h4, h5, h6, h1 + p {
+	font-family: "Source Serif Pro", serif;
 }
 div#paper, body a {
 	background: white;
@@ -483,6 +483,7 @@ h1 + p {
   text-align: center;
   font-size: larger;
   margin-bottom: 2em;
+  font-style: italic;
 }
 summary {
   cursor: context-menu;
