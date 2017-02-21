@@ -400,7 +400,8 @@ toast build "${NEW_URL}" \
 && luarocks install luasocket --local \
 && luarocks install luaexpat --local \
 && luarocks install luafilesystem --local \
-&& cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/prosody.cfg.lua.stock \
+&& chmod u+w "${HOME}"/etc/prosody/prosody.cfg.lua.stock
+cp "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua "${HOME}"/etc/prosody/prosody.cfg.lua.stock \
 && rm "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua \
 && ln -s "${HOME}"/etc/prosody/prosody.cfg.lua "${HOME}"/.toast/armed/etc/prosody/prosody.cfg.lua \
 && svc -u "${HOME}"/service/prosody
