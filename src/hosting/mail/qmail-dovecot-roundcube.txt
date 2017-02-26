@@ -156,7 +156,7 @@ cat > $HOME/src/letsencrypt/renew.sh <<__EOF__
  
 . $HOME/.domain-vars.txt
  
-sha1sum /etc/letsencrypt/live/\${domain}/fullchain.pem \
+sha256sum /etc/letsencrypt/live/\${domain}/fullchain.pem \
 > $HOME/src/letsencrypt/fullchain_shasum.txt
  
 /usr/local/bin/svc -d /service/lighttpd
@@ -164,7 +164,7 @@ sleep 2
 $HOME/src/letsencrypt/certbot-auto renew
 /usr/local/bin/svc -u /service/lighttpd
  
-sha1sum -c $HOME/src/letsencrypt/fullchain_shasum.txt > /dev/null 2>&1
+sha256sum -c $HOME/src/letsencrypt/fullchain_shasum.txt > /dev/null 2>&1
  
 if [[ \$? -eq 0 ]]; then
   exit 1
@@ -204,19 +204,19 @@ cd $HOME
 dir='src/netqmail'; mkdir -p $dir ; cd $dir
  
 echo '
-6c591a541a2d69c2112dbad35b0f0ccab0978d85  checkpassword-0.90.tar.gz
-70a1be67e7dbe0192a887905846acc99ad5ce5b7  daemontools-0.76.tar.gz
-1c71452b8c77670b6fc2dedabb78e55aae076552  fake-smtp-1.0-1.noarch.rpm
-912b9c551dc461e838758e7672fe6f5da9e0b432  large-dns-response.patch
-9ee9a603e2ad3d8e1d34b900e19b7a5d275f538b  netqmail-1.06.tar.gz
-6aa77a4a122c03cf1120cd67818f823d6efd1ab6  netqmail-1.06-tls+auth-20151215_20160609.patch
-52d624e6a59eed9fe0c8d7bf3805cd095e4f848f  qmailctl-script
-1e4291115b2ce63aabf4798276d2c8da8b64280e  qmail-smtpd-auth-0510_tgz.bin
-e1af39f7c3c0a61571d8e39c57b33a10c3b66265  qmail-smtpd-run
-2858a679331261c705df8ec2cefc32b1869c23eb  qmail-smtpd-run-checkpassword.patch
-bedb31c543f9b335d5d2b22339d11afd5bf62b85  qmail-smtpd-run-checkvpw.patch
-793b4189795b563085602c030dd8aa0d206ddc0e  ucspi-tcp-0.88.tar.gz
-' > SHASUM
+74300364b6be26be08e34f768532e911789827179e680bc89db3525fe415762f  checkpassword-0.90.tar.gz
+a55535012b2be7a52dcd9eccabb9a198b13be50d0384143bd3b32b8710df4c1f  daemontools-0.76.tar.gz
+4ddea56c7cbf6c64a052d98c79392d0fd72767b3440b70ad18c5def63205eda3  fake-smtp-1.0-1.noarch.rpm
+08f1677785022174603c5b82a3b736615c07215d0d3f42b6e397766be8a32099  large-dns-response.patch
+8e7d98d15211fc9f9c28109e942e2268f42a6672d68df92a42f2afa90ff00532  netqmail-1.06.tar.gz
+2d6f3494e516d0dfbe6c1a5aecb4362771fcbd238b426ce597318835d1623dd2  netqmail-1.06-tls+auth-20151215_20160609.patch
+b3b82f60ed388fad213d52e68049ed8983c029394d6bbaceaeee656c16c42867  qmailctl-script
+cae4f0c4b360cc342d611e860879204a11060ce42cc7b2e2e25106dcb6d4abbf  qmail-smtpd-auth-0510_tgz.bin
+9478c55496df2154bb0bf6ec947ca3e8567f928ce495d09b885ac0450666f04c  qmail-smtpd-run
+eb1b9dc83e1fa515e77b8f6ff5b089400a4fe89b205f7078bef0dd1a56fea219  qmail-smtpd-run-checkpassword.patch
+dd232e227ae9544aea37ef1ec9db7db805e8d9f41baa2924d23b53d2a9745770  qmail-smtpd-run-checkvpw.patch
+4a0615cab74886f5b4f7e8fd32933a07b955536a3476d74ea087a3ea66a23e9c  ucspi-tcp-0.88.tar.gz
+' > SHA256SUM.txt
  
 wget http://qmail.org/netqmail-1.06.tar.gz
 wget https://cr.yp.to/ucspi-tcp/ucspi-tcp-0.88.tar.gz
@@ -231,7 +231,7 @@ wget https://gist.githubusercontent.com/alexh-name/008eba81b0133a7d13228423170ba
 wget https://qmail.jms1.net/fake-smtp-1.0-1.noarch.rpm
 wget http://www.fehcom.de/qmail/auth/qmail-smtpd-auth-0510_tgz.bin
  
-sha1sum -c SHASUM
+sha256sum -c SHA256SUM.txt
  
 ====
 
@@ -555,10 +555,10 @@ dir='src/vmailmgr'; mkdir -p $dir ; cd $dir
 wget http://untroubled.org/vmailmgr/current/vmailmgr-0.97.tar.gz
 wget https://gist.githubusercontent.com/alexh-name/d6e5da485a7fd9d3e3c47852fbd7bb83/raw/4ea276358e5319e084427161f0ddf8122a832643/vmailmgr-glibc-2.10+.patch
 echo '
-0d97c8fd6df79001dd4f3b842a145089333eae8c  vmailmgr-0.97.tar.gz
-3dc79e8b55d1ff2b8b4570d5cc1ef3f2dc55f40e  vmailmgr-glibc-2.10+.patch
-' > SHASUM
-sha1sum -c SHASUM
+6266873db29991bf74c912e8423cee5ebf11b3b944ea413682d6b75634c399c2  vmailmgr-0.97.tar.gz
+0289f47727575b3a069ee3f85b2c8530109a17f522d1383fc43330e5872f1ed2  vmailmgr-glibc-2.10+.patch
+' > SHA256SUM.txt
+sha256sum -c SHA256SUM.txt
  
 ====
 
@@ -608,10 +608,10 @@ dir='src/dovecot'; mkdir -p $dir ; cd $dir
 wget http://dovecot.org/releases/2.2/dovecot-2.2.24.tar.gz
 wget http://mij.oltrelinux.com/net/dovecot-qmail-vmailmgr/checkvpw-dovecot-wrapper.c
 echo '
-005e733f7b76226ca6307ad3699d6cbe5f92c768  dovecot-2.2.24.tar.gz
-d65068d601ab10a7a45d6132f74379a5c3b85b12  checkvpw-dovecot-wrapper.c
-' > SHASUM
-sha1sum -c SHASUM
+93b2acfc75da633e03d52e868755e996a377e468f0ff315060c4b8bfa21df168  checkvpw-dovecot-wrapper.c
+71c86891ea8deb5703d3dbbc3ea31ce2cbf7638f1aa395d9e8794d3ff7aebeb7  dovecot-2.2.24.tar.gz
+' > SHA256SUM.txt
+sha256sum -c SHA256SUM.txt
  
 ====
 
@@ -1005,8 +1005,10 @@ Get a sample config:
 cd /etc/roundcubemail/
 wget -O config.inc.php.download https://gist.githubusercontent.com/alexh-name/ad81232c31a830378214a102d0b663c0/raw/57cb8beabc2a2760ef32f4a0ded84eb01c806c36/config.inc.php.sample
  
-echo '1d7d0b8bd1ecd6964122fff981f562e217a4e7d7  config.inc.php.download' > SHASUM
-sha1sum -c SHASUM
+echo '
+8236fd309605675d6214436f2578d5da38d809937ad72842ee506f3f06f6d73c  config.inc.php.download
+' > SHA256SUM.txt
+sha256sum -c SHA256SUM.txt
 ====
 
 OK? Now change to your needs:
@@ -1053,8 +1055,10 @@ Add dictionaries for the spell checking. More can be found here [18]:
 yum -y install aspell-en
 cd /usr/local/src
 wget ftp://ftp.gnu.org/gnu/aspell/dict/de/aspell6-de-20030222-1.tar.bz2
-echo 'a06b1153404f6d1f9bd8aa03d596c14093e561c7  aspell6-de-20030222-1.tar.bz2' >> SHASUM
-sha1sum -c SHASUM
+echo '
+ba6c94e11bc2e0e6e43ce0f7822c5bba5ca5ac77129ef90c190b33632416e906  aspell6-de-20030222-1.tar.bz2
+' >> SHA256SUM.txt
+sha256sum -c SHA256SUM.txt
  
 ====
 
@@ -1102,9 +1106,9 @@ cd $HOME
 dir="src/djbdns"; mkdir -p ${dir}; cd ${dir}
 wget https://cr.yp.to/djbdns/djbdns-1.05.tar.gz
 echo '
-2efdb3a039d0c548f40936aa9cb30829e0ce8c3d  djbdns-1.05.tar.gz
-' > SHASUM
-sha1sum -c SHASUM
+3ccd826a02f3cde39be088e1fc6aed9fd57756b8f970de5dc99fcd2d92536b48  djbdns-1.05.tar.gz
+' > SHA256SUM.txt
+sha256sum -c SHA256SUM.txt
  
 ====
 
@@ -1193,9 +1197,9 @@ cd $HOME
 dir="src/ezmlm-idx"; mkdir -p ${dir}; cd ${dir}
 wget http://untroubled.org/ezmlm/archive/7.2.2/ezmlm-idx-7.2.2.tar.gz
 echo '
-f24248551b20388cfc23d8474cd2114d0cefbf90  ezmlm-idx-7.2.2.tar.gz
-' > SHASUM
-sha1sum -c SHASUM
+5d8840678ad8c2b84350564a065149c055ace3d3e21b169590ebd5abca30c2a8  ezmlm-idx-7.2.2.tar.gz
+' > SHA256SUM.txt
+sha256sum -c SHA256SUM.txt
 ====
 
 OK?
