@@ -43,8 +43,8 @@ function page_footer {
 	<div id="lastlinks" class="center text-center">
 		<a href="https://alexh.name" target="_blank">about me</a>
 		<a href="/atom.xml" target="_blank">atom.xml</a>
-		<a href="mumble://'${WSH_TIT}':62877" target="_blank">mumble</a>
-		<a href="xmpp:one@'${WSH_TIT}'?message" target="_blank">xmpp</a>
+		<a href="mumble://0101010.one:62877" target="_blank">mumble</a>
+		<a href="xmpp:one@0101010.one?message" target="_blank">xmpp</a>
 		<a href="https://github.com/'${owner}'" target="_blank">github</a>
 		<a href="https://uberspace.de/" target="_blank">Uberspace</a>
 		<a href="http://en.jugendrettet.org/spenden" target="_blank">donate</a>
