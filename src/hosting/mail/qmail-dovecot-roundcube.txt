@@ -1,7 +1,10 @@
-: (DigitalOcean/CentOS) solid Mail Server (netqmail + dovecot + roundcube + ezmlm-idx)
+: modern life with qmail
 
-Setting up a modern, but no BS and solid mail server step by step in less than 60min. 
-With special instructions for CentOS 6 (on DigitalOcean). 
+Cheatsheet for setting up qmail with modern requirements in less than 60min.
+
+With special instructions for CentOS 6 (on DigitalOcean).
+
+The name of the article and many contents refer to http://www.lifewithqmail.org/. [0]
 
 For those knowing Uberspace [19]: In it's core you'll get the same setup, but without the space limit / disk quota. (Uberspace additionally has SpamAssassin, DSPAM and automx).
 
