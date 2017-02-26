@@ -7,7 +7,7 @@ RewriteCond %{ENV:HTTPS} !=on
 RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
 RewriteCond %{HTTP_HOST} !=0101010.one
-RewriteRule (.*) https://0101010.one/$1 [R=301,L]
+RewriteRule (.*) https://plaintext.blog/$1 [R=301,L]
 
 Redirect 301 /howtos/umurmur-auf-uberspace /hosting/Uberspace/umurmur.html
 Redirect 301 /howtos/ejabberd-auf-uberspace /hosting/Uberspace/ejabberd.html

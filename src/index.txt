@@ -1,4 +1,4 @@
-: akropolis.xyz
+: plaintext.blog
 
 Information age survival blog.
 
