@@ -8,7 +8,6 @@ function page_header {
 	<meta name="author" content="'"${WSH_AUTHOR}"'" />
 	<meta name="description" content="'"${WSH_GENF_DESC}"'" />
 	<meta name=viewport content="width=device-width, initial-scale=1" />
-	<link rel="icon" type="image/png" href="/files/logo.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="'"${WSH_TWITTER_SITE}"'" />
 	<meta name="twitter:creator" content="'"${WSH_TWITTER_AUTHOR}"'" />
