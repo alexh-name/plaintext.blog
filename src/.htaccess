@@ -18,6 +18,7 @@ Redirect 301 /TS /noise/freeTS.html
 Redirect 301 /ts /noise/freeTS.html
 Redirect 301 /links /like/alot.html
 Redirect 301 /dontlike /like/not.html
+Redirect 301 /hosting/mail/qmail-dovecot-roundcube.html /hosting/mail/qmail.html
 
 ErrorDocument 403 /about/
 ErrorDocument 404 /about/
