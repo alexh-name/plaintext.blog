@@ -11,6 +11,7 @@ function page_header {
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="'"${WSH_TWITTER_SITE}"'" />
 	<meta name="twitter:creator" content="'"${WSH_TWITTER_AUTHOR}"'" />
+	<meta name="google-site-verification" content="8bBrYM5UFX29VwEgb_QJ8Vb2QQsxHxvLBvptsDYAGMM" />
 	<meta property="og:url" content="https://'${WSH_TIT}'/'${WSH_GENF_HTML}'" />
 	<meta property="og:title" content="'"${WSH_GENF_TITLE}"'" />
 	<meta property="og:description" content="'"${WSH_GENF_DESC}"'" />'
