@@ -387,12 +387,12 @@ body {
 header, footer {
 	font-size:0.8em;
 }
-div#paper, nav a, div#lastlinks a {
+div#paper, nav a, div#lastlinks a, input.gsc-search-button {
 	border: solid thin;
 	box-shadow: none;
 	transition: box-shadow 0.2s;
 }
-div#paper, nav a:hover, div#lastlinks a:hover {
+div#paper, nav a:hover, div#lastlinks a:hover, input.gsc-search-button:hover {
 	box-shadow: 3px 3px;
 }
 article {
@@ -488,8 +488,34 @@ h1 + p {
 summary {
   cursor: context-menu;
 }
-div#google-search {
-  max-width: 40ch;
+div#google-search a {
+  border-bottom: none;
+  line-height: initial;
+  word-wrap: initial;
+}
+form.gsc-search-box {
+  max-width: 40ch !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+.gsc-results-wrapper-visible {
+  border: solid thin whitesmoke !important;
+  margin: 1ch !important;
+  padding: 1ch !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 2ch !important;
+}
+input.gsc-input {
+  background: white !important;
+  height: 16px !important;
+}
+input.gsc-search-button {
+  background-color: initial !important;
+  border: solid thin !important;
+  border-color: initial !important;
+}
+input.gsc-search-button:hover {
+  cursor: pointer;
 }
 /* end styling */
 /* merged */
