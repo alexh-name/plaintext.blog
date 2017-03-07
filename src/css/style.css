@@ -488,6 +488,9 @@ h1 + p {
 summary {
   cursor: context-menu;
 }
+div#google-search {
+  margin-bottom: 2ch;
+}
 div#google-search a {
   border-bottom: none;
   line-height: initial;
