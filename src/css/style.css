@@ -517,6 +517,9 @@ input.gsc-search-button {
 input.gsc-search-button:hover {
   cursor: pointer;
 }
+form.gsc-search-box:after {
+  content: "by Google";
+}
 /* end styling */
 /* merged */
 div#tree, .monospace, nav, header, footer {
