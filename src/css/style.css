@@ -490,11 +490,11 @@ summary {
 }
 div#google-search {
   margin-bottom: 2ch;
+  line-height: initial;
+  word-wrap: initial;
 }
 div#google-search a {
   border-bottom: none;
-  line-height: initial;
-  word-wrap: initial;
 }
 form.gsc-search-box {
   max-width: 40ch !important;
@@ -510,12 +510,6 @@ form.gsc-search-box {
 }
 input.gsc-input {
   background: white !important;
-  height: 16px !important;
-}
-input.gsc-search-button {
-  background-color: initial !important;
-  border: solid thin !important;
-  border-color: initial !important;
 }
 input.gsc-search-button:hover {
   cursor: pointer;
