@@ -1228,6 +1228,15 @@ sed -i -e 's/PATH:/PATH:\/usr\/local\/bin\/ezmlm:/' $HOME/.bash_profile
 export PATH
 ====
 
+::: Allow mails to a list without having it in 'To' or 'CC'
+
+AKA circumventing 'ezmlm-reject: fatal: List address must be in To: or Cc: (#5.7.0)'
+
+====
+list='SOMELIST'
+sed -i 's/ezmlm-reject/ezmlm-reject\ -T/' /var/qmail/alias/.qmail-"${list}"
+====
+
 :: aftermaths
 
 Check and update your system regularly of course.
