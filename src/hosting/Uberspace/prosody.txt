@@ -8,10 +8,9 @@ I assume the installation to be on a shared host, so the guide uses paths inside
 
 ::: updates
 
-:::: 2016.12.12
+:::: 2017.03.11
 
-Update version of Prosody (0.9.11) and OpenSSL (1.0.2j). Translation to english. 
-Shortened here and there.
+Update version of Prosody (0.9.12) and OpenSSL (1.0.2k).
 
 Former changes to this guide on the bottom of the page.
 
@@ -444,6 +443,11 @@ toast remove "${OLD_URL}"
 
 
 :: Former changes to this document
+
+::: 2016.12.12
+
+Update version of Prosody (0.9.11) and OpenSSL (1.0.2j). Translation to english. 
+Shortened here and there.
 
 ::: 2016.03.27 [master d9bd2a1]
 
