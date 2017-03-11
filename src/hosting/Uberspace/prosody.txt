@@ -36,10 +36,10 @@ openssl version
 If you get something different, go ahead:
 
 ====
-toast arm https://www.openssl.org/source/openssl-1.0.2j.tar.gz && . "${HOME}"/.bash_profile && openssl version
+toast arm https://www.openssl.org/source/openssl-1.0.2k.tar.gz && . "${HOME}"/.bash_profile && openssl version
 ====
 
-Now you should get 'OpenSSL 1.0.2j  26 Sep 2016'.
+Now you should get 'OpenSSL 1.0.2k  26 Jan 2017'.
 
 :: prepare Lua
 
@@ -103,7 +103,7 @@ luasocket
 Now we can finally install Prosody. Sources are here [6].
 
 ====
-toast arm https://prosody.im/downloads/source/prosody-0.9.11.tar.gz
+toast arm https://prosody.im/downloads/source/prosody-0.9.12.tar.gz
  
 mkdir -p "${HOME}"/var/prosody/data
 mkdir -p "${HOME}"/var/prosody/ssl
@@ -391,8 +391,8 @@ You can install it via toast like in the initial installation.
 * restart the service
 
 ====
-NEW_URL='https://prosody.im/downloads/source/prosody-0.9.11.tar.gz'
-OLD_URL='https://prosody.im/downloads/source/prosody-0.9.10.tar.gz'
+NEW_URL='https://prosody.im/downloads/source/prosody-0.9.12.tar.gz'
+OLD_URL='https://prosody.im/downloads/source/prosody-0.9.11.tar.gz'
  
 toast build "${NEW_URL}" \
 && svc -d "${HOME}"/service/prosody \
@@ -425,8 +425,8 @@ Simple:
 * restart prosody
 
 ====
-NEW_URL='https://www.openssl.org/source/openssl-1.0.2j.tar.gz'
-OLD_URL='https://www.openssl.org/source/openssl-1.0.2f.tar.gz'
+NEW_URL='https://www.openssl.org/source/openssl-1.0.2k.tar.gz'
+OLD_URL='https://www.openssl.org/source/openssl-1.0.2j.tar.gz'
  
 toast build "${NEW_URL}" \
 && svc -d "${HOME}"/service/prosody \
