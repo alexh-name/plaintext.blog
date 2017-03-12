@@ -13,7 +13,7 @@ Redirect 301 /howtos/umurmur-auf-uberspace /hosting/Uberspace/umurmur.html
 Redirect 301 /howtos/ejabberd-auf-uberspace /hosting/Uberspace/ejabberd.html
 #Redirect 301 /AP https://how.cosmofox.net/using-open-WiFi/
 #Redirect 301 /ap https://how.cosmofox.net/using-open-WiFi/
-#Redirect 301 /gen2 https://gentoo.cosmofox.net/
+Redirect 301 /gen2 https://gentoo.cosmofox.net/
 Redirect 301 /TS /noise/freeTS.html
 Redirect 301 /ts /noise/freeTS.html
 Redirect 301 /links /like/alot.html
