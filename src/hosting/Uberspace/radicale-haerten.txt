@@ -4,6 +4,8 @@
 radicale ist ein Server für CardDAV und CalDAV. [0] 
 In der default-Konfiguration [1] nutzt radicale keine verschlüsselte Verbindung. Das geht besser.
 
+Eine Anleitung zur Installation von radicale findet sich hier. [6]
+
 /This guide is security critical. See [6] // Diese Anleitung ist sicherheitskritisch. Siehe [6]/
 
 <!--TOC-->
@@ -85,3 +87,4 @@ Siehe auch:
 [4] https://develovers.de/2015/03/ssl-bei-uberspace-einrichten/
 [6] /about/
 [5] http://frank.zisko.io/leitstelle/2015-04-01-radicale-uberspace/
+[6] /hosting/Uberspace/radicale.html

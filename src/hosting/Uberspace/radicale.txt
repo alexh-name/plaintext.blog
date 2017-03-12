@@ -1,0 +1,74 @@
+: radicale
+
+radicale is a server for CardDAV and CalDAV. [0] 
+
+Some steps are burrowed from chaosdaten.org. [1] 
+
+<!--TOC-->
+
+:: Prerequisities
+
+* daemontools
+
+:: Installation
+
+====
+pip3 install radicale --user
+====
+
+:: Configuration
+
+You can find a config on radicale's documentation page. [2] 
+For further hardening of the config look here. [3]
+
+Find a TCP port, open it [4] and specify it in the config.
+
+When using htpasswd as auth you should now create a htpasswd file. [5]
+
+:: Daemon
+
+====
+mkdir ~/etc/run-radicale
+cat <<__EOF__ > ~/etc/run-radicale/run
+#!/bin/sh
+exec python3 ~/bin/radicale -Df 2>&1
+__EOF__
+chmod +x ~/etc/run-radicale/run
+mkdir ~/etc/run-radicale/log
+cat <<__EOF__ > ~/etc/run-radicale/log/run
+#!/bin/sh
+exec multilog t ./main
+__EOF__
+chmod +x ~/etc/run-radicale/log/run
+ln -s ~/etc/run-radicale ~/service/my-daemon
+====
+
+:: git log
+
+You can also log your changes in a git repo:
+
+====
+dir='YOU_COLLECTIONS_DIR'
+ 
+cd "${dir}"
+cat <<__EOF__ > log.sh
+#!/bin/sh
+DATE="\$(date +%Y-%m-%d" "%H:%M)"
+cd '${dir}'
+git add *
+git commit -m "Backup \${DATE}"
+__EOF__
+chmod +x log.sh
+git init
+git config --global --edit
+====
+
+You can now schedule the script either by crontab or runwhen [6] etc.
+
+[0] http://radicale.org/
+[1] https://chaosdaten.org/radicale-auf-dem-uberspace/
+[2] http://radicale.org/user_documentation/#idmain-configuration-file
+[3] /hosting/Uberspace/radicale-haerten.html
+[4] https://wiki.uberspace.de/system:ports
+[5] https://wiki.uberspace.de/webserver:htaccess#verzeichnisschutz
+[6] https://wiki.uberspace.de/system:runwhen
