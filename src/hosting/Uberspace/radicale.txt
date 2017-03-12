@@ -2,7 +2,7 @@
 
 radicale is a server for CardDAV and CalDAV. [0] 
 
-Some steps are burrowed from chaosdaten.org. [1] 
+Some steps are borrowed from chaosdaten.org. [1] 
 
 <!--TOC-->
 
