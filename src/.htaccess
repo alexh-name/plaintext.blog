@@ -9,6 +9,7 @@ RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} !=plaintext.blog
 RewriteRule (.*) https://plaintext.blog/$1 [R=301,L]
 
+Redirect 301 /umurmur-auf-Uberspace/ /hosting/Uberspace/umurmur.html
 Redirect 301 /howtos/umurmur-auf-uberspace /hosting/Uberspace/umurmur.html
 Redirect 301 /howtos/ejabberd-auf-uberspace /hosting/Uberspace/ejabberd.html
 #Redirect 301 /AP https://how.cosmofox.net/using-open-WiFi/
