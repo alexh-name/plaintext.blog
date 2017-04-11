@@ -517,6 +517,9 @@ input.gsc-search-button:hover {
 form.gsc-search-box:after {
   content: "by Google";
 }
+article img {
+  max-width: 100%;
+}
 /* end styling */
 /* merged */
 div#tree, .monospace, nav, header, footer {
