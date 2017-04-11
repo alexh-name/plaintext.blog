@@ -1,0 +1,78 @@
+: Removing KMSpico / AutoKMS
+
+Removing the famous activator for Microsoft products from your computer.
+
+This assumes you trust the tool you installed to not be or not to have included malware. This guide does not claim to remove any malware from your computer. It's goal is to remove and revert the most visible signs of installing KMSpico.
+If for some reason or another you used KMSpico I hope you got it from a source you trust. This should go for any software anyways.
+
+<!--TOC-->
+
+:: Deinstall
+
+First thing will be to straight away deinstall the tool by the means provided by it itself and the Windows Control Panel.
+
+Navigate to the Control Panel. On Windows 10 you can easily find it by typing 'Control Panel' into the search bar:
+
+<img src="/files/kmspico_01.png" alt="Find the Control Panel">
+
+In the Control Panel go to "Programs" and from there to "Programs and Features". 
+Make out KMSpico, select it and then click "Uninstall" like here:
+
+<img src="/files/kmspico_02.png" alt="Uninstall KMSpico">
+
+Follow the instructions. You might get a notice like the following: 'KMSpico uninstall complete. Some elements could not be removed.'
+
+<img src="/files/kmspico_03.png" alt="KMSpico uninstall complete. Some elements could not be removed.">
+
+This is ok. 
+
+:: Make Antivirus sensible to it again
+
+Some or most antivirus software (AV) will complain about KMSpico as an potentially unwanted software. If that was the case when you installed it initially you might have recorded an exception for KMSpico to your AV. If that's what you did, you should remove the exception so that you will notice newer attempts to install similar software in case it'll indeed be unwanted.
+
+Your AV may differ. I'll show Windows Defender as an example, which comes pre installed with many versions of Windows.
+
+Windows Defender has a tab called "History" which contains recorded instances of presumed unwanted software and also the exceptions you might have made. Other AV might have similar sections. We'll go there to first remove our exceptions. On Windows Defender you'll find them under "Allowed items". If there aren't any then we don't need to remove any. In Windows Defender you'll recognize KMSpico by the terms "HackTool:Win32/Keygen", "HackTool:Win32/AutoKMS" and/or "Trojan:Win32/Vigorf.A" (as of 2017/04/07).
+
+<img src="/files/kmspico_04.png" alt="Remove AV exceptions.">
+
+Go on for "Quarantined items" and "All detected items".
+
+After that you might want to do a fresh scan of your computer so that your AV will go ahead to remove remaining parts of KMSpico that it might detect.
+
+<img src="/files/kmspico_05.png" alt="Scan with AV.">
+
+:: Remove folder manually
+
+After uninstalling and even AV scans the installation folder of KMSpico might still be present. You can manually remove it. By default it should be located at 'C:\Program Files\' but it may differ if you chose another path when you installed it. If you've found it, just remove the folder "KMSpico".
+
+<img src="/files/kmspico_06.png" alt="Remove installation folder.">
+
+:: Disable scheduled tasks
+
+Even though we now deinstalled and removed remaining files of the tool, there might still be scheduled tasks that where put in place by KMSpico that are still active. To remove them we'll revisit the Control Panel and go to "Schedule tasks". You can find it by using the search bar in the upper right corner of the Control Panel:
+
+<img src="/files/kmspico_07.png" alt="Get to scheduled tasks.">
+
+From there you have to find the tasks named 'AutoKMS' and 'AutoPico Daily Restart'. 
+Select them and hit 'Delete' on the right:
+
+<img src="/files/kmspico_08.png" alt="Remove tasks.">
+
+:: Remove unused TAP-Devices (optional)
+
+This step is optional and you should only carry it out if you know for sure that you don't need the TAP-Devices that are going to be removed. The TAP-Devices we are targeting are virtual network devices that can connect different networks with each other. KMSpico is using them, but they are also commonly used by VPN clients e.g. for connecting to a corporate network. 
+In some cases KMSpico would create a lot of those devices which might be unpleasent for keeping track of your actual network devices, like this:
+
+<img src="/files/kmspico_09.png" alt="Many network devices.">
+
+If you know the devices you don't want to keep, you can get rid of them. Revisit the Control Panel and locate the 'Device Manager':
+
+<img src="/files/kmspico_10.png" alt="Device Manager.">
+
+Now locate your network devices. You have to select each undesired device one at a time to remove it. Again: make sure you only remove devices you are sure have no use anymore or otherwise you might lose connection to a network (even to the internet). The devices created by KMSpico should all be called 'TAP-Win32 Adapter OAS' and 'TAP-Windows Adapter V9' but again: Those could have been created and might be in use by other software than KMSpico. 
+(The devices in the example below are named differently.)
+
+<img src="/files/kmspico_11.png" alt="Remove device.">
+
+This should be it.
