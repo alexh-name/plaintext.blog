@@ -2,8 +2,11 @@
 
 Removing the famous activator for Microsoft products from your computer.
 
-This assumes you trust the tool you installed to not be or not to have included malware. This guide does not claim to remove any malware from your computer. It's goal is to remove and revert the most visible signs of installing KMSpico.
-If for some reason or another you used KMSpico I hope you got it from a source you trust. This should go for any software anyways.
+KMSpico is a tool to activate MS products. This guide is about removing KMSpico. 
+Due to it's nature there might be versions of KMSpico packed with malware. 
+This guide assumes you trust the tool you installed not to be or not to have included malware.
+It does not claim to remove any malware that might have come with any version of KMSpico or with anything else.
+If you assume to have been affected with malware you have to look somewhere else.
 
 <!--TOC-->
 
