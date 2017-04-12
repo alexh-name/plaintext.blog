@@ -6,7 +6,8 @@ KMSpico is a tool to activate MS products. This guide is about removing KMSpico.
 Due to its nature there might be versions of KMSpico packed with malware. 
 This guide assumes you trust the tool you installed not to be or not to have included malware.
 It does not claim to remove any malware that might have come with any version of KMSpico or with anything else.
-If you assume to have been affected with malware you have to look somewhere else.
+
+<a href="https://decentsecurity.com/holiday-tasks/">If you assume to have been affected with malware you have to look somewhere else, e.g. here.</a>
 
 <!--TOC-->
 
