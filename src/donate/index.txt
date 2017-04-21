@@ -9,12 +9,14 @@ If so, you might like to give something back.
 
 :: Crypto Currencies
 
-BTC:
+::: BTC
 
 <a href="bitcoin:1BqwV15mz2N91rhmbGzTkd7NxM15YysGZi">1BqwV15mz2N91rhmbGzTkd7NxM15YysGZi</a>
 <br>
 <img alt="bitcoin:1BqwV15mz2N91rhmbGzTkd7NxM15YysGZi" src="/files/btc.png">
 
-ETH: 0x9E668f803679c1d1EFf421b51606AfE2Ba6C1D41
+::: ETH 
+
+0x9E668f803679c1d1EFf421b51606AfE2Ba6C1D41
 
 <img alt="ethereum:0x9E668f803679c1d1EFf421b51606AfE2Ba6C1D41" src="/files/eth.png">
