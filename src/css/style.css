@@ -514,9 +514,10 @@ input.gsc-input {
 input.gsc-search-button:hover {
   cursor: pointer;
 }
+/*
 form.gsc-search-box:after {
   content: "by Google";
-}
+}*/
 article img {
   max-width: 100%;
 }
