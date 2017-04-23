@@ -1,0 +1,43 @@
+: About me
+
+damnavi ego stuporem meum et nihil amplius interrogavi, ne viderer numquam inter honestos cenasse
+
+Name: Alex H.
+
+I'm a student in his 20s. 
+I'm studying philosophy and classics. 
+Technical stuff is all self-taught. 
+My main interest in technology is the conflict between simplicity, security and usability in software.
+
+:: Selected Writings
+
+<ul>
+<li><a href="/hosting/Uberspace/prosody.html">Hosting a (decently) secure XMPP / Jabber server</a></li>
+<li><a href="/hosting/mail/qmail.html">Modern life with qmail</a></li>
+</ul>
+
+:: Projects
+
+<ul>
+<li><a href="/">plaintext.blog</a> - Information age survival blog</li>
+<li>Supporting NGOs with administration / DevOps</li>
+<li><a href="http://savoirvivre.intraaktion.de">SAVOIR VIVRE - Ein dezentrales Labor der Intraaktion</a></li>
+<li>Spreading version control and saner text formats outside programming</a></li>
+<li><del>Ranting against</del> Documenting bad computer security
+	<ul>
+		<li><a href="https://0101010.one/CWoS/">CWoS - Crypto Wall Of Shame</a></li>
+		<!--<li><a href="https://0101010.one/blog/sechustle">Everyday Security Hustle</a></li>-->
+	</ul>
+</li>
+<li>Occasional teaching</li>
+</ul>
+
+:: Contact
+
+<ul>
+<li><a href="https://keybase.io/alexh_name">keybase</a></li>
+<li><a href="https://mastodon.social/@alexh">twitter</a></li>
+<li><a href="https://twitter.com/prosaic_alex">twitter</a></li>
+<li><a href="xmpp:one@0101010.one?message">xmpp</a></li>
+<li><a href="https://github.com/alexh-name">github</a></li>
+</ul>

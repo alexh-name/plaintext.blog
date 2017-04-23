@@ -48,7 +48,7 @@ function page_footer {
 	</div>
 	<div id="lastlinks" class="center text-center">
 		<a href="/donate">♡ donate</a>
-		<a href="https://alexh.name" target="_blank">about me</a>
+		<a href="/about/me.html" target="_blank">about me</a>
 		<a href="/atom.xml" target="_blank">atom.xml</a>
 		<a href="mumble://0101010.one:62877" target="_blank">mumble</a>
 		<a href="xmpp:one@0101010.one?message" target="_blank">xmpp</a>
