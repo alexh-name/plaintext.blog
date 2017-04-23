@@ -19,7 +19,7 @@ Former changes to this guide on the bottom of the page.
 The goal of this guide is to get an own instance with the best available encryption.
 IM Observatory [0] will rate it with an 'A'.
 
-Parts of thus guide are inspired by [1].
+Parts of this guide are inspired by [1].
 
 <!--TOC-->
 
