@@ -36,7 +36,7 @@ My main interest in technology is the conflict between simplicity, security and 
 
 <ul>
 <li><a href="https://keybase.io/alexh_name">keybase</a></li>
-<li><a href="https://mastodon.social/@alexh">twitter</a></li>
+<li><a href="https://mastodon.social/@alexh">mastodon</a></li>
 <li><a href="https://twitter.com/prosaic_alex">twitter</a></li>
 <li><a href="xmpp:one@0101010.one?message">xmpp</a></li>
 <li><a href="https://github.com/alexh-name">github</a></li>
