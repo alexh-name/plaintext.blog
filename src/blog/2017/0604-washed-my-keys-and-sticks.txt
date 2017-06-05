@@ -1,0 +1,11 @@
+<!-- DATE: 2017-06-05 -->
+<!-- DESC: washed my keys and sticks -->
+
+: thumb drives can be quite resilient
+
+Yesterday I managed to throw my keyring into the washing machine and only
+realized the loud noise it was making after about 30mins.  
+This included 2x Kingston DataTraveler USB 3 and a USB 2 model as well as my
+YubiKey 4. I let the YubiKey dry for 2 hours or so, the thumb drives for 24h.
+They all still work :)
+
