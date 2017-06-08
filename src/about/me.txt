@@ -20,7 +20,7 @@ My main interest in technology is the conflict between simplicity, security and 
 
 <ul>
 <li><a href="/">plaintext.blog</a> - Information age survival blog</li>
-<li>Supporting NGOs with administration / DevOps</li>
+<li>Supporting NGOs with system administration</li>
 <li><a href="http://savoirvivre.intraaktion.de">SAVOIR VIVRE - Ein dezentrales Labor der Intraaktion</a></li>
 <li>Spreading version control and saner text formats outside programming</a></li>
 <li><del>Ranting against</del> Documenting bad computer security
