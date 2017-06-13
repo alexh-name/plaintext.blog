@@ -42,11 +42,11 @@ My main interest in technology is the conflict between simplicity, security and 
 <li><a href="https://github.com/alexh-name">github</a></li>
 </ul>
 
-<code>
+<pre><code>
 -----BEGIN GEEK CODE BLOCK-----
 Version: 3.1
 GC/CS/CM/ED/M/MU/P/S/SS d--(+) s: a- C++()$ UBL++++$ P+ L++(+) !E W+++$ !N !o K? w$ !O M !V PS++ PE Y++ PG
 P++ t+ 5? !X !R tv b+ !DI !D G e(++) h--- r++ y++
 ------END GEEK CODE BLOCK------
-</code>
+</code></pre>
 
