@@ -583,7 +583,9 @@ make install
 . $HOME/.domain-vars.txt
  
 user='john'
-message="From: ${user}@${address}
+message="Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+From: ${user}@${address}
 Subject: Autoresponse: I'm away
  
 Hi,
