@@ -601,7 +601,8 @@ echo "${message}" > autoresponse/message.txt
 chown -R ${user}:${user} autoresponse
 chmod -R 0700 autoresponse
 cp .qmail dotqmail.b
-echo '|qmail-autoresponder ~/autoresponse/
+echo '# |/usr/local/bin/ifspamh postmaster-spam # better use some anti spam
+|qmail-autoresponder ~/autoresponse/
 ./Maildir/' > dotqmail
 chown -R ${user}:${user} dotqmail
 chmod 0640 dotqmail
