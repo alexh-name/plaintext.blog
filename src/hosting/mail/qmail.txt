@@ -491,7 +491,7 @@ chmod 4750 /bin/checkpassword
  
 ====
 
-Now we modify /var/qmail/supervise/qmail-smtpd/run so that qmail-smtpd uses
+Now we modify /var/qmail/supervise/qmail-submission/run so that qmail-submission uses
 checkpassword for authentication:
 
 ====
