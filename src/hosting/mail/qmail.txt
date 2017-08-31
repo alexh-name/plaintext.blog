@@ -122,8 +122,17 @@ The last line should now give you your hostname.
 
 :: get a cert from Let's Encrypt
 
-/Adapted from https://certbot.eff.org/#centosrhel6-other/
-[16]
+/Adapted from: /
+[16], [26]
+
+First we need python 2.7 in a way that dosn't break CentOS 6:
+
+====
+yum install centos-release-SCL
+yum install python27
+====
+
+Now certbot:
 
 ====
 yum -y install epel-release
@@ -139,14 +148,15 @@ chmod a+x certbot-auto
 ====
 
 /Use the second line to agree to their TOS without user input./
-You might need to adapt the domains to your needs.
+You might need to adapt the domains to your needs.  
+``scl`` provides python 2.7 to certbot.
 
 ====
-./certbot-auto -n --email admin@${address} certonly --standalone \
--d ${domain} -d imap.${address} -d smtp.${address} -d send.${address}
+scl enable python27 "./certbot-auto -n --email admin@${address} certonly --standalone \
+-d ${domain} -d imap.${address} -d smtp.${address} -d send.${address}"
  
-# ./certbot-auto --agree-tos --email admin@${address} -n certonly --standalone \
--d ${domain} -d imap.${address} -d smtp.${address} -d send.${address}
+# scl enable python27 "./certbot-auto --agree-tos --email admin@${address} -n certonly --standalone \
+-d ${domain} -d imap.${address} -d smtp.${address} -d send.${address}"
 ====
 
 This may fail occasionally (e.g. with '[Errno 111] Connection refused'. It's fine to just try again.
@@ -164,7 +174,7 @@ sha256sum /etc/letsencrypt/live/\${domain}/fullchain.pem \
  
 /usr/local/bin/svc -d /service/lighttpd
 sleep 2
-$HOME/src/letsencrypt/certbot-auto renew -q
+scl enable python27 "$HOME/src/letsencrypt/certbot-auto renew -q"
 /usr/local/bin/svc -u /service/lighttpd
  
 sha256sum -c $HOME/src/letsencrypt/fullchain_shasum.txt > /dev/null 2>&1
@@ -183,6 +193,12 @@ Some directories we may need:
 
 ====
 mkdir -p /etc/ssl/certs/ /etc/ssl/private/
+====
+
+In case you used certbot with python 2.6 before use this to get rid of the old dependencies:
+
+====
+rm -Rf /root/.local/share/letsencrypt
 ====
 
 :: netqmail
@@ -1276,3 +1292,4 @@ More perhaps useful things are covered here: [23]
 [23] /hosting/mail/qmail-extra.html
 [24] https://cr.yp.to/djbdns.html
 [25] https://cr.yp.to/djbdns/run-cache.html
+[26] https://thelastcicada.com/2016/solving-the-python-2-6-issue-for-letencrypt-on-centos-6/
