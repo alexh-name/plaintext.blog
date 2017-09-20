@@ -6,6 +6,11 @@ Unkomplizierten Team-Voice-Chat selbst hosten.
 
 ::: updates
 
+:::: 2017.09.20
+
+Updated dependency versions: cmake, mbedTLS.
+Updated umumur version.
+
 :::: 2015.08.15
 
 Die Installation von cmake und libconfig per toast wurde korrigiert.
@@ -31,10 +36,10 @@ Zunächst brauchen wir paar Abhängigkeiten:
 
 ====
 toast arm libconfig/v1.5-snscltt: https://github.com/alexh-name/libconfig/archive/v1.5-snscltt.tar.gz
-toast arm cmake/v3.3.0: https://github.com/Kitware/CMake/archive/v3.3.0.zip
+toast arm cmake/v3.9.3: https://github.com/Kitware/CMake/archive/v3.9.3.tar.gz
 toast arm https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.bz2
 toast arm https://github.com/protobuf-c/protobuf-c/releases/download/v1.1.1/protobuf-c-1.1.1.tar.gz
-toast arm https://tls.mbed.org/download/polarssl-1.2.15-gpl.tgz
+toast arm https://tls.mbed.org/download/start/mbedtls-2.6.0-apache.tgz
 ====
 
 /Achtung: der Link zu den libconfig-Quellen weist auf einen Fork von mir. Hintergrund: Das Tarball auf der Homepage von hyperrealm (Autoren von libconfig) ist nur über http (also nicht https!) erreichbar und es gibt keine Checksums. Auf Anfrage wurden nun auch alle nötigen Dateien dem github-Repo hinzugefügt. Ich habe nur den entsprechenden Commit der letzten veröffentlichten Version 1.5 hinzugefügt. [3] [4]/
@@ -56,7 +61,7 @@ Wer den Stand des masters auf git kompilieren möchte, überspringt den nächste
 
 ====
 cd $HOME/git/umurmur
-git checkout tags/0.2.16a
+git checkout tags/0.2.17
 ====
 
 Wir kopieren jetzt noch den Inhalt in ein Arbeitsverzeichnis, wo wir dann auch kompilieren:
@@ -72,7 +77,18 @@ cd umurmur/build
 Jetzt kanns losgehen:
 
 ====
-cmake ../
+cmake \
+  -DMBEDTLS_INCLUDE_DIR="$HOME/.toast/armed/include/mbedtls" \
+  -DMBEDTLS_LIBRARIES="$HOME/.toast/armed/lib" \
+  -DMBEDTLS_LIB_DIR="$HOME/.toast/armed/lib" \
+  -DLIBCONFIG_INCLUDE_DIR="$HOME/.toast/armed/include/" \
+  -DLIBCONFIG_LIBRARIES="$HOME/.toast/armed/lib" \
+  -DLIBCONFIG_LIB_DIR="$HOME/.toast/armed/lib" \
+  -DPROTOBUFC_INCLUDE_DIR="$HOME/.toast/armed/include/protobuf-c" \
+  -DPROTOBUFC_LIBRARIES="$HOME/.toast/armed/lib" \
+  -DPROTOBUFC_LIB_DIR="$HOME/.toast/armed/lib" \
+  -DSSL=mbedtls \
+   ../
 make
 ====
 
@@ -80,7 +96,7 @@ Kopiert die Binary an einen guten Platz:
 
 ====
 mkdir $HOME/bin
-cp umurmurd $HOME/bin/
+cp bin/umurmurd $HOME/bin/
 ====
 
 Und macht euch an die Config:
