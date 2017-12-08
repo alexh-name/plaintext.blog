@@ -11,12 +11,20 @@ If so, you might like to give something back.
 
 ::: BTC
 
-<a href="bitcoin:1BqwV15mz2N91rhmbGzTkd7NxM15YysGZi">1BqwV15mz2N91rhmbGzTkd7NxM15YysGZi</a>
+<a href="bitcoin:1FHgR1BYUKcuBJEALB3zMYFTfSrW64zJLZ">1FHgR1BYUKcuBJEALB3zMYFTfSrW64zJLZ</a>
 <br>
-<img alt="bitcoin:1BqwV15mz2N91rhmbGzTkd7NxM15YysGZi" src="/files/btc.png">
+<a href="https://blockchain.info/payment_request?address=1FHgR1BYUKcuBJEALB3zMYFTfSrW64zJLZ&message=:3&amount=0.002">
+  <img alt="bitcoin:1FHgR1BYUKcuBJEALB3zMYFTfSrW64zJLZ" src="/files/btc.png">
+</a>
 
 ::: ETH 
 
-0x9E668f803679c1d1EFf421b51606AfE2Ba6C1D41
+0xb91f5e0d19273a9c5d5a5214c58693e29d903ed4
 
-<img alt="ethereum:0x9E668f803679c1d1EFf421b51606AfE2Ba6C1D41" src="/files/eth.png">
+<img alt="ethereum:0xb91f5e0d19273a9c5d5a5214c58693e29d903ed4" src="/files/eth.png">
+
+::: LTC
+
+<a href="litecoin:LWNAiTfLW2Q8U1RUwxSUJWpazoioJBLvuk">LWNAiTfLW2Q8U1RUwxSUJWpazoioJBLvuk</a>
+<br>
+<img alt="litecoin:LWNAiTfLW2Q8U1RUwxSUJWpazoioJBLvuk" src="/files/ltc.png">
