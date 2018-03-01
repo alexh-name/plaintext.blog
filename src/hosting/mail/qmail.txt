@@ -1275,11 +1275,11 @@ Probably the only packages used here requiring regular updates are
 ====
 version='2.2.34'
 version_major="$( echo "${version}" | cut -d '.' -f -2  )"
-
+ 
 cd /usr/local/src
 wget "https://dovecot.org/releases/${version_major}/dovecot-${version}.tar.gz"
 wget "https://dovecot.org/releases/${version_major}/dovecot-${version}.tar.gz.sig"
-
+ 
 gpg2 --verify dovecot-${version}.tar.gz.sig  dovecot-${version}.tar.gz
 ====
 
