@@ -624,11 +624,11 @@ Get the source [4]:
 ====
 cd $HOME
 dir='src/dovecot'; mkdir -p $dir ; cd $dir
-wget http://dovecot.org/releases/2.2/dovecot-2.2.24.tar.gz
+wget https://dovecot.org/releases/2.2/dovecot-2.2.34.tar.gz
 wget http://mij.oltrelinux.com/net/dovecot-qmail-vmailmgr/checkvpw-dovecot-wrapper.c
 echo '
 93b2acfc75da633e03d52e868755e996a377e468f0ff315060c4b8bfa21df168  checkvpw-dovecot-wrapper.c
-71c86891ea8deb5703d3dbbc3ea31ce2cbf7638f1aa395d9e8794d3ff7aebeb7  dovecot-2.2.24.tar.gz
+5e92a4325409e66b343f6aaa67174b8921ce83d0df792c6eeb0b7b7e2c808353  dovecot-2.2.34.tar.gz
 ' > SHA256SUM.txt
 sha256sum -c SHA256SUM.txt
  
@@ -637,10 +637,10 @@ sha256sum -c SHA256SUM.txt
 When fetching was alright, put it to the right places to compile:
 
 ====
-cp dovecot-2.2.24.tar.gz checkvpw-dovecot-wrapper.c /usr/local/src/
+cp dovecot-2.2.34.tar.gz checkvpw-dovecot-wrapper.c /usr/local/src/
 cd /usr/local/src/
-tar -xf dovecot-2.2.24.tar.gz
-cd dovecot-2.2.24
+tar -xf dovecot-2.2.34.tar.gz
+cd dovecot-2.2.34
 ./configure
 make
 make install
