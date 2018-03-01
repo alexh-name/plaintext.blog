@@ -399,6 +399,8 @@ sed -i 's/\ smtp\ /\ submission\ /' /var/qmail/supervise/qmail-submission/run
  
 echo 20 > /var/qmail/control/concurrencyincoming
 chmod 644 /var/qmail/control/concurrencyincoming
+echo "${domain}" > /var/qmail/control/smtpgreeting
+chmod 644 /var/qmail/control/smtpgreeting
  
 echo '#!/bin/sh
 exec /usr/local/bin/setuidgid qmaill /usr/local/bin/multilog t /var/log/qmail/smtpd' > /var/qmail/supervise/qmail-smtpd/log/run
