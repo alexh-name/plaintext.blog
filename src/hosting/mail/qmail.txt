@@ -1263,6 +1263,47 @@ To find files and directories owned by apache:
 find / -type f \( -group apache -o -user apache \) -not -path "/proc/*"
 ====
 
+:: update
+
+Probably the only packages used here requiring regular updates are
+
+* dovecot
+* roundcube
+
+::: dovecot
+
+====
+version='2.2.34'
+version_major="$( echo "${version}" | cut -d '.' -f -2  )"
+
+cd /usr/local/src
+wget "https://dovecot.org/releases/${version_major}/dovecot-${version}.tar.gz"
+wget "https://dovecot.org/releases/${version_major}/dovecot-${version}.tar.gz.sig"
+
+gpg2 --verify dovecot-${version}.tar.gz.sig  dovecot-${version}.tar.gz
+====
+
+Ok?
+
+====
+cd "dovecot-${version}"
+./configure
+nice -n 15 make
+====
+
+This will take some time.  
+Next comes the installation. Because of make install taking some time, this
+will produce some downtime.
+
+====
+svc -d /service/dovecot/
+make install
+chgrp dovecot /usr/local/libexec/dovecot/checkpassword-reply
+chmod g+s /usr/local/libexec/dovecot/checkpassword-reply
+svc -u /service/dovecot/
+tail -f /var/log/maillog
+====
+
 :: extras
 
 More perhaps useful things are covered here: [23]
