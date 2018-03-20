@@ -626,11 +626,11 @@ Get the source [4]:
 ====
 cd $HOME
 dir='src/dovecot'; mkdir -p $dir ; cd $dir
-wget https://dovecot.org/releases/2.2/dovecot-2.2.34.tar.gz
+wget https://dovecot.org/releases/2.2/dovecot-2.2.35.tar.gz
 wget http://mij.oltrelinux.com/net/dovecot-qmail-vmailmgr/checkvpw-dovecot-wrapper.c
 echo '
 93b2acfc75da633e03d52e868755e996a377e468f0ff315060c4b8bfa21df168  checkvpw-dovecot-wrapper.c
-5e92a4325409e66b343f6aaa67174b8921ce83d0df792c6eeb0b7b7e2c808353  dovecot-2.2.34.tar.gz
+cce15db2fc5233386b63a3cf21c465c09e6e55014ed66c4f184b7d221a47180c  dovecot-2.2.35.tar.gz
 ' > SHA256SUM.txt
 sha256sum -c SHA256SUM.txt
  
@@ -639,10 +639,10 @@ sha256sum -c SHA256SUM.txt
 When fetching was alright, put it to the right places to compile:
 
 ====
-cp dovecot-2.2.34.tar.gz checkvpw-dovecot-wrapper.c /usr/local/src/
+cp dovecot-2.2.35.tar.gz checkvpw-dovecot-wrapper.c /usr/local/src/
 cd /usr/local/src/
-tar -xf dovecot-2.2.34.tar.gz
-cd dovecot-2.2.34
+tar -xf dovecot-2.2.35.tar.gz
+cd dovecot-2.2.35
 ./configure
 make
 make install
@@ -1275,7 +1275,7 @@ Probably the only packages used here requiring regular updates are
 ::: dovecot
 
 ====
-version='2.2.34'
+version='2.2.35'
 version_major="$( echo "${version}" | cut -d '.' -f -2  )"
  
 cd /usr/local/src
@@ -1288,6 +1288,7 @@ gpg2 --verify dovecot-${version}.tar.gz.sig  dovecot-${version}.tar.gz
 Ok?
 
 ====
+tar -xf "dovecot-${version}.tar.gz"
 cd "dovecot-${version}"
 ./configure
 nice -n 15 make
