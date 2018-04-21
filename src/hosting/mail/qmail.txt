@@ -456,6 +456,38 @@ echo 104857600 > /var/qmail/control/databytes
 
 ::: crypto
 
+We will use haveged to increase the available entropy:
+
+====
+yum install haveged
+====
+
+Add service:
+
+====
+service='haveged'
+cmd='/usr/sbin/haveged -F -v -1'
+usr='root'
+ 
+mkdir -m 0755 -p /var/service/"${service}"/log
+mkdir -m 0750 -p /var/log/"${service}"
+ 
+cat >> /var/service/"${service}"/run <<__EOF__
+#!/bin/sh
+exec ${cmd} 2>&1
+__EOF__
+  
+cat >> /var/service/"${service}"/log/run <<__EOF__
+#!/bin/sh
+exec /usr/local/bin/setuidgid ${usr} /usr/local/bin/multilog t /var/log/${service}
+__EOF__
+ 
+chmod +x /var/service/"${service}"/run /var/service/"${service}"/log/run
+chown "${usr}":"${usr}" /var/log/"${service}"
+ 
+ln -s /var/service/"${service}" /service/
+====
+
 Put our certs to the right places and renew automatically:
 
 ====
