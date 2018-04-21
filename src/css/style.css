@@ -387,12 +387,12 @@ body {
 header, footer {
 	font-size:0.8em;
 }
-div#paper, nav a, div#lastlinks a, input.gsc-search-button {
+div#paper, nav a, div#lastlinks a {
 	border: solid thin;
 	box-shadow: none;
 	transition: box-shadow 0.2s;
 }
-div#paper, nav a:hover, div#lastlinks a:hover, input.gsc-search-button:hover {
+div#paper, nav a:hover, div#lastlinks a:hover {
 	box-shadow: 3px 3px;
 }
 article {
@@ -488,36 +488,6 @@ h1 + p {
 summary {
   cursor: context-menu;
 }
-div#google-search {
-  margin-bottom: 2ch;
-  line-height: initial;
-  word-wrap: initial;
-}
-div#google-search a {
-  border-bottom: none;
-}
-form.gsc-search-box {
-  max-width: 40ch !important;
-  margin-right: auto !important;
-  margin-left: auto !important;
-}
-.gsc-results-wrapper-visible {
-  border: solid thin whitesmoke !important;
-  margin: 1ch !important;
-  padding: 1ch !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 2ch !important;
-}
-input.gsc-input {
-  background: white !important;
-}
-input.gsc-search-button:hover {
-  cursor: pointer;
-}
-/*
-form.gsc-search-box:after {
-  content: "by Google";
-}*/
 article img {
   max-width: 100%;
 }
