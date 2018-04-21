@@ -1,4 +1,4 @@
-: contact
+: impressum
 
 Catch me if you can.
 
@@ -7,6 +7,8 @@ Alexander Hof
 a at alexh.name
 
 See: [0] or [1]
+
+No personal data is collected by visiting this website.
 
 [0] https://keybase.io/alexh_name
 [1] https://alexh.name
