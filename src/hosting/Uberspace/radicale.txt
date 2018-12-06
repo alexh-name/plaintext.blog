@@ -72,9 +72,9 @@ python3.6 -m radicale -Df --config ~/etc/radicale/config --export-storage ~/radi
 
 Upgrade radicale:
 
-===
+====
 python3.6 -m pip install --upgrade radicale --user
-===
+====
 
 Change the run-script, because pip won't place the executable in ~/bin/ anymore;
 also we want to use python3.6:
