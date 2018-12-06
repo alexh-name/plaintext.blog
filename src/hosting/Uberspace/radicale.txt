@@ -13,7 +13,7 @@ Some steps are borrowed from chaosdaten.org. [1]
 :: Installation
 
 ====
-pip3 install radicale --user
+python3.6 -m pip install radicale --user
 ====
 
 :: Configuration
@@ -31,7 +31,7 @@ When using htpasswd as auth you should now create a htpasswd file. [5]
 mkdir ~/etc/run-radicale
 cat <<__EOF__ > ~/etc/run-radicale/run
 #!/bin/sh
-exec python3 ~/bin/radicale -Df 2>&1
+exec python3.6 -m radicale -Df 2>&1
 __EOF__
 chmod +x ~/etc/run-radicale/run
 mkdir ~/etc/run-radicale/log
@@ -40,30 +40,77 @@ cat <<__EOF__ > ~/etc/run-radicale/log/run
 exec multilog t ./main
 __EOF__
 chmod +x ~/etc/run-radicale/log/run
-ln -s ~/etc/run-radicale ~/service/my-daemon
+ln -s ~/etc/run-radicale ~/service/radicale
 ====
 
-:: git log
+:: update from radicale 1.x
 
-You can also log your changes in a git repo:
+Stop the service:
+
+===
+svc -d ~/service/radicale/
+===
+
+Get the newest version of the 1.x tree:
+
+===
+python3.6 -m pip install --upgrade radicale==1.1.6 --user
+===
+
+If you logged your collections via git, move them somewhere safe. It is not
+longer supported:
+
+===
+mv ~/var/radicale/collections/.git ~/radicale-backup.git
+===
+
+Export the collections in a format the updated version can work with:
 
 ====
-dir='YOU_COLLECTIONS_DIR'
- 
-cd "${dir}"
-cat <<__EOF__ > log.sh
-#!/bin/sh
-DATE="\$(date +%Y-%m-%d" "%H:%M)"
-cd '${dir}'
-git add *
-git commit -m "Backup \${DATE}"
-__EOF__
-chmod +x log.sh
-git init
-git config --global --edit
+python3.6 -m radicale -Df --config ~/etc/radicale/config --export-storage ~/radicale-export/
 ====
 
-You can now schedule the script either by crontab or runwhen [6] etc.
+Upgrade radicale:
+
+===
+python3.6 -m pip install --upgrade radicale --user
+===
+
+Change the run-script, because pip won't place the executable in ~/bin/ anymore;
+also we want to use python3.6:
+
+====
+sed -i \
+  -e 's|~/bin/radicale|-m radicale|' \
+  -e 's|python3|python3.6|' \
+  service/radicale/run
+====
+
+Move the original, 1.x-format collections somewhere safe and place the
+new-format exported collections in the right place:
+
+===
+mv ~/var/radicale/collections ~/var/radicale/radicale-collections-1.x
+mkdir ~/var/radicale/collections
+mv ~/radicale-export/collection-root ~/var/radicale/collections/
+===
+
+Make some changes to the config:
+
+===
+sed -i \
+  -e '/^base_prefix/d' \
+  -e '/^\[git\]/d' \
+  -e '/^committer/d' \
+  -e '/^type = filesystem/d' \
+  ~/etc/radicale/config
+===
+
+Restart:
+
+===
+svc -u ~/service/radicale/
+===
 
 [0] http://radicale.org/
 [1] https://chaosdaten.org/radicale-auf-dem-uberspace/
@@ -71,4 +118,3 @@ You can now schedule the script either by crontab or runwhen [6] etc.
 [3] /hosting/Uberspace/radicale-haerten.html
 [4] https://wiki.uberspace.de/system:ports
 [5] https://wiki.uberspace.de/webserver:htaccess#verzeichnisschutz
-[6] https://wiki.uberspace.de/system:runwhen
