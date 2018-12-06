@@ -47,22 +47,22 @@ ln -s ~/etc/run-radicale ~/service/radicale
 
 Stop the service:
 
-===
+====
 svc -d ~/service/radicale/
-===
+====
 
 Get the newest version of the 1.x tree:
 
-===
+====
 python3.6 -m pip install --upgrade radicale==1.1.6 --user
-===
+====
 
 If you logged your collections via git, move them somewhere safe. It is not
 longer supported:
 
-===
+====
 mv ~/var/radicale/collections/.git ~/radicale-backup.git
-===
+====
 
 Export the collections in a format the updated version can work with:
 
@@ -89,28 +89,28 @@ sed -i \
 Move the original, 1.x-format collections somewhere safe and place the
 new-format exported collections in the right place:
 
-===
+====
 mv ~/var/radicale/collections ~/var/radicale/radicale-collections-1.x
 mkdir ~/var/radicale/collections
 mv ~/radicale-export/collection-root ~/var/radicale/collections/
-===
+====
 
 Make some changes to the config:
 
-===
+====
 sed -i \
   -e '/^base_prefix/d' \
   -e '/^\[git\]/d' \
   -e '/^committer/d' \
   -e '/^type = filesystem/d' \
   ~/etc/radicale/config
-===
+====
 
 Restart:
 
-===
+====
 svc -u ~/service/radicale/
-===
+====
 
 [0] http://radicale.org/
 [1] https://chaosdaten.org/radicale-auf-dem-uberspace/
