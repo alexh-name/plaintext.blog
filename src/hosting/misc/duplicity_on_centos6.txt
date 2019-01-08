@@ -1,0 +1,49 @@
+: duplicity 0.7 on CentOS 6
+
+CentOS only provides duplicity 0.6.x. However, versions up to including 0.7.12
+run just fine using pexpect as the ssh/scp/sftp backend.
+
+Here is a cheatsheet to make it run.
+
+Remember to remove the RPM provided version:
+
+====
+yum remove duplicity
+====
+
+Make sure all dependencies are fulfilled (this is for core functionality):
+
+====
+yum install python-devel librsync-devel python-lockfile gnupg2 pexpect
+====
+
+Get duplicity 0.7.12. This is the last version that uses python-lockfile for
+locking. Later versions use fastener, that is not easily available on
+CentOS 6.  
+Luckily, this version also fixes problems with gpg available on CentOS 6.  
+Unpack, install and check the reported version:
+
+====
+wget https://mirror.netcologne.de/savannah/duplicity/duplicity-0.7.12.tar.gz
+tar xf duplicity-0.7.12.tar.gz
+cd duplicity-0.7.12
+python setup.py install
+duplicity -V
+====
+
+If all is fine, there is one last thing to consider. There seems to be a
+problem with the default SSH backend paramiko. To work around that, specify
+pexpect as the backend by prefixing the protocol used for the remote location
+with 'pexpect+'. This is explained in more detail in the man page of duplicity.
+
+If you still get a wrong version number, here are the places to check for
+remaining files from other installations:
+
+====
+/usr/lib64/python2.6/site-packages/duplicity*
+/usr/share/man/man1/duplicity.1
+/usr/share/doc/duplicity*
+/usr/bin/rdiffdir
+/usr/bin/duplicity
+====
+
