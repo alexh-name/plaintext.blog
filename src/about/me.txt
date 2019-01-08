@@ -19,14 +19,25 @@ My main interest in technology is the conflict between simplicity, security and 
 :: Projects
 
 <ul>
+<li>Inventing and building unique tools like
+  <ul>
+    <li><a href="https://mirror.alexh.name/WZ/">this website</a></li>
+    <li>
+      and a
+      <a href="https://www.instagram.com/p/BYZLLmGl7fj/">giant</a>
+      <a href="https://www.instagram.com/p/BYd-URFllLX/">interactive</a>
+      <a href="https://www.instagram.com/p/BYqzx3dFdXB/">virtual</a>
+      <a href="https://app.welchezukunft.org/en/archive/1eZq0VM6KGGGq4iIkO6MIi/">table</a>
+    </li>
+  <ul>
+</li>
 <li><a href="/">plaintext.blog</a> - Information age survival blog</li>
 <li>Supporting NGOs with system administration</li>
 <li><a href="http://savoirvivre.intraaktion.de">SAVOIR VIVRE - Ein dezentrales Labor der Intraaktion</a></li>
 <li>Spreading version control and saner text formats outside programming</a></li>
 <li><del>Ranting against</del> Documenting bad computer security
 	<ul>
-		<li><a href="https://0101010.one/CWoS/">CWoS - Crypto Wall Of Shame</a></li>
-		<!--<li><a href="https://0101010.one/blog/sechustle">Everyday Security Hustle</a></li>-->
+		<li><a href="/CWoS/">CWoS - Crypto Wall Of Shame</a></li>
 	</ul>
 </li>
 <li>Occasional teaching</li>
@@ -39,7 +50,6 @@ My main interest in technology is the conflict between simplicity, security and 
 <li><a href="https://mastodon.social/@alexh">mastodon</a></li>
 <li><a href="https://www.instagram.com/prosaic_alex/">instagram</a></li>
 <li><a href="https://twitter.com/prosaic_alex">twitter</a></li>
-<li><a href="xmpp:one@0101010.one?message">xmpp</a></li>
 <li><a href="https://github.com/alexh-name">github</a></li>
 </ul>
 
