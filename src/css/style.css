@@ -378,22 +378,26 @@ div#topbox p {
 /* end structure */
 /* styling */
 body {
-  background: lightpink; /* fallback for old browsers */
+  background: palevioletred; /* fallback for old browsers */
+  background-image: url("/files/banan.png"); /* fallback for old browsers */
 	/* found here: http://uigradients.com/, named 'clouds' */
 	/* background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF); */ /* Chrome 10-25, Safari 5.1-6 */
 	/* background: linear-gradient(to left, #ECE9E6 , #FFFFFF); */ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	font-family: Source Sans Pro, sans-serif;
+  font-family: Source Sans Pro, sans-serif;
+  font-size: large;
+  color: white;
 }
 header, footer {
 	font-size:0.8em;
 }
 div#paper, nav a, div#lastlinks a {
-	/*border: solid thin;*/
+	border: solid thin;
 	box-shadow: none;
 	transition: box-shadow 0.2s;
 }
-div#paper, nav a:hover, div#lastlinks a:hover {
-	box-shadow: 3px 3px;
+/*div#paper, nav a:hover, div#lastlinks a:hover {*/
+nav a:hover, div#lastlinks a:hover {
+  box-shadow: 3px 3px;
 }
 article {
 	line-height:140%;
@@ -401,13 +405,17 @@ article {
 }
 pre {
 	color:white;
-	background-color:black;
 	overflow-x:auto;
 	word-wrap:normal;
 	max-width:95%;
 	margin: auto;
 	margin-bottom: 1ch;
 	padding: 1ch;
+  border: solid;
+  font-size: initial;
+}
+body, pre {
+  background-color:lightslategray;
 }
 pre,.quote {
 	line-height:normal;
@@ -440,10 +448,10 @@ h1, h2, h3, h4, h5, h6, h1 + p {
 	font-family: "Source Serif Pro", serif;
 }
 div#paper, body a {
-	background: white;
+	background: palevioletred;
 }
 footer {
-	border-top: thin solid gray;
+	border-top: thin solid;
 	word-break:break-all;
 }
 ul {
