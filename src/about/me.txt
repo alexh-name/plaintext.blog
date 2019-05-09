@@ -1,5 +1,7 @@
 : About me
 
+<img src="/files/avatar.png" style="margin-left:auto;margin-right:auto;display: block;">
+
 damnavi ego stuporem meum et nihil amplius interrogavi, ne viderer numquam inter honestos cenasse
 
 Name: Alex H.
